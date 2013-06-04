@@ -14,28 +14,28 @@
     file:///usr/share/openbox/menu.xsd">
 
 
-	<menu id="root-menu" label="Openbox 3">
+    <menu id="root-menu" label="Openbox 3">
 
 <!-- Section 1: Run Program -->
 
         <item label="Run Program">
-			<action name="Execute">
-				<command>
-					gmrun
-				</command>
-			</action>
+            <action name="Execute">
+                <command>
+                    gmrun
+                </command>
+            </action>
         </item>
 
         <separator/>
 
 <!-- Section 2: Useful Application -->
 
-		<item label="Web Browser">
-			<action name="Execute">
-				<command>
+        <item label="Web Browser">
+            <action name="Execute">
+                <command>
 					x-www-browser
-				</command>
-			</action>
+                </command>
+            </action>
         </item>
 
 		<item label="File Manager">
@@ -149,7 +149,7 @@
 					<command>
 						xfburn
 					</command>
-				</action>
+                </action>
             </item>
 
         </menu>
