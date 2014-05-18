@@ -1,0 +1,64 @@
+###########################################################
+# Lines configured by zsh-newuser-install
+###########################################################
+
+HISTFILE=~/.histfile
+HISTSIZE=1000
+SAVEHIST=1000
+bindkey -e
+# End of lines configured by zsh-newuser-install
+# The following lines were added by compinstall
+zstyle :compinstall filename '/home/alegen/.zshrc'
+autoload -Uz compinit
+compinit
+
+###########################################################
+# Simple one-liners
+###########################################################
+
+# Colors
+autoload -U colors
+colors
+setopt prompt_subst
+
+# Settings to make delete, home, end keys work in tmux
+bindkey "^[[5~" beginning-of-line
+bindkey "^[[6~" end-of-line
+bindkey "^[[3~" delete-char
+
+# Aliases
+alias ls='pwd; ls --color=tty'
+alias lss='ls --color=tty -Alh'
+alias sz='pwd; du -hs . ; for each in * ; do du -hs "$each" ; done'
+alias cd..="cd .."
+alias sex="sudo /etc/init.d/slim start"
+
+# System variables
+
+###########################################################
+# The PROMPT variable
+###########################################################
+
+COLOR_USER='red'
+COLOR_ROOT='green'
+COLOR_HOST='white'
+
+if [[ $(whoami) == 'root' ]]; then
+    export PROMPT="%{$fg[$COLOR_ROOT]%} %n %{$fg[blue]%} @ %{$fg[$COLOR_HOST]%} %m %{$fg[blue]%} : %~ %{$reset_color%} ";
+else
+    export PROMPT="%{$fg[$COLOR_USER]%} %n %{$fg[blue]%} @ %{$fg[$COLOR_HOST]%} %m %{$fg[blue]%} : %~ %{$reset_color%} ";
+fi
+
+###########################################################
+# Functions
+###########################################################
+
+# This function will add "sudo " before the command when pressing Alt-S
+function insert_sudo {
+    if [[ $BUFFER != "sudo "* ]]; then
+        BUFFER="sudo $BUFFER";
+        CURSOR+=5;
+    fi
+}
+zle -N insert-sudo insert_sudo
+bindkey "^[s" insert-sudo
