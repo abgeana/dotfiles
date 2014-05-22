@@ -31,10 +31,15 @@
 import subprocess as sp
 import os.path
 import urllib
+import calendar
+import datetime as dt
 
 TUNIP_FILE = '/tmp/i3_tunip'
 DDG_URL = 'https://duckduckgo.com/?q=my+ip'
 DDG_STR = 'Your IP address is'
+
+def unix_now():
+    return calendar.timegm(dt.datetime.utcnow().utctimetuple())
 
 def get_saved_info():
     if not os.path.isfile(TUNIP_FILE):
@@ -45,14 +50,17 @@ def get_saved_info():
         loc = fhandle.readline()
         loc = loc.replace('\n', '')
         tunip = fhandle.readline()
-        return [outip, loc, tunip]
+        tunip = tunip.replace('\n', '')
+        unixts = fhandle.readline()
+        return [outip, loc, tunip, unixts]
     return []
 
 def save_info(outip, loc, tunip):
     with open(TUNIP_FILE, 'w') as fhandle:
         fhandle.write(outip + '\n')
         fhandle.write(loc + '\n')
-        fhandle.write(tunip)
+        fhandle.write(tunip + '\n')
+        fhandle.write(str(unix_now()))
 
 def ask_ddg():
     con = urllib.urlopen(DDG_URL)
@@ -86,10 +94,10 @@ def get_tunip():
             tunip = line[start + 1 : end]
             # verify ip address with the one in TUNIP_FILE
             info = get_saved_info()
-            svoutip, svloc, svtunip = '', '', ''
+            svoutip, svloc, svtunip, svunixts = '', '', '', '0'
             if len(info) != 0:
-                svoutip, svloc, svtunip = info
-            if tunip != svtunip:
+                svoutip, svloc, svtunip, svunixts = info
+            if tunip != svtunip or unix_now() > int(svunixts) + (60 * 5):
                 outip, loc = ask_ddg()
                 save_info(outip, loc, tunip)
                 return [outip, loc]
