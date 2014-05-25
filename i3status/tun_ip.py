@@ -30,12 +30,13 @@
 
 import subprocess as sp
 import os.path
-import urllib
+import urllib3
 import calendar
 import datetime as dt
 
 TUNIP_FILE = '/tmp/i3_tunip'
-DDG_URL = 'https://duckduckgo.com/?q=my+ip'
+DDG_URL = 'duckduckgo.com'
+DDG_REQ_PATH = '/?q=my+ip'
 DDG_STR = 'Your IP address is'
 
 def unix_now():
@@ -63,16 +64,15 @@ def save_info(outip, loc, tunip):
         fhandle.write(str(unix_now()))
 
 def ask_ddg():
-    con = urllib.urlopen(DDG_URL)
-    page = con.read()
-    con.close()
-    idx1 = page.find(DDG_STR)
+    http = urllib3.HTTPSConnectionPool(DDG_URL, port = 443)
+    resp = http.request('GET', DDG_REQ_PATH)
+    idx1 = resp.data.find(DDG_STR)
     idx1 += len(DDG_STR) + 1
-    idx2 = page.find(' ', idx1)
-    ddgip = page[idx1 : idx2]
-    idx3 = page.find('>', idx2)
-    idx4 = page.find('<', idx3)
-    ddgloc = page[idx3 + 1 : idx4]
+    idx2 = resp.data.find(' ', idx1)
+    ddgip = resp.data[idx1 : idx2]
+    idx3 = resp.data.find('>', idx2)
+    idx4 = resp.data.find('<', idx3)
+    ddgloc = resp.data[idx3 + 1 : idx4]
     if ',' in ddgloc:
         idx5 = ddgloc.rfind(',')
         ddgloc = ddgloc[idx5 + 2 : ]
