@@ -66,6 +66,7 @@ def save_info(outip, loc, tunip):
 def ask_ddg():
     http = urllib3.HTTPSConnectionPool(DDG_URL, port = 443)
     resp = http.request('GET', DDG_REQ_PATH)
+    resp.close()
     idx1 = resp.data.find(DDG_STR)
     idx1 += len(DDG_STR) + 1
     idx2 = resp.data.find(' ', idx1)

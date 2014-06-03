@@ -47,7 +47,7 @@
 import sys
 import json
 
-from tun_ip import *
+from net_ip import *
 
 def print_line(message):
     """ Non-buffered printing to stdout. """
