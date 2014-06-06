@@ -89,8 +89,9 @@ def ask_ddg():
         resp = http.request('GET', DDG_REQ_PATH, timeout = 4)
         resp.close()
     except urllib3.exceptions.ConnectTimeoutError:
-        # suicide deal, yeap
-        return None
+        return None # nope
+    except urllib3.exceptions.MaxRetryError:
+        return None # no suicide here
 
     # if it worked, parse output :)
     idx1 = resp.data.find(DDG_STR)
