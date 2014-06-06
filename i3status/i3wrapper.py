@@ -82,11 +82,15 @@ if __name__ == '__main__':
 
         j = json.loads(line)
         # insert information into the start of the json, but could be anywhere
-        info = get_tunip()
-        if len(info) == 0:
-            j.insert(0, {'color' : '#FF0000', 'full_text' : 'VPN: no :('})
+        info = get_netip()
+        if info[1] is None: # no interwebz connection
+            j.insert(0, {'color' : '#FF0000', 'full_text' : 'No connection :('})
         else:
-            j.insert(0, {'color' : '#00FF00', 'full_text' : 'VPN: ' + info[0] + ' (' + info[1] + ')'})
+            if info[0]:
+                j.insert(0, {'color' : '#00FF00', 'full_text' : 'VPN IP: ' + info[1] + ' (' + info[2] + ')'})
+            else:
+                j.insert(0, {'color' : '#E36009', 'full_text' : 'Net IP: ' + info[1] + ' (' + info[2] + ')'})
+
         # and echo back new encoded json
         print_line(prefix + json.dumps(j))
 
