@@ -50,7 +50,7 @@ cHost = cWhite
 
 # prompt variables
 prompt_start = cLCyan + '[IP] '
-c.PromptManager.in_template = prompt_start + cUser + '\u' + cBlue + '  @  ' + cHost + '\h' + cBlue + '  : \Y0' + cLCyan + ' [\#' + cLCyan + '] '
-c.PromptManager.in2_template = cLBlue + '>> '
+c.PromptManager.in_template = prompt_start + cUser + '\u' + cGreen + '  @  ' + cHost + '\h' + cGreen + '  : \Y0' + cLCyan + ' [\#' + cLCyan + '] '
+c.PromptManager.in2_template = cGreen + '>> '
 c.PromptManager.out_template = cLCyan + '[\#' + cLCyan + '] '
 c.PromptManager.justify = True

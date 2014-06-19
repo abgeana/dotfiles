@@ -32,6 +32,7 @@ alias lss='ls --color=tty -Alh'
 alias sz='pwd; du -hs . ; for each in * ; do du -hs "$each" ; done'
 alias cd..="cd .."
 alias sex="sudo /etc/init.d/slim start"
+alias shutdown="sudo shutdown -h now"
 
 # System variables
 
@@ -42,11 +43,12 @@ alias sex="sudo /etc/init.d/slim start"
 COLOR_USER='red'
 COLOR_ROOT='green'
 COLOR_HOST='white'
+COLOR_EXTRA='green'
 
 if [[ $(whoami) == 'root' ]]; then
-    export PROMPT="%{$fg[$COLOR_ROOT]%} %n %{$fg[blue]%} @ %{$fg[$COLOR_HOST]%} %m %{$fg[blue]%} : %~ %{$reset_color%} ";
+    export PROMPT="%{$fg[$COLOR_ROOT]%} %n %{$fg[$COLOR_EXTRA]%} @ %{$fg[$COLOR_HOST]%} %m %{$fg[$COLOR_EXTRA]%}: %~ %{$reset_color%} ";
 else
-    export PROMPT="%{$fg[$COLOR_USER]%} %n %{$fg[blue]%} @ %{$fg[$COLOR_HOST]%} %m %{$fg[blue]%} : %~ %{$reset_color%} ";
+    export PROMPT="%{$fg[$COLOR_USER]%} %n %{$fg[$COLOR_EXTRA]%} @ %{$fg[$COLOR_HOST]%} %m %{$fg[$COLOR_EXTRA]%}: %~ %{$reset_color%} ";
 fi
 
 ###########################################################
