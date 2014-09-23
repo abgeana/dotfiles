@@ -77,9 +77,9 @@ def save_info(netip, loc, tunip = None):
             fhandle.write(loc + '\n')
             if tunip is not None:
                 fhandle.write(tunip)
-    except IOError:
+    except IOError, er:
         # if something happens, again, avoid suicide
-        pass
+        print er #pass
 
 def ask_ddg():
     # open an ssl connection to DDG
@@ -92,6 +92,8 @@ def ask_ddg():
         return None # nope
     except urllib3.exceptions.MaxRetryError:
         return None # no suicide here
+    except urllib3.exceptions.SSLError:
+        return None # not even once
 
     # if it worked, parse output :)
     idx1 = resp.data.find(DDG_STR)
@@ -104,6 +106,14 @@ def ask_ddg():
     if ',' in ddgloc:
         idx5 = ddgloc.rfind(',')
         ddgloc = ddgloc[idx5 + 2 : ]
+    if '(' in ddgloc and ')' in ddgloc:
+        idx5 = ddgloc.find('(')
+        idx6 = ddgloc.rfind(')')
+        if idx6 + 1 < len(ddgloc):
+            ddgloc = ddgloc[:idx5] + ddgloc[idx6 + 1:]
+        else:
+            ddgloc = ddgloc[:idx5]
+    ddgloc = ddgloc.replace(' ', '')
     return [ddgip, ddgloc]
 
 # this method return a tuple with three items
