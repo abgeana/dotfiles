@@ -33,6 +33,7 @@ import os
 import urllib3
 import calendar
 import datetime as dt
+import ipcalc
 
 NETIP_FILE = '/tmp/i3_netip'
 DDG_URL = 'duckduckgo.com'
@@ -56,7 +57,6 @@ def get_saved_info():
             data.append(fhandle.readline()) # unix timestamp
             data.append(fhandle.readline()) # net ip
             data.append(fhandle.readline()) # geographic location
-            data.append(fhandle.readline()) # tun ip (if it exists)
         # remove '\n' characters and emptry strings
         aux = []
         for item in data:
@@ -68,18 +68,16 @@ def get_saved_info():
         # if something happens then let's not commit suicide here
         return None
 
-def save_info(netip, loc, tunip = None):
+def save_info(netip, loc):
     try:
         # open file for writing
         with open(NETIP_FILE, 'w') as fhandle:
             fhandle.write(str(unix_now()) + '\n')
             fhandle.write(netip + '\n')
             fhandle.write(loc + '\n')
-            if tunip is not None:
-                fhandle.write(tunip)
     except IOError, er:
         # if something happens, again, avoid suicide
-        print er #pass
+        pass
 
 def ask_ddg():
     # open an ssl connection to DDG
@@ -125,21 +123,32 @@ def get_netip():
     # get saved info
     svinfo = get_saved_info()
 
-    # first check for a tun interface
-    tunip = None
-    # execute command "ip -f inet -o addr"
-    p = sp.Popen('ip -f inet -o addr'.split(' '), stdout=sp.PIPE, stderr=sp.PIPE)
-    out, err = p.communicate()
-    # split each line
-    out = out.split('\n')
-    # check each device if it is a tun
-    for line in out:
-        if 'tun' in line:
-            # if we find a tun device, extract the ip address
-            start = line.find('inet')
-            start = line.find(' ', start + 1)
-            end = line.find(' ', start + 1)
-            tunip = line[start + 1 : end]
+    # assume vpn is not used
+    vpn_used = False
+
+    # get ip of gateway in default route
+    gwip = None
+    p = sp.Popen('ip route list'.split(' '), stdout=sp.PIPE, stderr=sp.PIPE)
+    routes, _ = p.communicate()
+    p = sp.Popen('grep default'.split(' '), stdin=sp.PIPE, stdout=sp.PIPE, stderr=sp.PIPE)
+    def_route, _ = p.communicate(input=routes)
+    if def_route != '':
+        # we found a default route, let's get the gateway ip
+        idx_gwip = def_route.find('via ')
+        idx_gwip += len('via ')
+        def_route = def_route[idx_gwip:]
+        gwip = def_route[:def_route.find(' ')]
+
+    # get a list of all tun routes
+    p = sp.Popen('grep tun'.split(' '), stdin=sp.PIPE, stdout=sp.PIPE, stderr=sp.PIPE)
+    tun_routes, _ = p.communicate(input=routes)
+    tun_routes = tun_routes.split('\n')
+    for route in tun_routes:
+        if route != '':
+            backbone = route[:route.find(' ')]
+            if gwip in ipcalc.Network(backbone):
+                # default gateway is in tun network
+                vpn_used = True
 
     # verify against saved info
     do_ask_ddg = False
@@ -147,14 +156,7 @@ def get_netip():
         svunixts = svinfo[0]
         svnetip = svinfo[1]
         svloc = svinfo[2]
-        if len(svinfo) == 4:
-            svtunip = svinfo[3]
-        else:
-            svtunip = None
-        if (unix_now() > int(svunixts) + (60 * 5)) or \
-           (svtunip is None and tunip is not None) or \
-           (svtunip is not None and tunip is None) or \
-           (svtunip is not None and svtunip != tunip):
+        if unix_now() > int(svunixts) + (60 * 5):
             do_ask_ddg = True
     else:
         do_ask_ddg = True
@@ -165,14 +167,10 @@ def get_netip():
         ddg_resp = ask_ddg()
         if ddg_resp is not None:
             netip, loc = ddg_resp
-            save_info(netip, loc, tunip)
-
-        if tunip is not None:
-            return (True, netip, loc)
-        else:
-            return (False, netip, loc)
+            save_info(netip, loc)
+        return (vpn_used, netip, loc)
     else:
-        return (svtunip != None, svnetip, svloc)
+        return (vpn_used, svnetip, svloc)
 
 if __name__ == '__main__':
     info = get_netip()
