@@ -82,9 +82,9 @@ def save_info(netip, loc):
 def ask_ddg():
     # open an ssl connection to DDG
     http = urllib3.HTTPSConnectionPool(DDG_URL, port = 443)
-    # attempt to make GET request and timeout after 4s (function is called every 5s)
+    # attempt to make GET request and timeout after 1s (function is called every 5s)
     try:
-        resp = http.request('GET', DDG_REQ_PATH, timeout = 4)
+        resp = http.request('GET', DDG_REQ_PATH, timeout = 1)
         resp.close()
     except urllib3.exceptions.ConnectTimeoutError:
         return None # nope
