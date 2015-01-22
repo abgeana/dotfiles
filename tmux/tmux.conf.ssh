@@ -1,0 +1,31 @@
+# set Ctrl+A as prefix
+set-option -g prefix C-a
+
+# make Ctrl+B prefix in inner tmux session
+unbind C-b
+bind C-b send-prefix
+
+# set status bar at the top
+set-option -g status-position top
+
+# some pretty terminal images
+set-option -g status-fg white
+set-option -g status-bg black
+
+# set default shell to zsh
+set-option -g default-shell /usr/bin/zsh
+
+# vim key bindings for the win!
+set-option -g mode-keys vi
+
+# map vim movement keys as pane movement keys
+bind h select-pane -L
+bind j select-pane -D
+bind k select-pane -U
+bind l select-pane -R
+
+# resize panes using vim keys
+bind H resize-pane -L 5
+bind J resize-pane -D 5
+bind K resize-pane -U 5
+bind L resize-pane -R 5
