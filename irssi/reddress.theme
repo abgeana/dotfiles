@@ -30,138 +30,138 @@
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 #
 #######################################################################
- 
- 
+
+
 # default foreground color (%w) - -1 is the "default terminal color"
 default_color                           = "-1";
- 
+
 # print timestamp/servertag at the end of line, not at beginning
 info_eol                                = "false";
- 
+
 # these characters are automatically replaced with specified color
 # (dark grey by default)
 #replaces = { "[]=" = "%b$*%n"; };
- 
+
 abstracts                               = {
- 
+
   # text to insert at the beginning of each non-message line
   line_start                            = "";
- 
+
   # timestamp styling, nothing by default
   timestamp                             = "%K[%n$0-%K]%n";
- 
+
   # any kind of text that needs hilighting, default is to bold
   hilight                               = "%_$*%_";
- 
+
   # any kind of error message, default is bright red
   error                                 = "%R$*%n";
- 
+
   # channel name is printed
   channel                               = "$*";
- 
+
   # nick is printed
   nick                                  = "%_$*%_";
- 
+
   # nick host is printed
   nickhost                              = "%K[%n$*%K]%n";
- 
+
   # server name is printed
   server                                = "%_$*%_";
- 
+
   # some kind of comment is printed
   comment                               = "$*";
- 
+
   # reason for something is printed (part, quit, kick, ..)
   reason                                = "{comment $*}";
- 
+
   # highlighted nick/host is printed (joins)
   channick_hilight                      = "%W$*%w";
   chanhost_hilight                      = "{nickhost %c$*%w}";
- 
+
   # nick/host is printed (parts, quits, etc.)
   channick                              = "%w$*%w";
   chanhost                              = "{nickhost $*}";
- 
+
   # highlighted channel name is printed
   channelhilight                        = "%n$*%n";
- 
+
   # ban/ban exception/invite list mask is printed
   ban                                   = "%c$*%n";
- 
+
   # Actions
- 
+
   action_core                           = " %m            * %K|%W $*%n";
- 
+
   # generic one that's used by most actions
   action                                = "{action_core $*} ";
- 
+
   # own action, both private/public
   ownaction                             = "{action $*}";
- 
+
   # own action with target, both private/public
   ownaction_target                      = "{action_core $0}%W:%c$1%n ";
- 
+
   # private action sent by others
   pvtaction                             = "%G (*) $*%n ";
   pvtaction_query                       = "{action $*}";
- 
+
   # public action sent by others
   pubaction                             = "{action $*}";
- 
+
   # wallops
   wallop                                = "%b$*%n: ";
   wallop_nick                           = "%w$*";
   wallop_action                         = "%W * $*%n ";
- 
+
   # DCC
   dcc                                   = "           %w-%c-%C- %K|%G $*%n";
   dccfile                               = "%_$*%_";
- 
+
   # DCC chat, own msg/action
   dccownmsg                             = "%K[%r$0%b($1-%b)%w%K] ";
   dccownnick                            = "%R$*%n";
   dccownquerynick                       = "%G$*%n";
   dccownaction                          = "{action $*}";
   dccownaction_target                   = "{action_core $0}%W:%c$1%n ";
- 
+
   # DCC chat, others
   dccmsg                                = "%K[%G$1-%b(%g$0%b)%w%K]%n ";
   dccquerynick                          = "%G$*%w";
   dccaction                             = "%W (*dcc*) $*%w %|";
- 
+
   ##
   ## statusbar
   ##
- 
+
   # default background for all statusbars. You can also give
   # the default foreground color for statusbar items.
   sb_background                         = "%n%n";
- 
+
   # background for prompt / input line
   sb_prompt_bg                          = "%w";
   # background for info statusbar
   sb_info_bg                            = "%8";
- 
+
   # text at the beginning of statusbars. sb-item already puts
   # space there,so we don't use anything by default.
   sbstart                               = "%K-(";
   # text at the end of statusbars. Use space so that it's never
   # used for anything.
   sbend                                 = "%K)-";
- 
+
   topicsbstart                          = "{sbstart $*}";
   topicsbend                            = "{sbend $*}";
- 
+
   prompt                                = "%K[%w$tag%K/%m$cumode%c$*%K]%n ";
- 
- 
-  sb                                    = " %m-=%K[%w$*%K]%m=-%n";
+
+
+  sb                                    = " %r-=%w[ %w$*%w ]%r=-%n";
   sbmode                                = "%K(%n+%C$*%K)%n";
   sbaway                                = " %K(%MzZzZ%K)";
-  sbservertag                           = "%n:$0 (change with ^X)";
- 
+  sbservertag                           = "%n:$0";
+
   # activity in statusbar
- 
+
   # ',' separator
   sb_act_sep                            = "%K$*";
   # normal text
@@ -172,9 +172,9 @@ abstracts                               = {
   sb_act_hilight                        = "%M$*";
   # hilight with specified color, $0 = color, $1 = text
   sb_act_hilight_color                  = "$0$1-%w";
- 
+
   indent_default                        = "                       %K|%n ";
- };                                         
+ };
 formats                                 = {
   "fe-text"                             = {
     lastlog_too_long                    = "                      %w-%c-%C- %K| %W/LASTLOG %nwould print %C$0 %nlines.  Use the -force option to print all of them.";
@@ -194,7 +194,7 @@ formats                                 = {
     Window_info_scroll                  = "           %w-%c-%C- %K| %WWindow: %nWindow Scroll   : $0";
     paste_warning                       = "           %w-%c-%C- %K| %rWARNING: %nTrying to paste %C$0%n lines to %W$1%n.";
     paste_prompt                        = "%RPress Ctrl-K to continue, Ctrl-C to abort.";
- };                                         
+ };
   "fe-common/core"                      = {
     line_start_irssi                    = "";
     join                                = "           %w-%c-%C> %K|%n {channick_hilight $0} {chanhost_hilight $1} has joined %c{channel $2}";
@@ -217,7 +217,7 @@ formats                                 = {
     topic_unset                         = "           %w-%c-%C- %K| %nTopic unset by {nick $0} on {channel $1}";
     daychange                           = "                   %w-%c-%C- %K| %nDay changed to %%d %%b %%Y";
     your_nick_changed                   = "           %w-%c-%C- %K| %nYou're now known as %W$1";
- 
+
     pubmsg                              = "%b<%w$2\00313$[-11]0%b> %K|%n $1";
     own_msg_private_query               = "%m<%W$[-12]2%m> %K| %n$1";
     msg_private_query                   = "%b<%w$[-12]0%b>%K | %n$2";
@@ -227,7 +227,7 @@ formats                                 = {
     pubmsg_me_channel                   = "{pubmsgmenick $3 {menick $[-12]0}{msgchannel $1}}%K|%n $2";
     pubmsg_hilight                      = "{pubmsghinick $0 $3 $[-11]1}%K|%n $2";
     pubmsg_hilight_channel              = "{pubmsghinick $0 $4 $[-11]1{msgchannel $2}}%K|%n $3";
- 
+
     talking_with                        = "           %w-%c-%C- %K| %nYou are now talking with %W$0";
     refnum_too_low                      = "           %w-%c-%C- %K| %WWindow: %nWindow number must be greater than 1";
     error_server_sticky                 = "           %w-%c-%C- %K| %WWindow: %nWindow's server is sticky, use -unsticky option to change";
@@ -358,7 +358,7 @@ formats                                 = {
     talking_in                          = "      %b{fq Irssi}%n | %bYou are now talking in %W$0";
     not_in_channels                     = "   %b{fq Channels}%n | %bYou are not on any channels";
     current_channel                     = "   %b{fq Channels}%n | %bCurrent channel $0";
- };                                         
+ };
   "fe-common/irc"                       = {
     usermode_change                     = "           %w-%c-%C- %K| %nMode change %C{mode $0}%n for user {nick $1}";
     ircnet_added                        = "           %w-%c-%C- %K| %WIRCnet %W{hilight $0} %nsaved";
@@ -437,7 +437,7 @@ formats                                 = {
     ctcp_requested                      = "           %w-%c-%C- %K| %nGot %C$2 %nrequest from %W$0 %n($1) to $4: $3";
     ctcp_requested_unknown              = "           %w-%c-%C- %K| %nGot unknown %C$2%n request from %c$0 %n($1) to %n$4: $3";
     own_ctcp                            = "           %w-%c-%C- %K| %nSending %WCTCP %C$1 %nto %c$0: $2";
- };                                         
+ };
   "fe-common/perl"                      = {
     script_not_found                    = "           %w-%c-%C- %K| %rScript: %W{hilight $0} %nnot found";
     script_not_loaded                   = "           %w-%c-%C- %K| %rScript: %W{hilight $0} is not loaded";
@@ -448,8 +448,8 @@ formats                                 = {
     script_list_line                    = "           %w-%c-%C- %K| %n$[!20]0 $1";
     script_list_footer                  = "";
     script_error                        = "           %w-%c-%C- %K| %rScript: ERROR %n in script %W{hilight $0}:";
- };                                         
- 
+ };
+
   "fe-common/irc/notifylist"            = {
     notify_join                         = "           %w-%c-%C- %K| %WNotify: %W{hilight $0} %C($1@$2) [$3] %nhas connected to %C$4";
     notify_part                         = "           %w-%c-%C- %K| %WNotify: %W{hilight $0}%n has disconnected from %C$4";
@@ -460,5 +460,5 @@ formats                                 = {
     notify_offline                      = "           %w-%c-%C- %K| %WNotify: %WOffline: $0";
     notify_list                         = "           %w-%c-%C- %K| %n#$0: $1 $2 $3";
     notify_list_empty                   = "           %w-%c-%C- %K| %WNotify: %nThe notify list is empty";
- };                                         
- };                                         
+ };
+ };
