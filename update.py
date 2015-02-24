@@ -63,7 +63,7 @@ def main():
     zsh_updated = False
 
     i3wm = Config('i3 status bar', 'i3wm', \
-        [ File(j(home, '.i3status'), 'i3status'), \
+        [ File(j(home, '.i3status.conf'), 'i3status.conf'), \
           File(j(home, '.i3', 'config'), 'config'), \
           File(j(home, '.i3', 'i3wrapper.py'), 'i3wrapper.py'), \
           File(j(home, '.i3', 'net_ip.py'), 'net_ip.py') ])
@@ -85,6 +85,10 @@ def main():
         if arg == 'zsh' and not zsh_updated:
             zsh.update()
             zsh_updated = True
+
+        if arg == 'i3wm' and not i3wm_updated:
+            i3wm.update()
+            i3wm_updated = True
 
 if __name__ == '__main__':
     main()
