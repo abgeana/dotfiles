@@ -144,14 +144,14 @@ abstracts                               = {
 
   # text at the beginning of statusbars. sb-item already puts
   # space there,so we don't use anything by default.
-  sbstart                               = "       ";
+  sbstart                               = "%r>>> ";
   # text at the end of statusbars. Use space so that it's never
   # used for anything.
   sbend                                 = "";
 
   topicsbstart                          = "{sbstart $*}";
   topicsbend                            = "{sbend $*}";
-  prompt                                = "%r>>> %C$tag %r- %C$*%r >>> %n";
+  prompt                                = "%r>>>  [%C$tag%r] - [%C$*%r] >>> %n";
   sb                                    = " %r[ %w$* %r]%n";
   sbmode                                = "%r(%n+%C$*%r)%n";
   sbaway                                = " %r(%MzZzZ%r)";
@@ -215,11 +215,11 @@ formats                                 = {
     topic_unset                         = "           %w-%c-%C- %r| %nTopic unset by {nick $0} on {channel $1}";
     daychange                           = "                   %w-%c-%C- %r| %nDay changed to %%d %%b %%Y";
     your_nick_changed                   = "           %w-%c-%C- %r| %nYou're now known as %W$1";
-    pubmsg                              = "%b<%w$2\00313$[-11]0%b> %r|%n $1";
-    own_msg_private_query               = "%m<%W$[-12]2%m> %r| %n$1";
-    msg_private_query                   = "%b<%w$[-12]0%b>%r | %n$2";
-    own_msg                             = "%m<%W$2$[-11]0%m>%r | %n$1";
-    own_msg_private                     = "%G>%w$[-12]0%G<%r |%n $1-";
+    pubmsg                              = "%r<%w$2\00313$[-11]0%r> |%n $1";
+    own_msg_private_query               = "%r<%w$[-12]2%r> | %n$1";
+    msg_private_query                   = "%r<%w$[-12]0%r> | %n$2";
+    own_msg                             = "%r<%C$2$[-11]0%r> | %n$1"
+    own_msg_private                     = "%r<%w$[-12]0%r> | %n$1";
     pubmsg_me                           = "{pubmsgmenick {menick $[-12]0}}%r|%n $1";
     pubmsg_me_channel                   = "{pubmsgmenick $3 {menick $[-12]0}{msgchannel $1}}%r|%n $2";
     pubmsg_hilight                      = "{pubmsghinick $0 $3 $[-11]1}%r|%n $2";
