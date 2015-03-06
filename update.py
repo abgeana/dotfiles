@@ -46,7 +46,9 @@ def main():
     home = os.getenv('HOME')
 
     tmux = Config('tmux multiplexer', 'tmux', \
-        [ File(j(home, '.tmux.conf'), 'tmux.conf') ])
+        [ File(j(home, '.tmux.conf'), 'tmux.conf'), \
+          File(j(home, '.tmux.conf.ssh'), 'tmux.conf.ssh'), \
+          File(j(home, '.tmux.common'), 'tmux.common') ])
     tmux_updated = False
 
     ssh_tmux = Config('tmux ssh setup', 'tmux', \
