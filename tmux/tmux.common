@@ -1,0 +1,17 @@
+# set default shell to zsh
+set-option -g default-shell /usr/bin/zsh
+
+# vim key bindings for the win!
+set-option -g mode-keys vi
+
+# map vim movement keys as pane movement keys
+bind -r h select-pane -L
+bind -r j select-pane -D
+bind -r k select-pane -U
+bind -r l select-pane -R
+
+# resize panes using vim keys
+bind -r H resize-pane -L 5
+bind -r J resize-pane -D 5
+bind -r K resize-pane -U 5
+bind -r L resize-pane -R 5
