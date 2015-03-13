@@ -4,6 +4,11 @@ set-option -g default-shell /usr/bin/zsh
 # vim key bindings for the win!
 set-option -g mode-keys vi
 
+# vi-like visual select + yank in copy mode
+bind -t vi-copy v begin-selection
+bind -t vi-copy y copy-selection
+bind -t vi-copy C-v rectangle-toggle
+
 # map vim movement keys as pane movement keys
 bind -r h select-pane -L
 bind -r j select-pane -D
@@ -15,3 +20,9 @@ bind -r H resize-pane -L 5
 bind -r J resize-pane -D 5
 bind -r K resize-pane -U 5
 bind -r L resize-pane -R 5
+
+# better resizing
+setw -g aggressive-resize on
+
+# longer history
+set -g history-limit 10000
