@@ -44,53 +44,40 @@ class Config(object):
 
 def main():
     home = os.getenv('HOME')
+    configs = {}
+    updated_files = []
 
-    tmux = Config('tmux multiplexer', 'tmux', \
+    configs['tmux'] = Config('tmux multiplexer', 'tmux', \
         [ File(j(home, '.tmux.conf'), 'tmux.conf'), \
           File(j(home, '.tmux.conf.ssh'), 'tmux.conf.ssh'), \
           File(j(home, '.tmux.common'), 'tmux.common') ])
-    tmux_updated = False
 
-    ssh_tmux = Config('tmux ssh setup', 'tmux', \
+    configs['ssh-tmux'] = Config('tmux ssh setup', 'tmux', \
         [ File(j(home, '.tmux.conf.ssh'), 'tmux.conf.ssh'), \
           File(j(home, 'ssh-tmux'), 'ssh-tmux') ])
-    ssh_tmux_updated = False
 
-    vim = Config('vim editor', 'vim', \
+    configs['vim'] = Config('vim editor', 'vim', \
         [ File(j(home, '.vimrc'), 'vimrc') ])
-    vim_updated = False
 
-    zsh = Config('zsh shell', 'zsh', \
+    configs['zsh'] = Config('zsh shell', 'zsh', \
         [ File(j(home, '.zshrc'), 'zshrc') ])
-    zsh_updated = False
 
-    i3wm = Config('i3 status bar', 'i3wm', \
+    configs['i3wm'] = Config('i3 status bar', 'i3wm', \
         [ File(j(home, '.i3status.conf'), 'i3status.conf'), \
           File(j(home, '.i3', 'config'), 'config'), \
           File(j(home, '.i3', 'i3wrapper.py'), 'i3wrapper.py'), \
           File(j(home, '.i3', 'net_ip.py'), 'net_ip.py') ])
-    i3wm_updated = False
+
+    configs['irssi'] = Config('irssi IRC client', 'irssi', \
+        [ File(j(home, '.irssi', 'reddress.theme'), 'reddress.theme') ])
 
     for arg in sys.argv:
-        if arg == 'tmux' and not tmux_updated:
-            tmux.update()
-            tmux_updated = True
+        if arg in updated_files:
+            continue
+        updated_files.append(arg)
 
-        if arg == 'ssh-tmux' and not ssh_tmux_updated:
-            ssh_tmux.update()
-            ssh_tmux_updated = True
-
-        if arg == 'vim' and not vim_updated:
-            vim.update()
-            vim_updated = True
-
-        if arg == 'zsh' and not zsh_updated:
-            zsh.update()
-            zsh_updated = True
-
-        if arg == 'i3wm' and not i3wm_updated:
-            i3wm.update()
-            i3wm_updated = True
+        if arg in configs:
+            configs[arg].update()
 
 if __name__ == '__main__':
     main()
