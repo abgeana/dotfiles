@@ -1,8 +1,17 @@
+## set default terminal with 256 colors
+set-option -g default-terminal "screen-256color"
+
 # set default shell to zsh
 set-option -g default-shell /usr/bin/zsh
 
+# longer history
+set-option -g history-limit 10000
+
 # vim key bindings for the win!
 set-option -g mode-keys vi
+
+# better resizing
+set-window-option -g aggressive-resize on
 
 # vi-like visual select + yank in copy mode
 bind -t vi-copy v begin-selection
@@ -20,9 +29,3 @@ bind -r H resize-pane -L 5
 bind -r J resize-pane -D 5
 bind -r K resize-pane -U 5
 bind -r L resize-pane -R 5
-
-# better resizing
-setw -g aggressive-resize on
-
-# longer history
-set -g history-limit 10000
