@@ -70,6 +70,9 @@ set showcmd
 " when a tab is clossed, remove the buffer
 set nohidden
 
+" 256 colors
+set t_Co=256
+
 " set the colorscheme
 colorscheme darkblue
 
