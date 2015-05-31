@@ -34,10 +34,7 @@ alias ls='pwd; ls --color=tty'
 alias lss='ls --color=tty -Alh'
 alias sz='pwd; du -hs . ; for each in * ; do du -hs "$each" ; done'
 alias cd..="cd .."
-alias sex="sudo /etc/init.d/slim start"
-alias shutdown="sudo shutdown -h now"
-alias hibernate="sudo pm-hibernate"
-alias sync="sudo sync"
+alias tmux='tmux -2'
 
 # System variables
 
