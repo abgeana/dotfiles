@@ -1,0 +1,19 @@
+# use vi keybindings
+set editing-mode vi
+set keymap vi
+
+# disable the bell
+set bell-style none
+
+# meta characters interpretation
+set input-meta on
+set output-meta on
+set convert-meta off
+
+# auto completion stuff
+set completion-ignore-case on
+set mark-directories on
+set mark-symlinked-directories on
+set show-all-if-ambiguous on
+set show-all-if-unmodified on
+set skip-completed-text on
