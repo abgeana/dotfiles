@@ -20,8 +20,7 @@ compinit
 ###########################################################
 
 # Colors
-autoload -U colors
-colors
+autoload -U colors && colors
 setopt prompt_subst
 
 # Settings to make delete, home, end keys work in tmux
@@ -36,21 +35,19 @@ alias sz='pwd; du -hs . ; for each in * ; do du -hs "$each" ; done'
 alias cd..="cd .."
 alias tmux='tmux -2'
 
-# System variables
-
 ###########################################################
 # The PROMPT variable
 ###########################################################
 
-COLOR_USER='red'
-COLOR_ROOT='green'
-COLOR_HOST='white'
-COLOR_EXTRA='green'
+COLOR_USER='196'
+COLOR_ROOT='51'
+COLOR_EXTRA='118'
+COLOR_HOST='227'
 
 if [[ $(whoami) == 'root' ]]; then
-    export PROMPT="%{$fg[$COLOR_ROOT]%} %n %{$fg[$COLOR_EXTRA]%} @ %{$fg[$COLOR_HOST]%} %m %{$fg[$COLOR_EXTRA]%}: %~ %{$reset_color%} ";
+    export PROMPT="%F{ $COLOR_ROOT } %n %F{ $COLOR_EXTRA } @ %F{ $COLOR_HOST } %m %F{ $COLOR_EXTRA }: %~ %f ";
 else
-    export PROMPT="%{$fg[$COLOR_USER]%} %n %{$fg[$COLOR_EXTRA]%} @ %{$fg[$COLOR_HOST]%} %m %{$fg[$COLOR_EXTRA]%}: %~ %{$reset_color%} ";
+    export PROMPT="%F{ $COLOR_USER } %n %F{ $COLOR_EXTRA } @ %F{ $COLOR_HOST } %m %F{ $COLOR_EXTRA }: %~ %f ";
 fi
 
 ###########################################################
