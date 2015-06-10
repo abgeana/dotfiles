@@ -49,9 +49,8 @@ retab               " when opening a file, convert tab chars to spaces
 set autoindent
 set smartindent
 
-" to disable autoindentation and autocommenting press F7, to enable it back press F8
-:nnoremap <F7> :setl formatoptions-=c formatoptions-=r formatoptions-=o noai nocin nosi inde=<CR>
-:nnoremap <F8> :setl formatoptions+=c formatoptions+=r formatoptions+=o ai cin si inde=    <CR>
+" highlight occurences of word under cursor
+map <F1> :setl hlsearch<CR>*#
 
 " searching
 set incsearch               " incremental search
@@ -59,7 +58,14 @@ set ignorecase              " search ignoring case
 set hlsearch                " highlight the search
 set showmatch               " show matching bracket
 set diffopt=filler,iwhite   " ignore all whitespace and sync
-:nnoremap <F3> :setl hlsearch!<CR>
+map <F2> :setl hlsearch!<CR>
+
+" copy all text from the file
+map <F3> :%y+<CR>
+
+" to disable autoindentation and autocommenting press F7, to enable it back press F8
+map <F4> :setl formatoptions-=c formatoptions-=r formatoptions-=o noai nocin nosi inde=<CR>
+map <F5> :setl formatoptions+=c formatoptions+=r formatoptions+=o ai cin si inde=    <CR>
 
 " show line numbers
 set number
@@ -87,9 +93,6 @@ set noerrorbells
 
 " enter command mode with ; instead of :
 nore ; :
-
-" copy all text from the file
-:nnoremap <F2> :%y+<CR>
 
 " cursor moves as expected with wrapped lines
 map <silent> k gk
@@ -123,9 +126,9 @@ function MyTabLine()
                 " set page number string
                 let s .= t + 1 . ' '
                 " get buffer names and statuses
-                let n = ''      "temp string for buffer names while we loop and check buftype
+                let n = ''      " temp string for buffer names while we loop and check buftype
                 let m = 0       " &modified counter
-                let bc = len(tabpagebuflist(t + 1))     "counter to avoid last ' '
+                let bc = len(tabpagebuflist(t + 1))     " counter to avoid last ' '
                 " loop through each buffer in a tab
                 for b in tabpagebuflist(t + 1)
                         " buffer types: quickfix gets a [Q], help gets [H]{base fname}
