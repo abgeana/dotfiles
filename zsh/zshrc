@@ -34,6 +34,7 @@ alias lss='ls --color=tty -Alh'
 alias sz='pwd; du -hs . ; for each in * ; do du -hs "$each" ; done'
 alias cd..="cd .."
 alias tmux='tmux -2'
+alias colors='for i in {0..255}; do echo -e "\e[38;05;${i}m${i}"; done | column -c 80 -s " "; echo -e "\e[m"'
 
 ###########################################################
 # The PROMPT variable
@@ -42,7 +43,15 @@ alias tmux='tmux -2'
 COLOR_USER='196'
 COLOR_ROOT='51'
 COLOR_EXTRA='118'
-COLOR_HOST='227'
+
+if [[ $(hostname) == 'bendis' ]]; then
+    COLOR_HOST='156'
+elif [[ $(hostname) == 'gebeleizis' ]]; then
+    COLOR_HOST='227'
+elif [[ $(hostname) == 'atlas' ]]; then
+    COLOR_HOST='57'
+fi
+export TMUX_COLOR='colour'$COLOR_HOST
 
 if [[ $(whoami) == 'root' ]]; then
     export PROMPT="%F{ $COLOR_ROOT } %n %F{ $COLOR_EXTRA } @ %F{ $COLOR_HOST } %m %F{ $COLOR_EXTRA }: %~ %f ";
