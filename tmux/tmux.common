@@ -2,7 +2,7 @@
 set-option -g default-terminal "screen-256color"
 
 # set default shell to zsh
-set-option -g default-shell /usr/bin/zsh
+set-option -g default-shell $ZSH_BINARY
 
 # longer history
 set-option -g history-limit 10000
