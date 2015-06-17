@@ -47,7 +47,7 @@ COLOR_USER='196'
 COLOR_ROOT='51'
 COLOR_EXTRA='118'
 
-if [[ $(hostname) == 'bendis' ]]; then
+if [[ $(hostname) == 'bendis' || $(hostname) == 'heretic' ]]; then
     COLOR_HOST='156'
 elif [[ $(hostname) == 'gebeleizis' ]]; then
     COLOR_HOST='227'
