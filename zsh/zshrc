@@ -23,11 +23,6 @@ compinit
 autoload -U colors && colors
 setopt prompt_subst
 
-# Settings to make delete, home, end keys work in tmux
-bindkey "^[[5~" beginning-of-line
-bindkey "^[[6~" end-of-line
-bindkey "^[[3~" delete-char
-
 # Aliases
 alias ls='pwd; ls --color=tty'
 alias lss='ls --color=tty -Alh'
