@@ -38,6 +38,22 @@ augroup JumpCursorOnEdit
             \   endif
 augroup END
 
+" escape sequences for urxvt (can be obtained with cat)
+" also ontopic is http://vim.wikia.com/wiki/Mapping_fast_keycodes_in_terminal_Vim
+" do not just type, instead enter Insert mode and type Ctrl-v followed by key stroke
+set <F1>=[11~
+set <F2>=[12~
+set <F3>=[13~
+set <F4>=[14~
+set <F5>=[15~
+set <F6>=[17~
+set <F7>=[18~
+set <F8>=[19~
+set <F9>=[20~
+set <F10>=[21~
+set <F11>=[23~
+set <F12>=[24~
+
 " tabs and spaces
 set expandtab       " insert space chars whenever TAB is pressed
 set tabstop=4       " control the number of space chars inserted when TAB is pressed
