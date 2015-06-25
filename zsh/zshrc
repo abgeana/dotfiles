@@ -32,7 +32,18 @@ alias tmux='tmux -2'
 alias colors='for i in {0..255}; do echo -e "\e[38;05;${i}m${i}"; done | column -c 80 -s " "; echo -e "\e[m"'
 
 # Environment
-export ZSH_BINARY=$(which zsh) # needed for .tmux.common
+export ZSH_BINARY=$(which zsh)  # needed for .tmux.common
+export GPG_TTY=$(tty)           # needed for gpg-agent; see man page
+
+###########################################################
+# gpg-agent-info setup
+###########################################################
+
+if [ -f "${HOME}/.gpg-agent-info" ]; then
+    . "${HOME}/.gpg-agent-info"
+    export GPG_AGENT_INFO
+    export SSH_AUTH_SOCK
+fi
 
 ###########################################################
 # The PROMPT variable
