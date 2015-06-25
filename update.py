@@ -78,6 +78,10 @@ def main():
         [ File(j(home, '.Xresources'), 'Xresources'), \
           File(j(home, '.Xsession'), 'Xsession') ])
 
+    configs['gpg'] = Config('GnuPG', 'gnupg', \
+        [ File(j(home, '.gnupg', 'gpg-agent.conf'), 'gpg-agent.conf'), \
+          File(j(home, '.gnupg', 'gpg.conf'), 'gpg.conf') ])
+
     for arg in sys.argv:
         if arg in updated_files:
             continue
