@@ -71,11 +71,12 @@ def main():
     configs['irssi'] = Config('irssi IRC client', 'irssi', \
         [ File(j(home, '.irssi', 'reddress.theme'), 'reddress.theme') ])
 
-    configs['inputrc'] = Config('inputrc file for all software that support it', 'inputrc', \
+    configs['inputrc'] = Config('inputrc', 'inputrc', \
         [ File(j(home, '.inputrc'), 'inputrc') ])
 
-    configs['xresources'] = Config('Xresources for X11 based software', 'Xresources', \
-        [ File(j(home, '.Xresources'), 'Xresources') ])
+    configs['x11'] = Config('X11', 'X11', \
+        [ File(j(home, '.Xresources'), 'Xresources'), \
+          File(j(home, '.Xsession'), 'Xsession') ])
 
     for arg in sys.argv:
         if arg in updated_files:
