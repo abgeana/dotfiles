@@ -75,8 +75,7 @@ def main():
         [ File(j(home, '.inputrc'), 'inputrc') ])
 
     configs['x11'] = Config('X11', 'X11', \
-        [ File(j(home, '.Xresources'), 'Xresources'), \
-          File(j(home, '.Xsession'), 'Xsession') ])
+        [ File(j(home, '.Xresources'), 'Xresources') ])
 
     configs['gpg'] = Config('GnuPG', 'gnupg', \
         [ File(j(home, '.gnupg', 'gpg-agent.conf'), 'gpg-agent.conf'), \

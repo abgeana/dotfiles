@@ -1,2 +1,0 @@
-# start gpg-agent for the current X11 session
-gpg-agent --daemon --enable-ssh-support --write-env-file "${HOME}/.gpg-agent-info"
