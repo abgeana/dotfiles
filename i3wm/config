@@ -10,14 +10,12 @@ font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
 
 # switch langauges
 bindsym $mod+F1 exec /bin/ch_kblayout.sh
-bindcode $mod+164 exec /bin/ch_kblayout.sh # this is a special key on my keyboard
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec terminator
-bindcode 164 exec terminator # this is a special key on my keyboard
+bindsym $mod+Return exec urxvt
 
 # lock the screen
 bindsym $mod+Shift+x exec "i3lock -d"
