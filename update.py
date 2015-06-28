@@ -93,7 +93,7 @@ def main():
             update_list.append(sys.argv[idx])
         update_list = set(update_list)
     else:
-        update_list.extend(configs.keys)
+        update_list.extend(configs.keys())
 
     for item in update_list:
         if item in configs:
