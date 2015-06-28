@@ -28,6 +28,8 @@ URxvt*boldItalicFont:                   xft:Terminus:size=8
 URxvt*imFont:                           xft:Terminus:size=8
 
 ! copy/paste and make sure perl-ext-common contains the clipboard plugin
+! this requires the clipboard extension to be loaded (see also perl-ext-common)
+! this extension can be found at https://raw.githubusercontent.com/muennich/urxvt-perls/master/clipboard
 URxvt*iso14755:                         false
 URxvt*iso14755_52:                      false
 URxvt*keysym.Shift-Control-C:           perl:clipboard:copy
