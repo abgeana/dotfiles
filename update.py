@@ -31,10 +31,14 @@ class Config(object):
         print()
 
     def _download_file(self, local, remote):
+        if self._folder is not None:
+            remote_url = Config._base_url + self._folder + '/' + remote
+        else:
+            remote_url = Config._base_url + '/' + remote
         return self._exec([ \
             'curl', '-o', \
             local, \
-            Config._base_url + self._folder + '/' + remote \
+            remote_url \
         ])
 
     def _exec(self, cmd):
@@ -45,7 +49,10 @@ class Config(object):
 def main():
     home = os.getenv('HOME')
     configs = {}
-    updated_files = []
+    update_list = []
+
+    configs['self'] = Config('update script', None, \
+        [ File(os.path.abspath(sys.argv[0]), 'update.py') ])
 
     configs['tmux'] = Config('tmux multiplexer', 'tmux', \
         [ File(j(home, '.tmux.conf'), 'tmux.conf'), \
@@ -81,13 +88,16 @@ def main():
         [ File(j(home, '.gnupg', 'gpg-agent.conf'), 'gpg-agent.conf'), \
           File(j(home, '.gnupg', 'gpg.conf'), 'gpg.conf') ])
 
-    for arg in sys.argv:
-        if arg in updated_files:
-            continue
-        updated_files.append(arg)
+    if len(sys.argv) > 1:
+        for idx in range( 1, len(sys.argv) ):
+            update_list.append(sys.argv[idx])
+        update_list = set(update_list)
+    else:
+        update_list.extend(configs.keys)
 
-        if arg in configs:
-            configs[arg].update()
+    for item in update_list:
+        if item in configs:
+            configs[item].update()
 
 if __name__ == '__main__':
     main()
