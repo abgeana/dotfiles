@@ -88,6 +88,9 @@ def main():
         [ File(j(home, '.gnupg', 'gpg-agent.conf'), 'gpg-agent.conf'), \
           File(j(home, '.gnupg', 'gpg.conf'), 'gpg.conf') ])
 
+    configs['ipython'] = Config('ipython interactive python shell', 'ipython', \
+        [ File(j(home, '.ipython', 'profile_default', 'ipython_config.py'), 'ipython_config.py') ])
+
     if len(sys.argv) > 1:
         for idx in range( 1, len(sys.argv) ):
             update_list.append(sys.argv[idx])
