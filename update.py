@@ -20,7 +20,7 @@ class Config(object):
         self._files = files
 
     def update(self):
-        print('Updating files for %s...' % self._program)
+        print('Updating %s...' % self._program)
         for f in self._files:
             print('%s ' % f.local, end = '')
             ret = self._download_file(f.local, f.remote)
