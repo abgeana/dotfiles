@@ -60,6 +60,8 @@ elif [[ $(hostname) == 'gebeleizis' ]]; then
     COLOR_HOST='227'
 elif [[ $(hostname) == 'atlas' ]]; then
     COLOR_HOST='124'
+elif [[ $(hostname) == 'oryon' ]]; then
+    COLOR_HOST='21'
 else
     COLOR_HOST='232'
 fi
