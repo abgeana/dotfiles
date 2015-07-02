@@ -1,4 +1,4 @@
-## set default terminal with 256 colors
+# set default terminal with 256 colors
 set-option -g default-terminal "screen-256color"
 
 # set default shell to zsh
@@ -29,3 +29,9 @@ bind -r H resize-pane -L 5
 bind -r J resize-pane -D 5
 bind -r K resize-pane -U 5
 bind -r L resize-pane -R 5
+
+# put X11 clipboard contents into tmux paste buffer
+bind C-p run "xclip -o | tmux load-buffer -; tmux paste-buffer"
+# move tmux copy buffer into X11 clipboard
+bind C-y run "tmux save-buffer - | xclip -i -selection clipboard"
+
