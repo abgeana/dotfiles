@@ -31,7 +31,6 @@ bind -r K resize-pane -U 5
 bind -r L resize-pane -R 5
 
 # put X11 clipboard contents into tmux paste buffer
-bind C-p run "xclip -o | tmux load-buffer -; tmux paste-buffer"
+bind C-p run "xsel -ob | tmux load-buffer -; tmux paste-buffer"
 # move tmux copy buffer into X11 clipboard
-bind C-y run "tmux save-buffer - | xclip -i -selection clipboard"
-
+bind C-y run "tmux save-buffer - | xsel -ib; tmux display-message 'Moved save buffer to X clipboard'"
