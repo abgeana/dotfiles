@@ -51,7 +51,9 @@ save_prev_command() {
     # $1 line as it was written
     # $2 line with alias expanded and truncated with a certain size limit
     # $3 full line with alias expanded
-    PREVIOUS_COMMAND=$CURRENT_COMMAND
+    if [[ $CURRENT_COMMAND != 'fuck' ]]; then
+        PREVIOUS_COMMAND=$CURRENT_COMMAND
+    fi
     CURRENT_COMMAND=$2
 }
 add-zsh-hook preexec save_prev_command
