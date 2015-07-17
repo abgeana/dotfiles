@@ -1,30 +1,24 @@
 ###########################################################
-# Lines configured by zsh-newuser-install
+# General customization
 ###########################################################
 
-HISTFILE=~/.histfile
-HISTSIZE=1000
-SAVEHIST=1000
-
-# Vim mode!
-bindkey -v
-
-# End of lines configured by zsh-newuser-install
-# The following lines were added by compinstall
 zstyle :compinstall filename '/home/alegen/.zshrc'
 autoload -Uz compinit
 compinit
 
-###########################################################
-# Simple one-liners
-###########################################################
+# No command history
+unset HISTFILE
+unset HISTSIZE
+
+# Vim mode!
+bindkey -v
 
 # Colors
 autoload -U colors && colors
 setopt prompt_subst
 
 # Aliases
-alias ls='pwd; ls --color=tty'
+alias ls='ls --color=tty'
 alias lss='ls --color=tty -Alh'
 alias sz='pwd; du -hs . ; for each in * ; do du -hs "$each" ; done'
 alias cd..="cd .."
@@ -37,10 +31,39 @@ export ZSH_BINARY=$(which zsh)  # needed for .tmux.common
 export GPG_TTY=$(tty)           # needed for gpg-agent; see man page
 
 ###########################################################
+# Functions
+###########################################################
+
+# This function permits the command 'lsw $arg' which performs 'ls -l $(which $arg)'
+lsw() {
+    local w=$(which $1)
+    if [[ $w == "$1" ]]; then # if which fails, $w becomes first word in output
+        echo "$w not found"
+    else
+        ls -l $w
+    fi
+}
+
+# This command runs the previous command with sudo in front of it (not my original idea...)
+fu() {
+    eval sudo !!
+}
+
+# This function will add "sudo " before the command when pressing Alt-S
+function insert_sudo {
+    if [[ $BUFFER != "sudo "* ]]; then
+        BUFFER="sudo $BUFFER"
+        CURSOR+=5
+    fi
+}
+zle -N insert-sudo insert_sudo
+bindkey "^[s" insert-sudo
+
+###########################################################
 # gpg-agent-info setup
 ###########################################################
 
-if [ -f "${HOME}/.gpg-agent-info" ]; then
+if [[ -f "${HOME}/.gpg-agent-info" ]]; then
     . "${HOME}/.gpg-agent-info"
     export GPG_AGENT_INFO
     export SSH_AUTH_SOCK
@@ -68,21 +91,9 @@ fi
 export TMUX_COLOR='colour'$COLOR_HOST
 
 if [[ $(whoami) == 'root' ]]; then
-    export PROMPT="%F{ $COLOR_ROOT } %n %F{ $COLOR_EXTRA } @ %F{ $COLOR_HOST } %m %F{ $COLOR_EXTRA }: %~ %f ";
+    export PROMPT="%F{ $COLOR_ROOT } %n %F{ $COLOR_EXTRA } @ %F{ $COLOR_HOST } %m %F{ $COLOR_EXTRA }: %~ %f "
 else
-    export PROMPT="%F{ $COLOR_USER } %n %F{ $COLOR_EXTRA } @ %F{ $COLOR_HOST } %m %F{ $COLOR_EXTRA }: %~ %f ";
+    export PROMPT="%F{ $COLOR_USER } %n %F{ $COLOR_EXTRA } @ %F{ $COLOR_HOST } %m %F{ $COLOR_EXTRA }: %~ %f "
 fi
 
-###########################################################
-# Functions
-###########################################################
 
-# This function will add "sudo " before the command when pressing Alt-S
-function insert_sudo {
-    if [[ $BUFFER != "sudo "* ]]; then
-        BUFFER="sudo $BUFFER";
-        CURSOR+=5;
-    fi
-}
-zle -N insert-sudo insert_sudo
-bindkey "^[s" insert-sudo
