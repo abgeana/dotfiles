@@ -66,7 +66,7 @@ fw() {
     if [[ $(id -u) == 0 ]]; then
         eval "/root/firewall-$(hostname).sh $@"
     else
-        eval "Only root can manipulate the firewall..."
+        echo 'Only root can manipulate the firewall...'
     fi
 }
 
@@ -112,7 +112,7 @@ else
 fi
 export TMUX_COLOR='colour'$COLOR_HOST
 
-if [[ $(whoami) == 'root' ]]; then
+if [[ $(id -u) == 0 ]]; then
     export PROMPT="%F{ $COLOR_ROOT } %n %F{ $COLOR_EXTRA } @ %F{ $COLOR_HOST } %m %F{ $COLOR_EXTRA }: %~ %f "
 else
     export PROMPT="%F{ $COLOR_USER } %n %F{ $COLOR_EXTRA } @ %F{ $COLOR_HOST } %m %F{ $COLOR_EXTRA }: %~ %f "
