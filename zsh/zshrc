@@ -22,9 +22,9 @@ setopt prompt_subst
 alias ls='ls --color=tty'
 alias lss='ls --color=tty -Alh'
 alias sz='pwd; du -hs . ; for each in * ; do du -hs "$each" ; done'
-alias cd..="cd .."
+alias cd..='cd ..'
 alias tmux='tmux -2'
-alias colors='for i in {0..255}; do echo -e "\e[38;05;${i}m${i}"; done | column -c 80 -s " "; echo -e "\e[m"'
+alias show-colors='for i in {0..255}; do echo -e "\e[38;05;${i}m${i}"; done | column -c 80 -s " "; echo -e "\e[m"'
 alias dhcp='dhclient -r && dhclient'
 
 # Environment
@@ -60,6 +60,14 @@ add-zsh-hook preexec save_prev_command
 
 fuck() {
     eval "sudo $PREVIOUS_COMMAND"
+}
+
+fw() {
+    if [[ $(id -u) == 0 ]]; then
+        eval "/root/firewall-$(hostname).sh $@"
+    else
+        eval "Only root can manipulate the firewall..."
+    fi
 }
 
 # This function will add "sudo " before the command when pressing Alt-S
