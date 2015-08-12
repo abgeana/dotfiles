@@ -26,6 +26,7 @@ alias cd..='cd ..'
 alias tmux='tmux -2'
 alias show-colors='for i in {0..255}; do echo -e "\e[38;05;${i}m${i}"; done | column -c 80 -s " "; echo -e "\e[m"'
 alias dhcp='dhclient -r && dhclient'
+alias cat='cat -v'
 
 # Environment
 export ZSH_BINARY=$(which zsh)  # needed for .tmux.common
