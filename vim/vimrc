@@ -65,23 +65,20 @@ retab               " when opening a file, convert tab chars to spaces
 set autoindent
 set smartindent
 
-" highlight occurences of word under cursor
-map <F1> :setl hlsearch<CR>*#
-
 " searching
 set incsearch               " incremental search
 set ignorecase              " search ignoring case
 set hlsearch                " highlight the search
 set showmatch               " show matching bracket
 set diffopt=filler,iwhite   " ignore all whitespace and sync
+
+" F1 to highlight occurences of word under cursor and F2 to disable highlighting
+map <F1> :setl hlsearch<CR>*#
 map <F2> :setl hlsearch!<CR>
 
-" copy all text from the file
-map <F3> :%y+<CR>
-
-" to disable autoindentation and autocommenting press F7, to enable it back press F8
-map <F4> :setl formatoptions-=c formatoptions-=r formatoptions-=o noai nocin nosi inde=<CR>
-map <F5> :setl formatoptions+=c formatoptions+=r formatoptions+=o ai cin si inde=    <CR>
+" to disable autoindentation and autocommenting press F3, to enable it back press F4
+map <F3> :set formatoptions-=cro noautoindent nosmartindent inde=<CR>
+map <F4> :set formatoptions+=cro autoindent smartindent inde=    <CR>
 
 " show line numbers
 set number
