@@ -1,4 +1,4 @@
-alegen-configs
+alegen-env
 ==============
 
 Configuration files for different applications that I use. Feel free to use them yourself.
