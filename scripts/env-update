@@ -51,8 +51,8 @@ def main():
     configs = {}
     update_list = []
 
-    configs['self'] = Config('update script', None, \
-        [ File(os.path.abspath(sys.argv[0]), 'update.py') ])
+    configs['self'] = Config('update script', 'scripts', \
+        [ File(os.path.abspath(sys.argv[0]), 'env-update') ])
 
     configs['tmux'] = Config('tmux multiplexer', 'tmux', \
         [ File(j(home, '.tmux.conf'), 'tmux.conf'), \
