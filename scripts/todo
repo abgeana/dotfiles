@@ -5,33 +5,19 @@ set -o pipefail
 # manipulate the command line arguments
 ARGS=("$@")
 
-# load the config file or use sane defaults
+# load the config file
 if [[ -f ~/.todo.conf ]]; then
     source ~/.todo.conf
+    # this config file may contain
+    # TODO_DIR which is the directory for keeping tasks
+    # GIT_USER the username used by ssh for git purposes
+    # GIT_KEY the ssh key for git purposes
+    # this script uses only TODO_DIR
 fi
 
 # load defaults for options missing in .todo.conf
 if [[ -z $TODO_DIR ]]; then
     TODO_DIR=~/todos
-fi
-
-# some general initialization
-
-GIT_CMD="$(which git) --git-dir=$TODO_DIR/.git --work-tree=$TODO_DIR"
-export GIT_SSH="$(readlink -f ${0%/*})/todo-ssh"
-
-if [[ ! -d $TODO_DIR ]]; then
-    mkdir "$TODO_DIR" &> /dev/null
-    if [[ $? != 0 ]]; then
-        echo "Could not read or create directory for tasks in $TODO_DIR"
-    else
-        eval $GIT_CMD init &> /dev/null
-    fi
-else
-    eval $GIT_CMD rev-parse &> /dev/null
-    if [[ $? -ne 0 ]]; then
-        eval $GIT_CMD init &> /dev/null
-    fi
 fi
 
 # function for loading all tasks
@@ -58,11 +44,7 @@ function load_tasks() {
     done <<< "$(ls -Alr $TODO_DIR)"
 }
 
-# initialize TASKS
-TASKS=()
-load_tasks
-
-# print all tasks on the screen
+# function to print all tasks on the screen
 function list_tasks() {
     echo 'Your standing list of tasks is:'
     for ((i=1; i<=$#TASKS; i++ )) do
@@ -73,6 +55,7 @@ function list_tasks() {
     done
 }
 
+# function to add new task
 function add_task() {
     # ask for user input regarding the new task
     echo "Adding new task to $TODO_DIR"
@@ -132,6 +115,28 @@ function git_add_commit_push() {
     eval $GIT_CMD push &> /dev/null
 }
 
+# some general initialization
+GIT_CMD="$(which git) --git-dir=$TODO_DIR/.git --work-tree=$TODO_DIR"
+export GIT_SSH="$(readlink -f ${0%/*})/todo-ssh"
+
+TASKS=()
+load_tasks
+
+if [[ ! -d $TODO_DIR ]]; then
+    mkdir "$TODO_DIR" &> /dev/null
+    if [[ $? != 0 ]]; then
+        echo "Could not read or create directory for tasks in $TODO_DIR"
+    else
+        eval $GIT_CMD init &> /dev/null
+    fi
+else
+    eval $GIT_CMD rev-parse &> /dev/null
+    if [[ $? -ne 0 ]]; then
+        eval $GIT_CMD init &> /dev/null
+    fi
+fi
+
+# script logic
 if [[ $#ARGS == 0 ]]; then
     list_tasks
 else

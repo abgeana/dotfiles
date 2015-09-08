@@ -3,6 +3,11 @@
 # load the config file or use sane defaults
 if [[ -f ~/.todo.conf ]]; then
     source ~/.todo.conf
+    # this config file may contain
+    # TODO_DIR which is the directory for keeping tasks
+    # GIT_USER the username used by ssh for git purposes
+    # GIT_KEY the ssh key for git purposes
+    # this script uses only GIT_USER and GIT_KEY
 fi
 
 # load defaults for options missing in .todo.conf
