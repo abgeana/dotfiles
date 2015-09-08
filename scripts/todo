@@ -107,12 +107,14 @@ function remove_task() {
 # functions which run git commands
 function git_pull() {
     eval $GIT_CMD pull &> /dev/null
+    echo 'Updated tasks from git repository'
 }
 
 function git_add_commit_push() {
     eval $GIT_CMD add -A &> /dev/null
     eval $GIT_CMD commit -m \"commit $(date '+%Y-%m-%d %H:%M:%S')\" &> /dev/null
     eval $GIT_CMD push &> /dev/null
+    echo 'Saved tasks to git repository'
 }
 
 # some general initialization
