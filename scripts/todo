@@ -127,9 +127,9 @@ function git_pull() {
 }
 
 function git_add_commit_push() {
-    eval $GIT_CMD add -A
-    eval $GIT_CMD commit -m \"commit $(date '+%Y-%m-%d %H:%M:%S')\"
-    eval $GIT_CMD push
+    eval $GIT_CMD add -A &> /dev/null
+    eval $GIT_CMD commit -m \"commit $(date '+%Y-%m-%d %H:%M:%S')\" &> /dev/null
+    eval $GIT_CMD push &> /dev/null
 }
 
 if [[ $#ARGS == 0 ]]; then
