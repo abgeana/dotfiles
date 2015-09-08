@@ -1,0 +1,16 @@
+#!/usr/bin/zsh
+
+# load the config file or use sane defaults
+if [[ -f ~/.todo.conf ]]; then
+    source ~/.todo.conf
+fi
+
+# load defaults for options missing in .todo.conf
+if [[ -z $GIT_USER ]]; then
+    GIT_USER=alegen
+fi
+if [[ -z $GIT_KEY ]]; then
+    GIT_KEY=~/.ssh/id_rsa
+fi
+
+exec ssh -l $GIT_USER -i $GIT_KEY $@
