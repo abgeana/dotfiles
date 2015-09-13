@@ -1,0 +1,73 @@
+# InfoSec
+http://www.exploit-db.com/feed/ "InfoSec"
+http://resources.infosecinstitute.com/feed/ "InfoSec"
+http://blog.defensecode.com/feeds/posts/default?alt=rss "InfoSec"
+http://www.openrce.org/rss/feeds/blogs "InfoSec"
+http://www.openrce.org/rss/feeds/articles "InfoSec"
+http://news.hitb.org/rss.xml "InfoSec"
+http://feeds.feedburner.com/GoogleOnlineSecurityBlog "InfoSec"
+http://krebsonsecurity.com/feed/ "InfoSec"
+http://blog.osvdb.org/feed/ "InfoSec"
+https://nakedsecurity.sophos.com/feed/ "InfoSec"
+http://news.softpedia.com/newsRSS/Spyware-Threats-76.xml "InfoSec"
+http://www.pcworld.com/tag/security/index.rss "InfoSec"
+https://www.virusbtn.com/feeds/news.rdf "InfoSec"
+http://rss.packetstormsecurity.com/news/ "InfoSec"
+http://news.softpedia.com/newsRSS/Weekly-Roundup-164.xml "InfoSec"
+http://news.softpedia.com/newsRSS/Security-5.xml "InfoSec"
+http://feeds.arstechnica.com/arstechnica/security?format=xml "InfoSec"
+https://www.schneier.com/blog/atom.xml "InfoSec"
+
+# InfoSec Company Blogs
+https://srlabs.de/?feed=rss2 "InfoSec Company Blogs"
+http://www.symantec.com/connect/item-feeds/blog/2261/feed/all/all/all "InfoSec Company Blogs"
+http://feeds.feedburner.com/SpiderlabsAnterior "InfoSec Company Blogs"
+http://www.contextis.co.uk/resources/blog/blog.xml "InfoSec Company Blogs"
+http://blog.fox-it.com/feed/ "InfoSec Company Blogs"
+
+# Security Advisories
+http://www.exploit-db.com/rss.xml "Security Advisories"
+http://www.gentoo.org/rdf/en/glsa-index.rdf "Security Advisories"
+http://rss.packetstormsecurity.com/files/os/windows/ "Security Advisories"
+http://www.debian.org/security/dsa "Security Advisories"
+http://rss.packetstormsecurity.com/files/ "Security Advisories"
+
+# Talks
+http://feeds.feedburner.com/rsavisionvideos "Talks"
+http://feeds.feedburner.com/tedtalks_video "Talks"
+http://feeds.feedburner.com/tedtalks_audio "Talks"
+http://tedxtalks.ted.com/feed/magnify.rss/recent "Talks"
+http://feeds.feedburner.com/rsaevents "Talks"
+http://feeds.feedburner.com/rsaaudio "Talks"
+http://distrowatch.org/news/dww.xml "IT News"
+
+# IT News
+http://feeds.feedburner.com/codinghorror "IT News"
+http://www.linuxvoice.com/feed/ "IT News"
+http://www.debian.org/News/weekly/dwn.en.rdf "IT News"
+http://news.softpedia.com/newsRSS/Linux-7.xml "IT News"
+http://distrowatch.org/news/dw.xml "IT News"
+http://rss.slashdot.org/Slashdot/slashdot "IT News"
+http://lifehacker.com/index.xml "IT News"
+
+# FunFun
+http://feeds.feedburner.com/oatmealfeed "FunFun"
+http://www.reddit.com/r/asknetsec/.rss "FunFun"
+http://www.reddit.com/r/blackhat/.rss "FunFun"
+http://www.reddit.com/r/onions/.rss "FunFun"
+http://www.reddit.com/r/netsec/.rss "FunFun"
+http://www.reddit.com/r/libressl.rss "FunFun"
+http://www.reddit.com/r/Glitch_in_the_Matrix.rss "FunFun"
+http://www.reddit.com/r/anonymous/.rss "FunFun"
+http://www.reddit.com/r/LetsNotMeet.rss "FunFun"
+http://www.reddit.com/r/TheTruthIsHere.rss "FunFun"
+http://www.reddit.com/r/hacking/.rss "FunFun"
+http://www.reddit.com/r/nosleep.rss "FunFun"
+
+# News Sites
+https://firstlook.org/theintercept/feed/?rss "News Sites"
+https://firstlook.org/theintercept/feed/?post_type=article "News Sites"
+https://firstlook.org/theintercept/staff/glenn-greenwald/feed/?post_type=post "News Sites"
+https://firstlook.org/theintercept/feed/?post_type=document "News Sites"
+http://feeds.theguardian.com/theguardian/technology/rss "News Sites"
+http://feeds.theguardian.com/theguardian/world/rss "News Sites"
