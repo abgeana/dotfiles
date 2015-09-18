@@ -1,6 +1,7 @@
 #! env zsh
 
 set -o pipefail
+VERSION=1.1
 
 # manipulate the command line arguments
 ARGS=("$@")
@@ -89,7 +90,7 @@ function view_task() {
     fi
 }
 
-# fucntion for removing a task file
+# function for removing a task file
 function remove_task() {
     vared -p 'Task to remove: ' -c tkidx
     if [[ $tkidx -le $#TASKS ]]; then
@@ -117,6 +118,20 @@ function git_add_commit_push() {
     echo 'Saved tasks to git repository'
 }
 
+
+# function which prints the help message
+function print_help() {
+    echo "todo version $VERSION"
+    echo "Usage: todo [options]"
+    echo "    -l          list all tasks"
+    echo "    -a          add new task"
+    echo "    -v          view existing task"
+    echo "    -r          remove existing task"
+    echo "    -u, -gp     perform a git pull and update from remote repository"
+    echo "    -s, -gc     perform a git add + git commit and save changes to the remote repository"
+    echo "    -h          print this help message"
+}
+
 # some general initialization
 GIT_CMD="$(which git) --git-dir=$TODO_DIR/.git --work-tree=$TODO_DIR"
 export GIT_SSH="$(readlink -f ${0%/*})/todo-ssh"
@@ -140,7 +155,7 @@ fi
 
 # script logic
 if [[ $#ARGS == 0 ]]; then
-    list_tasks
+    print_help
 else
     for arg in $ARGS; do
         case $arg in
@@ -156,11 +171,14 @@ else
             '-r')
                 remove_task
                 ;;
-            '-gp' | '-gu')
+            '-gp' | '-u')
                 git_pull
                 ;;
-            '-gc' | '-gs')
+            '-gc' | '-s')
                 git_add_commit_push
+                ;;
+            '-h')
+                print_help
                 ;;
             *)
                 echo "Unknown argument $arg"
