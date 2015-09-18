@@ -1,7 +1,8 @@
 #! env python
 
 from __future__ import print_function
-import sys, os, subprocess as sp
+import sys, os, requests
+from colored import fg, attr
 from os.path import join as j
 
 class File(object):
@@ -22,12 +23,11 @@ class Config(object):
     def update(self):
         print('Updating %s...' % self._program)
         for f in self._files:
-            print('%s ' % f.local, end = '')
-            ret = self._download_file(f.local, f.remote)
-            if ret == 0:
-                print('[ OK ]')
+            print('%-30s ' % f.local, end = '')
+            if self._download_file(f.local, f.remote):
+                print('%s[  OK  ]%s' % (fg('green'), attr('reset')))
             else:
-                print('[ FAIL ]')
+                print('%s[ FAIL ]%s'% (fg('red'), attr('reset')))
         print()
 
     def _download_file(self, local, remote):
@@ -35,60 +35,67 @@ class Config(object):
             remote_url = Config._base_url + self._folder + '/' + remote
         else:
             remote_url = Config._base_url + '/' + remote
-        return self._exec([ \
-            'curl', '-o', \
-            local, \
-            remote_url \
-        ])
 
-    def _exec(self, cmd):
-        p = sp.Popen(cmd, stdout = sp.PIPE, stderr = sp.PIPE)
-        p.communicate()
-        return p.returncode
+        response = requests.get(remote_url)
+        try:
+            if response.status_code == 200:
+                with open(local, 'w') as f:
+                    f.write(response.text)
+                    return True
+            else:
+                return False
+        except IOError:
+            return False
 
 def main():
     home = os.getenv('HOME')
     configs = {}
     update_list = []
 
-    configs['self'] = Config('update script', 'scripts', \
-        [ File(os.path.abspath(sys.argv[0]), 'env-update') ])
+    configs['self'] = Config('update script', 'scripts',
+        [ File(j('/bin', 'env-update'), 'env-update') ])
 
-    configs['tmux'] = Config('tmux multiplexer', 'tmux', \
-        [ File(j(home, '.tmux.conf'), 'tmux.conf'), \
-          File(j(home, '.tmux.conf.ssh'), 'tmux.conf.ssh'), \
+    configs['scripts'] = Config('all scripts', 'scripts',
+        [ File(j('/bin', 'env-update'), 'env-update'),
+          File(j('/bin', 'todo'), 'todo'),
+          File(j('/bin', 'cbtype'), 'cbtype'),
+          File(j('/bin', 'chkb'), 'chkb') ])
+
+    configs['tmux'] = Config('tmux multiplexer', 'tmux',
+        [ File(j(home, '.tmux.conf'), 'tmux.conf'),
+          File(j(home, '.tmux.conf.ssh'), 'tmux.conf.ssh'),
           File(j(home, '.tmux.common'), 'tmux.common') ])
 
-    configs['ssh-tmux'] = Config('tmux ssh setup', 'tmux', \
-        [ File(j(home, '.tmux.conf.ssh'), 'tmux.conf.ssh'), \
+    configs['ssh-tmux'] = Config('tmux ssh setup', 'tmux',
+        [ File(j(home, '.tmux.conf.ssh'), 'tmux.conf.ssh'),
           File(j(home, 'ssh-tmux'), 'ssh-tmux') ])
 
-    configs['vim'] = Config('vim editor', 'vim', \
+    configs['vim'] = Config('vim editor', 'vim',
         [ File(j(home, '.vimrc'), 'vimrc') ])
 
-    configs['zsh'] = Config('zsh shell', 'zsh', \
+    configs['zsh'] = Config('zsh shell', 'zsh',
         [ File(j(home, '.zshrc'), 'zshrc') ])
 
-    configs['i3wm'] = Config('i3 status bar', 'i3wm', \
-        [ File(j(home, '.i3status.conf'), 'i3status.conf'), \
-          File(j(home, '.i3', 'config'), 'config'), \
-          File(j(home, '.i3', 'i3wrapper.py'), 'i3wrapper.py'), \
+    configs['i3wm'] = Config('i3 status bar', 'i3wm',
+        [ File(j(home, '.i3status.conf'), 'i3status.conf'),
+          File(j(home, '.i3', 'config'), 'config'),
+          File(j(home, '.i3', 'i3wrapper.py'), 'i3wrapper.py'),
           File(j(home, '.i3', 'net_ip.py'), 'net_ip.py') ])
 
-    configs['irssi'] = Config('irssi IRC client', 'irssi', \
+    configs['irssi'] = Config('irssi IRC client', 'irssi',
         [ File(j(home, '.irssi', 'reddress.theme'), 'reddress.theme') ])
 
-    configs['inputrc'] = Config('inputrc', 'inputrc', \
+    configs['inputrc'] = Config('inputrc', 'inputrc',
         [ File(j(home, '.inputrc'), 'inputrc') ])
 
-    configs['x11'] = Config('X11', 'X11', \
+    configs['x11'] = Config('X11', 'X11',
         [ File(j(home, '.Xresources'), 'Xresources') ])
 
-    configs['gpg'] = Config('GnuPG', 'gnupg', \
-        [ File(j(home, '.gnupg', 'gpg-agent.conf'), 'gpg-agent.conf'), \
+    configs['gpg'] = Config('GnuPG', 'gnupg',
+        [ File(j(home, '.gnupg', 'gpg-agent.conf'), 'gpg-agent.conf'),
           File(j(home, '.gnupg', 'gpg.conf'), 'gpg.conf') ])
 
-    configs['ipython'] = Config('ipython interactive python shell', 'ipython', \
+    configs['ipython'] = Config('ipython interactive python shell', 'ipython',
         [ File(j(home, '.ipython', 'profile_default', 'ipython_config.py'), 'ipython_config.py') ])
 
     if len(sys.argv) > 1:
