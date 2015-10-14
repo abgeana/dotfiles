@@ -28,9 +28,18 @@ alias show-colors='for i in {0..255}; do echo -e "\e[38;05;${i}m${i}"; done | co
 alias dhcp='dhclient -r && dhclient'
 alias cat='cat -v'
 
-# Environment
+###########################################################
+# Environment variables
+###########################################################
+
 export ZSH_BINARY=$(which zsh)  # needed for .tmux.common
 export GPG_TTY=$(tty)           # needed for gpg-agent; see man page
+export EDITOR=vim
+
+# pass specific variables
+export PASSWORD_STORE_DIR="$HOME/pass"
+export PASSWORD_STORE_KEY="fe3f4bfa"
+export PASSWORD_STORE_CLIP_TIME="15"
 
 ###########################################################
 # Functions
@@ -86,8 +95,8 @@ bindkey "^[s" insert_sudo_widget
 # gpg-agent-info setup
 ###########################################################
 
-if [[ -f "${HOME}/.gpg-agent-info" ]]; then
-    . "${HOME}/.gpg-agent-info"
+if [[ -f "$HOME/.gpg-agent-info" ]]; then
+    . "$HOME/.gpg-agent-info"
     export GPG_AGENT_INFO
     export SSH_AUTH_SOCK
 fi
