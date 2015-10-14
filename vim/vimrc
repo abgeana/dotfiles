@@ -73,7 +73,7 @@ set showmatch               " show matching bracket
 set diffopt=filler,iwhite   " ignore all whitespace and sync
 
 " F1 to highlight occurences of word under cursor and F2 to disable highlighting
-map <F1> :setl hlsearch<CR>*#
+map <F1> :setl hlsearch<CR>#*
 map <F2> :setl hlsearch!<CR>
 
 " to disable autoindentation and autocommenting press F3, to enable it back press F4
