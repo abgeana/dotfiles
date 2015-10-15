@@ -1,6 +1,6 @@
 #! env zsh
 
-set -o pipefail
+set -euo pipefail
 VERSION=1.1
 
 # manipulate the command line arguments
@@ -10,9 +10,10 @@ ARGS=("$@")
 if [[ -f ~/.todo.conf ]]; then
     source ~/.todo.conf
     # this config file may contain
-    # TODO_DIR which is the directory for keeping tasks
-    # GIT_USER the username used by ssh for git purposes
-    # GIT_KEY the ssh key for git purposes
+    # TODO_DIR          which is the directory for keeping tasks
+    # GIT_USER          the username used by ssh for git purposes
+    # GIT_KEY           the ssh key for git purposes
+    # DEFAULT_GROUP     the default group of tasks to perform actions on
     # this script uses only TODO_DIR
 fi
 
