@@ -57,9 +57,11 @@ def main():
 
     configs['scripts'] = Config('all scripts', 'scripts',
         [ File(j('/bin', 'env-update'), 'env-update'),
-          File(j('/bin', 'todo'), 'todo'),
           File(j('/bin', 'cbtype'), 'cbtype'),
-          File(j('/bin', 'chkb'), 'chkb') ])
+          File(j('/bin', 'chkb'), 'chkb'),
+          File(j('/bin', 'todo'), 'todo'),
+          File(j('/bin', 'todo-ssh'), 'todo-ssh'),
+          File(j(home, '.todo.conf'), 'todo.conf') ])
 
     configs['tmux'] = Config('tmux multiplexer', 'tmux',
         [ File(j(home, '.tmux.conf'), 'tmux.conf'),
