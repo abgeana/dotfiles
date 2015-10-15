@@ -119,6 +119,8 @@ elif [[ $(hostname) == 'stsvm' ]]; then
     COLOR_HOST='208'
 elif [[ $(hostname) == 'erra64' || $(hostname) == 'erra86' ]]; then
     COLOR_HOST='201'
+elif [[ $(hostname) == 'apozeu' ]]; then
+    COLOR_HOST='36'
 else
     COLOR_HOST='232'
 fi
