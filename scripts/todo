@@ -1,10 +1,19 @@
 #! env zsh
 
+# -e            exit when a non 0 exit code is encountered
+# -u            exit when an undefined variable is encountered
+# -o pipefail   exit when a command in a pipe chain has a non 0 exit code
 set -euo pipefail
-VERSION=1.1
+VERSION=1.2
 
 # manipulate the command line arguments
 ARGS=("$@")
+
+# define TRAPZERR to be executed when a command has a non 0 exit code
+TRAPZERR() {
+    local code=$?
+    echo "The command had exit code $code."
+}
 
 # load the config file
 if [[ -f ~/.todo.conf ]]; then
@@ -13,7 +22,6 @@ if [[ -f ~/.todo.conf ]]; then
     # TODO_DIR          which is the directory for keeping tasks
     # GIT_USER          the username used by ssh for git purposes
     # GIT_KEY           the ssh key for git purposes
-    # DEFAULT_GROUP     the default group of tasks to perform actions on
     # this script uses only TODO_DIR
 fi
 
@@ -113,9 +121,8 @@ function git_pull() {
 }
 
 function git_add_commit_push() {
-    eval $GIT_CMD add -A &> /dev/null
-    eval $GIT_CMD commit -m \"commit $(date '+%Y-%m-%d %H:%M:%S')\" &> /dev/null
-    eval $GIT_CMD push &> /dev/null
+    eval $GIT_CMD commit -a -m \"commit $(date '+%Y-%m-%d %H:%M:%S')\"
+    eval $GIT_CMD push
     echo 'Saved tasks to git repository'
 }
 
