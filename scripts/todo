@@ -116,7 +116,7 @@ function remove_task() {
 
 # functions which run git commands
 function git_pull() {
-    eval $GIT_CMD pull &> /dev/null
+    eval $GIT_CMD pull
     echo 'Updated tasks from git repository'
 }
 
@@ -152,10 +152,10 @@ if [[ ! -d $TODO_DIR ]]; then
     if [[ $? != 0 ]]; then
         echo "Could not read or create directory for tasks in $TODO_DIR"
     else
-        eval $GIT_CMD init &> /dev/null
+        eval $GIT_CMD init
     fi
 else
-    eval $GIT_CMD rev-parse &> /dev/null
+    eval $GIT_CMD rev-parse
     if [[ $? -ne 0 ]]; then
         eval $GIT_CMD init &> /dev/null
     fi
