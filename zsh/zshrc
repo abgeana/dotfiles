@@ -3,9 +3,13 @@
 ###########################################################
 
 zstyle :compinstall filename '/home/alegen/.zshrc'
-autoload -Uz compinit
 autoload -U add-zsh-hook
+autoload -Uz compinit
 compinit
+
+# word splitting - non alphanumeric chars treated as part of a word
+# default is '*?_-.[]~=/&;!#$%^(){}<>'
+WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'  # remove /
 
 # No command history
 unset HISTFILE
@@ -13,6 +17,10 @@ unset HISTSIZE
 
 # Vim mode!
 bindkey -v
+bindkey "^?" backward-delete-char   # here it depends on which key code the terminal
+bindkey "^H" backward-delete-char   # sends so i have both for rxvt and mintty
+bindkey "^W" backward-kill-word
+bindkey "^U" backward-kill-line
 
 # Colors
 autoload -U colors && colors
@@ -36,10 +44,13 @@ export ZSH_BINARY=$(which zsh)  # needed for .tmux.common
 export GPG_TTY=$(tty)           # needed for gpg-agent; see man page
 export EDITOR=vim
 
-# pass specific variables
-export PASSWORD_STORE_DIR="$HOME/pass"
-export PASSWORD_STORE_KEY="fe3f4bfa"
-export PASSWORD_STORE_CLIP_TIME="15"
+###########################################################
+# Specific host & user settings outside version control
+###########################################################
+
+if [[ -f ~/.zshrc.add ]]; then
+    source ~/.zshrc.add
+fi
 
 ###########################################################
 # Functions
@@ -105,8 +116,11 @@ fi
 # The PROMPT variable
 ###########################################################
 
-COLOR_USER='196'
-COLOR_ROOT='51'
+if [[ $(id -u) == 0 ]]; then
+    COLOR_USER='51'
+else
+    COLOR_USER='196'
+fi
 COLOR_EXTRA='118'
 
 if [[ $(hostname) == 'bendis' || $(hostname) == 'heretic' ]]; then
@@ -124,12 +138,6 @@ elif [[ $(hostname) == 'apozeu' ]]; then
 else
     COLOR_HOST='232'
 fi
+
+export PROMPT="%F{ $COLOR_USER } %n %F{ $COLOR_EXTRA } @ %F{ $COLOR_HOST } %m %F{ $COLOR_EXTRA }: %~ %f "
 export TMUX_COLOR='colour'$COLOR_HOST
-
-if [[ $(id -u) == 0 ]]; then
-    export PROMPT="%F{ $COLOR_ROOT } %n %F{ $COLOR_EXTRA } @ %F{ $COLOR_HOST } %m %F{ $COLOR_EXTRA }: %~ %f "
-else
-    export PROMPT="%F{ $COLOR_USER } %n %F{ $COLOR_EXTRA } @ %F{ $COLOR_HOST } %m %F{ $COLOR_EXTRA }: %~ %f "
-fi
-
-
