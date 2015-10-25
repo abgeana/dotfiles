@@ -135,10 +135,12 @@ elif [[ $(hostname) == 'erra64' || $(hostname) == 'erra86' ]]; then
     COLOR_HOST='201'
 elif [[ $(hostname) == 'apozeu' ]]; then
     COLOR_HOST='36'
+elif [[ $(hostname) == 'homero' ]]; then
+    COLOR_HOST='21'
 elif [[ $(hostname) == 'chipotle' ]]; then
     COLOR_HOST='172'
 else
-    COLOR_HOST='232'
+    COLOR_HOST='255'
 fi
 
 export PROMPT="%F{ $COLOR_USER } %n %F{ $COLOR_EXTRA } @ %F{ $COLOR_HOST } %m %F{ $COLOR_EXTRA }: %~ %f "
