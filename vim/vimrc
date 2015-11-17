@@ -19,21 +19,38 @@ autocmd BufEnter * execute "chdir ".escape(expand("%:p:h"), ' ')
 " remove any trailing whitespace that is in the file
 autocmd BufRead,BufWrite * if ! &bin | silent! %s/\s\+$//ge | endif
 
-" escape sequences for urxvt (can be obtained with cat)
+" escape sequences for urxvt/mintty
+" these can be obtained with cat
 " also ontopic is http://vim.wikia.com/wiki/Mapping_fast_keycodes_in_terminal_Vim
 " do not just type, instead enter Insert mode and type Ctrl-v followed by key stroke
-set <F1>=[11~
-set <F2>=[12~
-set <F3>=[13~
-set <F4>=[14~
-set <F5>=[15~
-set <F6>=[17~
-set <F7>=[18~
-set <F8>=[19~
-set <F9>=[20~
-set <F10>=[21~
-set <F11>=[23~
-set <F12>=[24~
+let uname = system('uname -a')
+if uname =~# '.*Linux.*'
+    set <F1>=[11~
+    set <F2>=[12~
+    set <F3>=[13~
+    set <F4>=[14~
+    set <F5>=[15~
+    set <F6>=[17~
+    set <F7>=[18~
+    set <F8>=[19~
+    set <F9>=[20~
+    set <F10>=[21~
+    set <F11>=[23~
+    set <F12>=[24~
+elseif uname =~# '.*Cygwin.*'
+    set <F1>=OP
+    set <F2>=OQ
+    set <F3>=OR
+    set <F4>=OS
+    set <F5>=[15~
+    set <F6>=[17~
+    set <F7>=[18~
+    set <F8>=[19~
+    set <F9>=[20~
+    set <F10>=[21~
+    set <F11>=[23~
+    set <F12>=[24~
+endif
 
 " tabs and spaces
 set expandtab       " insert space chars whenever TAB is pressed
@@ -106,6 +123,10 @@ execute pathogen#infect()
 " NERDTree
 let NERDTreeMinimalUI=1
 map <C-n> :NERDTreeToggle<CR>
+
+" clang format
+map <C-K> :pyf /usr/share/vim/addons/syntax/clang-format-3.7.py<CR>
+imap <C-K> <c-o>:pyf/usr/share/vim/addons/syntax/clang-format-3.7.py<CR>
 
 " fancy tabline
 set tabline=%!MyTabLine()  " custom tab pages line
