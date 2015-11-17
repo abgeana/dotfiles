@@ -91,6 +91,30 @@ fw() {
     fi
 }
 
+stopwatch() {
+    date_start=$(date +%s)
+    while true; do
+        echo -ne "$(date -u --date @$(( $(date +%s) - $date_start )) +%H:%M:%S)\r"
+    done
+}
+
+countdown() {
+    if [[ $# == 0 ]]; then
+        echo "Usage: countdown [seconds] [ minutes [hours] ]"
+        return
+    elif [[ $# == 1 ]]; then
+        local date_start=$(( $(date +%s) + $1 ))
+    elif [[ $# == 2 ]]; then
+        local date_start=$(( $(date +%s) + $1 + $2 * 60 ))
+    elif [[ $# == 3 ]]; then
+        local date_start=$(( $(date +%s) + $1 + $2 * 60 + $3 * 60 * 60 ))
+    fi
+
+    while [ $date_start -ge `date +%s` ]; do
+        echo -ne "$(date -u --date @$(( $date_start - $(date +%s) )) +%H:%M:%S)\r";
+    done
+}
+
 # This function will add "sudo " before the command when pressing Alt-S
 # If using rxvt, make sure the searchable-scrollback extension is removed.
 function insert_sudo {
@@ -116,32 +140,47 @@ fi
 # The PROMPT variable
 ###########################################################
 
-if [[ $(id -u) == 0 ]]; then
-    COLOR_USER='51'
-else
-    COLOR_USER='196'
-fi
 COLOR_EXTRA='118'
 
-if [[ $(hostname) == 'bendis' || $(hostname) == 'heretic' ]]; then
-    COLOR_HOST='156'
-elif [[ $(hostname) == 'gebeleizis' ]]; then
-    COLOR_HOST='227'
-elif [[ $(hostname) == 'atlas' ]]; then
-    COLOR_HOST='124'
-elif [[ $(hostname) == 'stsvm' ]]; then
-    COLOR_HOST='208'
-elif [[ $(hostname) == 'erra64' || $(hostname) == 'erra86' ]]; then
-    COLOR_HOST='201'
-elif [[ $(hostname) == 'apozeu' ]]; then
-    COLOR_HOST='36'
-elif [[ $(hostname) == 'homero' ]]; then
-    COLOR_HOST='21'
-elif [[ $(hostname) == 'chipotle' ]]; then
-    COLOR_HOST='172'
-else
-    COLOR_HOST='255'
+if [[ $(uname -a) =~ ".*Linux.*" ]]; then
+    if [[ $(id -u) == 0 ]]; then
+        COLOR_USER='51'
+    else
+        COLOR_USER='196'
+    fi
+
+    if [[ $(hostname) == 'bendis' || $(hostname) == 'heretic' ]]; then
+        COLOR_HOST='156'
+    elif [[ $(hostname) == 'gebeleizis' ]]; then
+        COLOR_HOST='227'
+    elif [[ $(hostname) == 'atlas' ]]; then
+        COLOR_HOST='124'
+    elif [[ $(hostname) == 'stsvm' ]]; then
+        COLOR_HOST='208'
+    elif [[ $(hostname) == 'erra64' || $(hostname) == 'erra86' ]]; then
+        COLOR_HOST='201'
+    elif [[ $(hostname) == 'apozeu' ]]; then
+        COLOR_HOST='36'
+    elif [[ $(hostname) == 'homero' ]]; then
+        COLOR_HOST='21'
+    elif [[ $(hostname) == 'chipotle' ]]; then
+        COLOR_HOST='172'
+    else
+        COLOR_HOST='255'
+    fi
+
+    export PROMPT="%F{ $COLOR_USER } %n %F{ $COLOR_EXTRA } @ %F{ $COLOR_HOST } %m %F{ $COLOR_EXTRA }: %~ %f "
+
+elif [[ $(uname -a) =~ ".*Cygwin.*" ]]; then
+    if [[ $(id -Gn) =~ '.*Administrators.*' ]]; then
+        COLOR_USER='51'
+    else
+        COLOR_USER='196'
+    fi
+
+    COLOR_HOST='118'
+
+    export PROMPT="%F{ $COLOR_USER } %n%F{ $COLOR_EXTRA }: %~ %f "
 fi
 
-export PROMPT="%F{ $COLOR_USER } %n %F{ $COLOR_EXTRA } @ %F{ $COLOR_HOST } %m %F{ $COLOR_EXTRA }: %~ %f "
 export TMUX_COLOR='colour'$COLOR_HOST
