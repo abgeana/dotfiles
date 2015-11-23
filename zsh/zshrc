@@ -2,18 +2,32 @@
 # General customization
 ###########################################################
 
-zstyle :compinstall filename '/home/alegen/.zshrc'
+if [[ -f ~/.dircolors ]]; then
+    eval "export $(dircolors --sh ~/.dircolors)"
+fi
+zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 autoload -U add-zsh-hook
-autoload -Uz compinit
-compinit
+autoload -Uz compinit && compinit
+
+# Colors
+autoload -U colors && colors
+setopt prompt_subst
+
+# auto cd
+setopt autocd
 
 # word splitting - non alphanumeric chars treated as part of a word
 # default is '*?_-.[]~=/&;!#$%^(){}<>'
 WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'  # remove /
 
-# No command history
-unset HISTFILE
-unset HISTSIZE
+# configure history
+export HISTFILE="$HOME/.zsh.history"
+export HISTSIZE=1000000
+export HISTFILESIZE=
+export SAVEHIST=$HISTSIZE
+setopt inc_append_history share_history
+setopt hist_ignore_all_dups
+setopt hist_ignore_space
 
 # Vim mode!
 bindkey -v
@@ -21,10 +35,6 @@ bindkey "^?" backward-delete-char   # here it depends on which key code the term
 bindkey "^H" backward-delete-char   # sends so i have both for rxvt and mintty
 bindkey "^W" backward-kill-word
 bindkey "^U" backward-kill-line
-
-# Colors
-autoload -U colors && colors
-setopt prompt_subst
 
 # Aliases
 alias ls='ls --color=tty'
@@ -35,6 +45,10 @@ alias tmux='tmux -2'
 alias show-colors='for i in {0..255}; do echo -e "\e[38;05;${i}m${i}"; done | column -c 80 -s " "; echo -e "\e[m"'
 alias dhcp='dhclient -r && dhclient'
 alias cat='cat -v'
+
+if [[ $(uname -a) =~ ".*Cygwin.*" ]]; then
+    alias clear='echo -e "\033c"'
+fi
 
 ###########################################################
 # Environment variables
