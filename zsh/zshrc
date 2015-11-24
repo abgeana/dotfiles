@@ -1,5 +1,5 @@
 ###########################################################
-# General customization
+# general customization
 ###########################################################
 
 if [[ -f ~/.dircolors ]]; then
@@ -9,7 +9,7 @@ zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 autoload -U add-zsh-hook
 autoload -Uz compinit && compinit
 
-# Colors
+# colors
 autoload -U colors && colors
 setopt prompt_subst
 
@@ -28,15 +28,18 @@ export SAVEHIST=$HISTSIZE
 setopt inc_append_history share_history
 setopt hist_ignore_all_dups
 setopt hist_ignore_space
+bindkey '^R' history-incremental-search-backward
+bindkey '^T' history-incremental-search-forward
 
-# Vim mode!
+# vim mode!
 bindkey -v
+# for the commands below to work, one needs to be in insert mode and press ctrl-[key]
 bindkey "^?" backward-delete-char   # here it depends on which key code the terminal
 bindkey "^H" backward-delete-char   # sends so i have both for rxvt and mintty
 bindkey "^W" backward-kill-word
 bindkey "^U" backward-kill-line
 
-# Aliases
+# aliases
 alias ls='ls --color=tty'
 alias lss='ls --color=tty -Alh'
 alias sz='pwd; du -hs . ; for each in * ; do du -hs "$each" ; done'
@@ -51,7 +54,7 @@ if [[ $(uname -a) =~ ".*Cygwin.*" ]]; then
 fi
 
 ###########################################################
-# Environment variables
+# environment variables
 ###########################################################
 
 export ZSH_BINARY=$(which zsh)  # needed for .tmux.common
@@ -59,7 +62,7 @@ export GPG_TTY=$(tty)           # needed for gpg-agent; see man page
 export EDITOR=vim
 
 ###########################################################
-# Specific host & user settings outside version control
+# specific host & user settings outside version control
 ###########################################################
 
 if [[ -f ~/.zshrc.add ]]; then
@@ -67,10 +70,10 @@ if [[ -f ~/.zshrc.add ]]; then
 fi
 
 ###########################################################
-# Functions
+# functions
 ###########################################################
 
-# This function permits the command 'lsw $arg' which performs 'ls -l $(which $arg)'
+# this function permits the command 'lsw $arg' which performs 'ls -l $(which $arg)'
 lsw() {
     local w=$(which $1)
     if [[ $w == "$1" ]]; then # if which fails, $w becomes first word in output
@@ -80,7 +83,7 @@ lsw() {
     fi
 }
 
-# These two functions enable execution of the previous command with sudo in front of it.
+# these two functions enable execution of the previous command with sudo in front of it.
 save_prev_command() {
     # arguments:
     # $1 line as it was written
@@ -129,8 +132,8 @@ countdown() {
     done
 }
 
-# This function will add "sudo " before the command when pressing Alt-S
-# If using rxvt, make sure the searchable-scrollback extension is removed.
+# this function will add "sudo " before the command when pressing alt-s
+# if using rxvt, make sure the searchable-scrollback extension is removed
 function insert_sudo {
     if [[ $BUFFER != "sudo "* ]]; then
         BUFFER="sudo $BUFFER"
@@ -151,7 +154,7 @@ if [[ -f "$HOME/.gpg-agent-info" ]]; then
 fi
 
 ###########################################################
-# The PROMPT variable
+# the PROMPT variable
 ###########################################################
 
 COLOR_EXTRA='118'
