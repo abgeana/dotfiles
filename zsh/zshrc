@@ -34,10 +34,13 @@ bindkey '^T' history-incremental-search-forward
 # vim mode!
 bindkey -v
 # for the commands below to work, one needs to be in insert mode and press ctrl-[key]
-bindkey "^?" backward-delete-char   # here it depends on which key code the terminal
-bindkey "^H" backward-delete-char   # sends so i have both for rxvt and mintty
-bindkey "^W" backward-kill-word
-bindkey "^U" backward-kill-line
+if [[ $(uname -a) =~ ".*Linux.*" ]]; then
+    bindkey "^H" backward-delete-char
+elif [[ $(uname -a) =~ ".*Cygwin.*" ]]; then
+    bindkey "^?" backward-delete-char
+fi
+bindkey '^W' backward-kill-word
+bindkey '^U' backward-kill-line
 
 # aliases
 alias ls='ls --color=tty'
@@ -51,6 +54,7 @@ alias cat='cat -v'
 
 if [[ $(uname -a) =~ ".*Cygwin.*" ]]; then
     alias clear='echo -e "\033c"'
+    alias psh='echo "\n" | powershell'
 fi
 
 ###########################################################
