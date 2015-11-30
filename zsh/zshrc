@@ -40,13 +40,16 @@ bindkey '^U' backward-kill-line
 
 # aliases
 alias ls='ls --color=tty'
-alias lss='ls --color=tty -Alh'
+alias ll='ls --color=tty -lh'
+alias la='ls --color=tty -Ah'
+alias lla='ls --color=tty -Alh'
 alias sz='pwd; du -hs . ; for each in * ; do du -hs "$each" ; done'
 alias cd..='cd ..'
 alias tmux='tmux -2'
 alias show-colors='for i in {0..255}; do echo -e "\e[38;05;${i}m${i}"; done | column -c 80 -s " "; echo -e "\e[m"'
 alias dhcp='dhclient -r && dhclient'
 alias cat='cat -v'
+alias unset-proxy='unset http_proxy https_proxy HTTP_PROXY HTTPS_PROXY'
 
 if [[ $(uname -a) =~ ".*Cygwin.*" ]]; then
     alias clear='echo -e "\033c"'
@@ -132,9 +135,17 @@ countdown() {
     done
 }
 
+rm() {
+    if [[ ! -d ~/.trash ]]; then
+        mkdir ~/.trash
+    fi
+    echo "Moving $@ to ~/.trash."
+    mv $@ ~/.trash
+}
+
 # this function will add "sudo " before the command when pressing alt-s
 # if using rxvt, make sure the searchable-scrollback extension is removed
-function insert_sudo {
+insert_sudo() {
     if [[ $BUFFER != "sudo "* ]]; then
         BUFFER="sudo $BUFFER"
         CURSOR+=5
