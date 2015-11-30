@@ -76,7 +76,8 @@ def main():
         [ File(j(home, '.vimrc'), 'vimrc') ])
 
     configs['zsh'] = Config('zsh shell', 'zsh',
-        [ File(j(home, '.zshrc'), 'zshrc') ])
+        [ File(j(home, '.zshrc'), 'zshrc'),
+          File(j(home, '.dircolors'), 'dircolors') ])
 
     configs['i3wm'] = Config('i3 status bar', 'i3wm',
         [ File(j(home, '.i3status.conf'), 'i3status.conf'),
