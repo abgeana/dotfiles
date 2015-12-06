@@ -200,6 +200,8 @@ if [[ $(uname -a) =~ ".*Linux.*" ]]; then
         COLOR_HOST='21'
     elif [[ $(hostname) == 'chipotle' ]]; then
         COLOR_HOST='172'
+    elif [[ $(hostname) == 'matryoshka' ]]; then
+        COLOR_HOST='93'
     else
         COLOR_HOST='255'
     fi
