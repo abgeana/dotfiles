@@ -7,22 +7,22 @@ from os.path import join as j
 
 class File(object):
 
-    def __init__(self, local, remote):
-        self.local = local
+    def __init__(self, remote, local):
         self.remote = remote
+        self.local = local
 
 class Config(object):
 
     _base_url = 'https://raw.githubusercontent.com/alegen/alegen-configs/master/'
 
-    def __init__(self, program, folder, files):
-        self._program = program
-        self._folder = folder
-        self._files = files
+    def __init__(self, program, folder, *files):
+        self.description = program
+        self.folder = folder
+        self.files = files
 
     def update(self):
-        print('Updating %s...' % self._program)
-        for f in self._files:
+        print('Updating %s...' % self.description)
+        for f in self.files:
             print('%-30s ' % f.local, end = '')
             if self._download_file(f.local, f.remote):
                 print('%s[  OK  ]%s' % (fg('green'), attr('reset')))
@@ -31,8 +31,8 @@ class Config(object):
         print()
 
     def _download_file(self, local, remote):
-        if self._folder is not None:
-            remote_url = Config._base_url + self._folder + '/' + remote
+        if self.folder is not None:
+            remote_url = Config._base_url + self.folder + '/' + remote
         else:
             remote_url = Config._base_url + '/' + remote
 
@@ -53,64 +53,75 @@ def main():
     update_list = []
 
     configs['self'] = Config('update script', 'scripts',
-        [ File(j('/bin', 'env-update'), 'env-update') ])
+        File('env-update', j('/bin', 'env-update'))
+    )
 
     configs['scripts'] = Config('all scripts', 'scripts',
-        [ File(j('/bin', 'env-update'), 'env-update'),
-          File(j('/bin', 'cbtype'), 'cbtype'),
-          File(j('/bin', 'chkb'), 'chkb'),
-          File(j('/bin', 'todo'), 'todo'),
-          File(j('/bin', 'todo-ssh'), 'todo-ssh'),
-          File(j(home, '.todo.conf'), 'todo.conf') ])
+        File('env-update',  j('/bin', 'env-update')),
+        File('cbtype',      j('/bin', 'cbtype')),
+        File('chkb',        j('/bin', 'chkb')),
+        File('todo',        j('/bin', 'todo')),
+        File('todo-ssh',    j('/bin', 'todo-ssh')),
+        File('todo.conf',   j(home,   '.todo.conf')),
+    )
 
     configs['tmux'] = Config('tmux multiplexer', 'tmux',
-        [ File(j(home, '.tmux.conf'), 'tmux.conf'),
-          File(j(home, '.tmux.conf.ssh'), 'tmux.conf.ssh'),
-          File(j(home, '.tmux.common'), 'tmux.common') ])
-
-    configs['ssh-tmux'] = Config('tmux ssh setup', 'tmux',
-        [ File(j(home, '.tmux.conf.ssh'), 'tmux.conf.ssh'),
-          File(j(home, 'ssh-tmux'), 'ssh-tmux') ])
+        File('tmux.conf',       j(home,   '.tmux.conf')),
+        File('tmux.conf.ssh',   j(home,   '.tmux.conf.ssh')),
+        File('tmux.common',     j(home,   '.tmux.common')),
+        File('ssh-tmux',        j('/bin', 'ssh-tmux'))
+    )
 
     configs['vim'] = Config('vim editor', 'vim',
-        [ File(j(home, '.vimrc'), 'vimrc') ])
+        File('vimrc', j(home, '.vimrc'))
+    )
 
     configs['zsh'] = Config('zsh shell', 'zsh',
-        [ File(j(home, '.zshrc'), 'zshrc'),
-          File(j(home, '.dircolors'), 'dircolors') ])
+        File('zshrc',       j(home, '.zshrc')),
+        File('dircolors',   j(home, '.dircolors'))
+    )
 
     configs['i3wm'] = Config('i3 status bar', 'i3wm',
-        [ File(j(home, '.i3status.conf'), 'i3status.conf'),
-          File(j(home, '.i3', 'config'), 'config'),
-          File(j(home, '.i3', 'i3wrapper.py'), 'i3wrapper.py'),
-          File(j(home, '.i3', 'net_ip.py'), 'net_ip.py') ])
+        File('i3status.conf',   j(home, '.i3status.conf')),
+        File('config',          j(home, '.i3', 'config')),
+        File('i3wrapper.py',    j(home, '.i3', 'i3wrapper.py')),
+        File('net_ip.py',       j(home, '.i3', 'net_ip.py'))
+    )
 
     configs['irssi'] = Config('irssi IRC client', 'irssi',
-        [ File(j(home, '.irssi', 'reddress.theme'), 'reddress.theme') ])
+        File('reddress.theme', j(home, '.irssi', 'reddress.theme'))
+    )
 
     configs['inputrc'] = Config('inputrc', 'inputrc',
-        [ File(j(home, '.inputrc'), 'inputrc') ])
+        File('inputrc', j(home, '.inputrc'))
+    )
 
     configs['x11'] = Config('X11', 'X11',
-        [ File(j(home, '.Xresources'), 'Xresources') ])
+        File('Xresources', j(home, '.Xresources'))
+    )
 
     configs['gpg'] = Config('GnuPG', 'gnupg',
-        [ File(j(home, '.gnupg', 'gpg-agent.conf'), 'gpg-agent.conf'),
-          File(j(home, '.gnupg', 'gpg.conf'), 'gpg.conf') ])
+        File('gpg-agent.conf',  j(home, '.gnupg', 'gpg-agent.conf')),
+        File('gpg.conf',        j(home, '.gnupg', 'gpg.conf'))
+    )
 
     configs['ipython'] = Config('ipython interactive python shell', 'ipython',
-        [ File(j(home, '.ipython', 'profile_default', 'ipython_config.py'), 'ipython_config.py') ])
+        File('ipython_config.py', j(home, '.ipython', 'profile_default', 'ipython_config.py'))
+    )
 
     if len(sys.argv) > 1:
         for idx in range( 1, len(sys.argv) ):
             update_list.append(sys.argv[idx])
         update_list = set(update_list)
-    else:
-        update_list.extend(configs.keys())
 
-    for item in update_list:
-        if item in configs:
-            configs[item].update()
+        for item in update_list:
+            if item in configs:
+                configs[item].update()
+    else:
+        print("Usage: env-update [ list of configs ]")
+        print("Known configs:")
+        for key, val in configs.items():
+            print( "\t%s\t - %s" % (key, val.description) )
 
 if __name__ == '__main__':
     main()
