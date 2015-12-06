@@ -118,7 +118,7 @@ noremap <Left> <NOP>
 noremap <Right> <NOP>
 
 " pathogen.vim
-execute pathogen#infect()
+"execute pathogen#infect()
 
 " NERDTree
 let NERDTreeMinimalUI=1
