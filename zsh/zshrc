@@ -143,6 +143,13 @@ rm() {
     mv $@ ~/.trash
 }
 
+reload() {
+    if [[ -f ~/.zshrc ]]; then
+        echo "Reloading config file."
+        source ~/.zshrc
+    fi
+}
+
 # this function will add "sudo " before the command when pressing alt-s
 # if using rxvt, make sure the searchable-scrollback extension is removed
 insert_sudo() {
