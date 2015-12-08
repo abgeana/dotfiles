@@ -2,8 +2,8 @@
 
 from __future__ import print_function
 import sys, os, requests
+from os.path import join as j, basename
 from colored import fg, attr
-from os.path import join as j
 
 class File(object):
 
@@ -23,7 +23,7 @@ class Config(object):
     def update(self):
         print('Updating %s...' % self.description)
         for f in self.files:
-            print('%-30s ' % f.local, end = '')
+            print('%-30s ' % basename(f.local), end = '')
             if self._download_file(f.local, f.remote):
                 print('%s[  OK  ]%s' % (fg('green'), attr('reset')))
             else:
@@ -78,7 +78,7 @@ def main():
 
     configs['shell'] = Config('zsh shell', 'shell',
         File('inputrc',             j(home, '.inputrc')),
-        File('ipython_config.py',   j(home, '.ipython', 'profile_default', 'ipython_config.py'))
+        File('ipython_config.py',   j(home, '.ipython', 'profile_default', 'ipython_config.py')),
         File('zshrc',               j(home, '.zshrc')),
         File('dircolors',           j(home, '.dircolors'))
     )
