@@ -76,9 +76,11 @@ def main():
         File('vimrc', j(home, '.vimrc'))
     )
 
-    configs['zsh'] = Config('zsh shell', 'zsh',
-        File('zshrc',       j(home, '.zshrc')),
-        File('dircolors',   j(home, '.dircolors'))
+    configs['shell'] = Config('zsh shell', 'shell',
+        File('inputrc',             j(home, '.inputrc')),
+        File('ipython_config.py',   j(home, '.ipython', 'profile_default', 'ipython_config.py'))
+        File('zshrc',               j(home, '.zshrc')),
+        File('dircolors',           j(home, '.dircolors'))
     )
 
     configs['i3wm'] = Config('i3 status bar', 'i3wm',
@@ -92,10 +94,6 @@ def main():
         File('reddress.theme', j(home, '.irssi', 'reddress.theme'))
     )
 
-    configs['inputrc'] = Config('inputrc', 'inputrc',
-        File('inputrc', j(home, '.inputrc'))
-    )
-
     configs['x11'] = Config('X11', 'X11',
         File('Xresources', j(home, '.Xresources'))
     )
@@ -105,8 +103,8 @@ def main():
         File('gpg.conf',        j(home, '.gnupg', 'gpg.conf'))
     )
 
-    configs['ipython'] = Config('ipython interactive python shell', 'ipython',
-        File('ipython_config.py', j(home, '.ipython', 'profile_default', 'ipython_config.py'))
+    configs['reveng'] = Config('reverse engineering', 'reveng',
+        File('radare2rc', j(home, '.radare2rc'))
     )
 
     if len(sys.argv) > 1:
