@@ -139,8 +139,15 @@ rm() {
     if [[ ! -d ~/.trash ]]; then
         mkdir ~/.trash
     fi
-    echo "Moving $@ to ~/.trash."
-    mv $@ ~/.trash
+    for file in $@; do
+        local base=$(basename $file)
+        if [[ -a ~/.trash/$base ]]; then
+            local idx=$(/bin/ls -l ~/.trash | grep $base | wc -l)
+            mv $file "$HOME/.trash/$base ($idx)"
+        else
+            mv $file ~/.trash
+        fi
+    done
 }
 
 reload() {
