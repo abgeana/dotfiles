@@ -10,6 +10,9 @@ set-option -g history-limit 10000
 # vim key bindings for the win!
 set-option -g mode-keys vi
 
+# escape timeout to 0 for weechat vimode
+set-option -g escape-timeout 0
+
 # better resizing
 set-window-option -g aggressive-resize on
 
