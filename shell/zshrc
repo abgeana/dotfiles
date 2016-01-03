@@ -213,7 +213,7 @@ if [[ $(uname -a) =~ ".*Linux.*" ]]; then
         COLOR_HOST='255'
     fi
 
-    export PROMPT="%F{ $COLOR_USER } %n %F{ $COLOR_EXTRA } @ %F{ $COLOR_HOST } %m %F{ $COLOR_EXTRA }: %~ %f "
+    export PROMPT="%F{86}[ %* ]%F{ $COLOR_USER } %n %F{ $COLOR_EXTRA } @ %F{ $COLOR_HOST } %m %F{ $COLOR_EXTRA }: %~ %f "
 
 elif [[ $(uname -a) =~ ".*Cygwin.*" ]]; then
     if [[ $(id -Gn) =~ '.*Administrators.*' ]]; then
@@ -224,7 +224,12 @@ elif [[ $(uname -a) =~ ".*Cygwin.*" ]]; then
 
     COLOR_HOST='118'
 
-    export PROMPT="%F{ $COLOR_USER } %n%F{ $COLOR_EXTRA }: %~ %f "
+    export PROMPT="%F{86}[ %* ]%F{ $COLOR_USER } %n%F{ $COLOR_EXTRA }: %~ %f "
 fi
+
+TMOUT=1
+TRAPALRM() {
+    zle reset-prompt
+}
 
 export TMUX_COLOR='colour'$COLOR_HOST
