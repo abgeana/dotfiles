@@ -50,6 +50,7 @@ alias show-colors='for i in {0..255}; do echo -e "\e[38;05;${i}m${i}"; done | co
 alias dhcp='dhclient -r && dhclient'
 alias cat='cat -v'
 alias unset-proxy='unset http_proxy https_proxy HTTP_PROXY HTTPS_PROXY'
+alias unset-hist='unset HISTFILE; export HISTSIZE=0'
 
 if [[ $(uname -a) =~ ".*Cygwin.*" ]]; then
     alias clear='echo -e "\033c"'
