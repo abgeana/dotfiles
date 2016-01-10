@@ -21,11 +21,16 @@ URxvt*internalBorder:                   0
 URxvt*externalBorder:                   0
 
 ! fonts and no bold/italic/italic-bold
-URxvt*font:                             xft:Terminus:size=8
-URxvt*boldFont:                         xft:Terminus:size=8
-URxvt*italicFont:                       xft:Terminus:size=8
-URxvt*boldItalicFont:                   xft:Terminus:size=8
-URxvt*imFont:                           xft:Terminus:size=8
+! if a glyph is missing from, add another fallback font which has the glyph
+! fonts and glyphs can be easily explored with gucharmap
+URxvt*font:                             xft:Terminus:size=8:antialias=true,xft:Symbola:pixelsize=10:antialias=true,-*-unifont-*-*-*-*-*-*-*-*-*-*-*-*
+URxvt*boldFont:                         xft:Terminus:size=8:antialias=true,xft:Symbola:pixelsize=10:antialias=true,-*-unifont-*-*-*-*-*-*-*-*-*-*-*-*
+URxvt*italicFont:                       xft:Terminus:size=8:antialias=true,xft:Symbola:pixelsize=10:antialias=true,-*-unifont-*-*-*-*-*-*-*-*-*-*-*-*
+URxvt*boldItalicFont:                   xft:Terminus:size=8:antialias=true,xft:Symbola:pixelsize=10:antialias=true,-*-unifont-*-*-*-*-*-*-*-*-*-*-*-*
+URxvt*imFont:                           xft:Terminus:size=8:antialias=true,xft:Symbola:pixelsize=10:antialias=true,-*-unifont-*-*-*-*-*-*-*-*-*-*-*-*
+
+! this was changed while testing the Symbola font but then I had to set it back to 0 in the config
+URxvt*letterSpace:                      0
 
 ! copy/paste and make sure perl-ext-common contains the clipboard plugin
 ! this requires the clipboard extension to be loaded (see also perl-ext-common) and xsel installed
@@ -128,7 +133,6 @@ URxvt*color15:                          #eeeeec
 ! URxvt*hold:                           boolean
 ! URxvt*borderLess:                     boolean
 ! URxvt*lineSpace:                      number
-! URxvt*letterSpace:                    number
 ! URxvt*skipBuiltinGlyphs:              boolean
 ! URxvt*pointerBlankDelay:              number
 ! URxvt*backspacekey:                   string
