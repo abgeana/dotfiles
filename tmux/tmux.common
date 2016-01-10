@@ -11,7 +11,10 @@ set-option -g history-limit 10000
 set-option -g mode-keys vi
 
 # escape timeout to 0 for weechat vimode
-set-option -g escape-timeout 0
+set-option -g escape-time 0
+
+# force utf-8
+set-window-option -g utf8 on
 
 # better resizing
 set-window-option -g aggressive-resize on
