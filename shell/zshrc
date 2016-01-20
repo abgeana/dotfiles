@@ -168,6 +168,19 @@ reload() {
     fi
 }
 
+totp() {
+    local seed=0
+    if [[ $# == 0 ]]; then
+        echo -n "Enter your seed: "
+        read -s seed
+        echo ""
+    else
+        seed=$1
+    fi
+    oathtool --totp -b $seed | xsel -ib
+    echo "Done."
+}
+
 # this function will add "sudo " before the command when pressing alt-s
 # if using rxvt, make sure the searchable-scrollback extension is removed
 insert_sudo() {
