@@ -195,11 +195,11 @@ rofi.fg:                                #ff0000
 ! Background color
 rofi.bg:                                #000000
 ! Foreground color for active row
-rofi.fg-active:                         #0000ff
+rofi.fg-active:                         #149bde
 ! Foreground color for urgent row
 rofi.fg-urgent:                         #00ff00
 ! Foreground color for highlighted active row
-rofi.hlfg-active:                       #0000ff
+rofi.hlfg-active:                       #149bde
 ! Foreground color for highlighted urgent row
 rofi.hlfg-urgent:                       #00ff00
 ! Background color for active row
@@ -207,17 +207,17 @@ rofi.bg-active:                         #000000
 ! Background color for urgent row
 rofi.bg-urgent:                         #000000
 ! Background color for highlighted active row
-rofi.hlbg-active:                       #a0a0a0
+rofi.hlbg-active:                       #3b3b3b
 ! Background color for highlighted urgent row
-rofi.hlbg-urgent:                       #a0a0a0
+rofi.hlbg-urgent:                       #3b3b3b
 ! Background color for alternating row
 rofi.bgalt:                             #000000
 ! Foreground color for highlighted row
 rofi.hlfg:                              #ff0000
 ! Background color for highlighted row
-rofi.hlbg:                              #a0a0a0
+rofi.hlbg:                              #3b3b3b
 ! Border color
-rofi.bc:                                #000000
+rofi.bc:                                #ff0000
 ! Use extended color scheme
 !rofi.color-enabled:                    false
 ! Color scheme for normal row
@@ -229,7 +229,7 @@ rofi.bc:                                #000000
 ! Color scheme window
 !rofi.color-window:                     #fdf6e3,#002b36
 ! Border width
-rofi.bw:                                0
+rofi.bw:                                2
 ! Location on screen
 !rofi.location:                         0
 ! Padding
