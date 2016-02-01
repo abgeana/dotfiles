@@ -56,6 +56,7 @@ alias lla='ls --color=tty -Alh'
 alias sz='pwd; du -hs . ; for each in * ; do du -hs "$each" ; done'
 alias cd..='cd ..'
 alias tmux='tmux -2'
+alias tb='tmux attach-session -t base; tmux new-session -s base'
 alias show-colors='for i in {0..255}; do echo -e "\e[38;05;${i}m${i}"; done | column -c 80 -s " "; echo -e "\e[m"'
 alias dhcp='dhclient -r && dhclient'
 alias cat='cat -v'
@@ -215,27 +216,28 @@ if [[ $(uname -a) =~ ".*Linux.*" ]]; then
         COLOR_USER='196'
     fi
 
-    if [[ $(hostname) == 'bendis' || $(hostname) == 'heretic' ]]; then
-        COLOR_HOST='156'
-    elif [[ $(hostname) == 'gebeleizis' ]]; then
-        COLOR_HOST='227'
-    elif [[ $(hostname) == 'atlas' ]]; then
-        COLOR_HOST='124'
-    elif [[ $(hostname) == 'stsvm' ]]; then
-        COLOR_HOST='208'
-    elif [[ $(hostname) == 'erra64' || $(hostname) == 'erra86' ]]; then
-        COLOR_HOST='201'
-    elif [[ $(hostname) == 'apozeu' ]]; then
-        COLOR_HOST='36'
-    elif [[ $(hostname) == 'homero' ]]; then
-        COLOR_HOST='21'
-    elif [[ $(hostname) == 'chipotle' ]]; then
-        COLOR_HOST='172'
-    elif [[ $(hostname) == 'matryoshka' ]]; then
-        COLOR_HOST='93'
-    else
-        COLOR_HOST='255'
-    fi
+    typeset -A HOST_COLORS
+    HOST_COLORS=(
+        bendis          156
+        heretic         156
+        gebeleizis      227
+        atlas           124
+        stsvm           208
+        erra86          201
+        erra64          201
+        apozeu           36
+        homero           21
+        chipotle        172
+        matryoshka       93
+        tanya           134
+    )
+
+    COLOR_HOST='255' # this is the default
+    for key in "${(@k)HOST_COLORS}"; do
+        if [[ $(hostname) == $key ]]; then
+            COLOR_HOST=$HOST_COLORS[$key]
+        fi
+    done
 
     export PROMPT="%F{255}[ %* ]%F{ $COLOR_USER } %n %F{ $COLOR_EXTRA } @ %F{ $COLOR_HOST } %m %F{ $COLOR_EXTRA }: %~ %f "
 
