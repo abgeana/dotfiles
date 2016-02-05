@@ -217,7 +217,7 @@ rofi.hlfg:                              #ff0000
 ! Background color for highlighted row
 rofi.hlbg:                              #3b3b3b
 ! Border color
-rofi.bc:                                #ff0000
+rofi.bc:                                #000000
 ! Use extended color scheme
 !rofi.color-enabled:                    false
 ! Color scheme for normal row
@@ -229,7 +229,7 @@ rofi.bc:                                #ff0000
 ! Color scheme window
 !rofi.color-window:                     #fdf6e3,#002b36
 ! Border width
-rofi.bw:                                2
+rofi.bw:                                0
 ! Location on screen
 !rofi.location:                         0
 ! Padding
@@ -303,7 +303,7 @@ rofi.pid:                               /run/user/1000/rofi.pid
 ! Keybinding
 !rofi.kb-secondary-paste:               Control+v,Insert
 ! Keybinding
-!rofi.kb-clear-line:                    Control+u
+rofi.kb-clear-line:                     Control+u
 ! Keybinding
 !rofi.kb-move-front:                    Control+a
 ! Keybinding
@@ -313,9 +313,9 @@ rofi.pid:                               /run/user/1000/rofi.pid
 ! Keybinding
 !rofi.kb-move-word-forward:             Alt+f
 ! Keybinding
-!rofi.kb-move-char-back:                Left,Control+b
+rofi.kb-move-char-back:                 Left,Control+h
 ! Keybinding
-!rofi.kb-move-char-forward:             Right,Control+f
+rofi.kb-move-char-forward:              Right,Control+l
 ! Keybinding
 !rofi.kb-remove-word-back:              Control+Alt+h
 ! Keybinding
@@ -325,13 +325,13 @@ rofi.pid:                               /run/user/1000/rofi.pid
 ! Keybinding
 !rofi.kb-remove-char-back:              BackSpace,Control+h
 ! Keybinding
-!rofi.kb-accept-entry:                  Control+j,Control+m,Return,KP_Enter
+rofi.kb-accept-entry:                   Return,KP_Enter
 ! Keybinding
 !rofi.kb-accept-custom:                 Control+Return
 ! Keybinding
 !rofi.kb-accept-entry-continue:         Shift+Return
 ! Keybinding
-rofi.kb-mode-next:                      Control-c
+rofi.kb-mode-next:                      Control+c
 ! Keybinding
 !rofi.kb-mode-previous:                 Shift+Left,Control+Shift+Tab
 ! Keybinding
@@ -343,11 +343,11 @@ rofi.kb-mode-next:                      Control-c
 ! Keybinding
 !rofi.kb-row-right:                     Control+Page_Down
 ! Keybinding
-rofi.kb-row-up:                         Up,Control+p
+rofi.kb-row-up:                         Up,Control+k
 ! Keybinding
-rofi.kb-row-down:                       Down,Control+n
+rofi.kb-row-down:                       Down,Control+j
 ! Keybinding
-rofi.kb-row-tab:                        Tab
+rofi.kb-row-tab:                        Control+Tab
 ! Keybinding
 !rofi.kb-page-prev:                     Page_Up
 ! Keybinding
@@ -357,9 +357,9 @@ rofi.kb-row-tab:                        Tab
 ! Keybinding
 !rofi.kb-row-last:                      End,KP_End
 ! Keybinding
-!rofi.kb-row-select:                    Control+space
+rofi.kb-row-select:                     Tab
 ! Keybinding
-!rofi.kb-cancel:                        Escape
+rofi.kb-cancel:                         Escape
 ! Keybinding
 !rofi.kb-custom-1:                      Alt+1
 ! Keybinding
