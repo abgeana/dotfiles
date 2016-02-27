@@ -222,14 +222,13 @@ if [[ $(uname -a) =~ ".*Linux.*" ]]; then
         heretic         156
         gebeleizis      227
         atlas           124
-        stsvm           208
         erra86          201
         erra64          201
         apozeu           36
         homero           21
         chipotle        172
-        matryoshka       93
         tanya           134
+        brainiac         58
     )
 
     COLOR_HOST='255' # this is the default
