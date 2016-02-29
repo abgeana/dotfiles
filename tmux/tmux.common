@@ -31,10 +31,10 @@ bind -r k select-pane -U
 bind -r l select-pane -R
 
 # resize panes using vim keys
-bind -r H resize-pane -L 5
-bind -r J resize-pane -D 5
-bind -r K resize-pane -U 5
-bind -r L resize-pane -R 5
+bind -r C-h resize-pane -L 5
+bind -r C-j resize-pane -D 5
+bind -r C-k resize-pane -U 5
+bind -r C-l resize-pane -R 5
 
 # put X11 clipboard contents into tmux paste buffer
 bind C-p run "xsel -ob | tmux load-buffer -; tmux paste-buffer"
