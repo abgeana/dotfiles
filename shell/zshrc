@@ -58,7 +58,6 @@ alias sz='pwd; du -hs . ; for each in * ; do du -hs "$each" ; done'
 alias cd..='cd ..'
 alias tmux='tmux -2'
 alias tb='tmux attach-session -t base; tmux new-session -s base'
-alias show-colors='for i in {0..255}; do echo -e "\e[38;05;${i}m${i}"; done | column -c 80 -s " "; echo -e "\e[m"'
 alias dhcp='dhclient -r && dhclient'
 alias cat='cat -v'
 alias unset-proxy='unset http_proxy https_proxy HTTP_PROXY HTTPS_PROXY'
@@ -123,6 +122,13 @@ fw() {
     else
         echo 'Only root can manipulate the firewall...'
     fi
+}
+
+show-colors() {
+    for i in {0..255}; do
+        echo -e "\e[38;05;${i}m${i}"
+    done | column -c 80 -s " "
+    echo -e "\e[m"
 }
 
 stopwatch() {
@@ -218,27 +224,34 @@ if [[ $(uname -a) =~ ".*Linux.*" ]]; then
         COLOR_USER='196'
     fi
 
-    typeset -A HOST_COLORS
-    HOST_COLORS=(
-        bendis          156
-        heretic         156
-        gebeleizis      227
-        hathor          227
-        atlas           124
-        erra86          201
-        erra64          201
-        apozeu           36
-        homero           21
-        tanya           134
-        brainiac         58
-    )
-
     COLOR_HOST='255' # this is the default
-    for key in "${(@k)HOST_COLORS}"; do
-        if [[ $(hostname) == $key ]]; then
-            COLOR_HOST=$HOST_COLORS[$key]
-        fi
-    done
+
+    if [[ $(hostname) =~ 'hthvm\-.*' ]]; then
+        COLOR_HOST=201
+    elif [[ $(hostname) =~ 'atlvm\-.*' ]]; then
+        COLOR_HOST=208
+    else
+        typeset -A HOST_COLORS
+        HOST_COLORS=(
+            bendis          156
+            heretic         156
+            gebeleizis      227 # to be removed
+            hathor          227
+            atlas           124
+            erra86          201 # to be removed
+            erra64          201 # to be removed
+            apozeu           36
+            homero           21
+            tanya           134
+            brainiac         58
+        )
+
+        for key in "${(@k)HOST_COLORS}"; do
+            if [[ $(hostname) == $key ]]; then
+                COLOR_HOST=$HOST_COLORS[$key]
+            fi
+        done
+    fi
 
     export PROMPT="%F{255}[ %* ]%F{ $COLOR_USER } %n %F{ $COLOR_EXTRA } @ %F{ $COLOR_HOST } %m %F{ $COLOR_EXTRA }: %~ %f "
 
