@@ -227,9 +227,9 @@ if [[ $(uname -a) =~ ".*Linux.*" ]]; then
     COLOR_HOST='255' # this is the default
 
     if [[ $(hostname) =~ 'hthvm\-.*' ]]; then
-        COLOR_HOST=201
-    elif [[ $(hostname) =~ 'atlvm\-.*' ]]; then
         COLOR_HOST=208
+    elif [[ $(hostname) =~ 'atlvm\-.*' ]]; then
+        COLOR_HOST=201
     else
         typeset -A HOST_COLORS
         HOST_COLORS=(
