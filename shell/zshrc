@@ -54,10 +54,9 @@ alias ls='ls --color=tty'
 alias ll='ls --color=tty -lh'
 alias la='ls --color=tty -Ah'
 alias lla='ls --color=tty -Alh'
-alias sz='pwd; du -hs . ; for each in * ; do du -hs "$each" ; done'
 alias cd..='cd ..'
 alias tmux='tmux -2'
-alias tb='tmux attach-session -t base; tmux new-session -s base'
+alias tb='tmux attach-session -t base || tmux new-session -s base'
 alias dhcp='dhclient -r && dhclient'
 alias cat='cat -v'
 alias unset-proxy='unset http_proxy https_proxy HTTP_PROXY HTTPS_PROXY'
@@ -129,6 +128,14 @@ show-colors() {
         echo -e "\e[38;05;${i}m${i}"
     done | column -c 80 -s " "
     echo -e "\e[m"
+}
+
+sz() {
+    pwd
+    du -hs .
+    for node in * ; do
+        du -hs "$node"
+    done
 }
 
 stopwatch() {
