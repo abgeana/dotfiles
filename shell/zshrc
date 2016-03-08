@@ -197,6 +197,55 @@ totp() {
     echo "Done."
 }
 
+SHELL_PID=$$
+IPC_FILE="/tmp/ipc-watchdog-self-destroy-$SHELL_PID"
+
+watchdog-self-destroy() {
+    local TIMER_SELF_DESTROY=2
+    while [[ $TIMER_SELF_DESTROY > 0 ]]; do
+        sleep 60
+
+        IPC_CONTENT=$(cat $IPC_FILE)
+        echo '' > $IPC_FILE
+        if [[ $IPC_CONTENT == "kick" ]]; then
+            TIMER_SELF_DESTROY=15
+        else
+            TIMER_SELF_DESTROY=$(($TIMER_SELF_DESTROY-1))
+        fi
+
+        if [[ $TIMER_SELF_DESTROY == 1 ]]; then
+            print '\nShell session will be closed in one minute...'
+        elif [[ $TIMER_SELF_DESTROY == 0 ]]; then
+            echo 'exit' > $IPC_FILE
+        fi
+    done
+}
+
+kick-watchdog-self-destroy() {
+    echo 'kick' > $IPC_FILE
+}
+
+start-watchdog-self-destroy() {
+    touch $IPC_FILE
+    chmod 600 $IPC_FILE
+    kick-watchdog-self-destroy
+    watchdog-self-destroy $IPC_FILE&
+}
+
+clean-watchdog-self-destroy-files() {
+    for f in `ls /tmp/ipc-watchdog-self-destroy-*`; do
+        local oldpid=$(echo $f | awk '{ split($0, a, "-"); print a[5] }')
+        local pidcmd=$(ps -p $oldpid -o comm=)
+        if [[ $pidcmd != 'zsh' ]]; then
+            rm $f
+        fi
+    done
+}
+
+if [[ $(id -u) == 0 ]]; then
+    start-watchdog-self-destroy
+fi
+
 # this function will add "sudo " before the command when pressing alt-s
 # if using rxvt, make sure the searchable-scrollback extension is removed
 insert_sudo() {
@@ -276,13 +325,6 @@ fi
 
 export TMUX_COLOR='colour'$COLOR_HOST
 
-# this is needed to update the time in the prompt every second
-# https://stackoverflow.com/questions/2187829
-TMOUT=1
-TRAPALRM() {
-    zle reset-prompt
-}
-
 # this is needed to show the mode (e.g. normal, insert) when using vimode
 # https://superuser.com/questions/151803
 # http://pawelgoscicki.com/archives/2012/09/vi-mode-indicator-in-zsh-prompt/
@@ -308,3 +350,17 @@ RPROMPT='${VIM_MODE}'
 # this line makes sure the RPROMPT of previous lines is removed
 # https://stackoverflow.com/questions/14316463
 setopt transientrprompt
+
+# timeouts to do things every
+TMOUT=1 # one second
+TRAPALRM() {
+    # this is needed to update the time in the prompt every second
+    # https://stackoverflow.com/questions/2187829
+    zle reset-prompt
+
+    # this is needed to exit from root shells when the watchdog times out
+    local IPC_CONTENT=$(cat $IPC_FILE)
+    if [[ $IPC_CONTENT == 'exit' ]]; then
+        exit
+    fi
+}
