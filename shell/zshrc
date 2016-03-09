@@ -63,7 +63,7 @@ alias tb='tmux attach-session -t base || tmux new-session -s base'
 alias dhcp='dhclient -r && dhclient'
 alias cat='cat -v'
 alias unset-proxy='unset http_proxy https_proxy HTTP_PROXY HTTPS_PROXY'
-alias unset-hist='unset HISTFILE; export HISTSIZE=0'
+alias unset-hist='unset HISTFILE'
 alias brm='/bin/rm'
 
 if [[ $(uname -a) =~ ".*Cygwin.*" ]]; then
