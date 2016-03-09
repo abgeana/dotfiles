@@ -9,6 +9,10 @@ zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
 autoload -U add-zsh-hook
 autoload -Uz compinit && compinit
 
+# regular expressions
+autoload -U regexp-replace
+setopt re_match_pcre
+
 # colors
 autoload -U colors && colors
 setopt prompt_subst
@@ -68,21 +72,15 @@ if [[ $(uname -a) =~ ".*Cygwin.*" ]]; then
     alias psh='echo "\n" | powershell'
 fi
 
-###########################################################
-# environment variables
-###########################################################
-
-export ZSH_BINARY=$(which zsh)  # needed for .tmux.common
-export GPG_TTY=$(tty)           # needed for gpg-agent; see man page
-export EDITOR=vim
-
-###########################################################
 # specific host & user settings outside version control
-###########################################################
-
 if [[ -f ~/.zshrc.add ]]; then
     source ~/.zshrc.add
 fi
+
+# misc
+export ZSH_BINARY=$(which zsh)  # needed for .tmux.common
+export GPG_TTY=$(tty)           # needed for gpg-agent; see man page
+export EDITOR=vim
 
 ###########################################################
 # functions
@@ -112,9 +110,13 @@ save_prev_command() {
 add-zsh-hook preexec save_prev_command
 
 fuck() {
+    # try to remove some unwanted characters and
+    # hopefully prevent a nasty command injection here
+    regexp-replace PREVIOUS_COMMAND '[><;]|(\|\|)|(&&)' ''
     eval "sudo $PREVIOUS_COMMAND"
 }
 
+# this function executes the firewall script based on the hostname
 fw() {
     if [[ $(id -u) == 0 ]]; then
         eval "/root/firewall-$(hostname).sh $@"
@@ -123,6 +125,7 @@ fw() {
     fi
 }
 
+# this function shows all 255 color codes
 show-colors() {
     for i in {0..255}; do
         echo -e "\e[38;05;${i}m${i}"
@@ -130,6 +133,7 @@ show-colors() {
     echo -e "\e[m"
 }
 
+# this function calcultates the size of all directories and files in the cwd
 sz() {
     pwd
     du -hs .
@@ -138,6 +142,7 @@ sz() {
     done
 }
 
+# the following two function help me time my stuff
 stopwatch() {
     date_start=$(date +%s)
     while true; do
@@ -162,6 +167,7 @@ countdown() {
     done
 }
 
+# special purpose rm which moves files to ~/.trash instead of actually removing them
 rm() {
     if [[ ! -d ~/.trash ]]; then
         mkdir ~/.trash
@@ -177,6 +183,7 @@ rm() {
     done
 }
 
+# reload the ~/.zshrc file
 reload() {
     if [[ -f ~/.zshrc ]]; then
         echo "Reloading config file."
@@ -184,6 +191,7 @@ reload() {
     fi
 }
 
+# calculate time based otp codes and put the result in the clipboard
 totp() {
     local seed=0
     if [[ $# == 0 ]]; then
@@ -197,6 +205,8 @@ totp() {
     echo "Done."
 }
 
+# the code below allows the destruction of root
+# shells after a certain amount of time
 SHELL_PID=$$
 IPC_FILE="/tmp/ipc-watchdog-self-destroy-$SHELL_PID"
 
@@ -243,6 +253,7 @@ clean-watchdog-self-destroy-files() {
 }
 
 if [[ $(id -u) == 0 ]]; then
+    echo 'Started self destroy watchdog...'
     start-watchdog-self-destroy
 fi
 
@@ -359,8 +370,10 @@ TRAPALRM() {
     zle reset-prompt
 
     # this is needed to exit from root shells when the watchdog times out
-    local IPC_CONTENT=$(cat $IPC_FILE)
-    if [[ $IPC_CONTENT == 'exit' ]]; then
-        exit
+    if [[ $(id -u) == 0 ]]; then
+        local IPC_CONTENT=$(cat $IPC_FILE)
+        if [[ $IPC_CONTENT == 'exit' ]]; then
+            exit
+        fi
     fi
 }
