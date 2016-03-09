@@ -11,6 +11,7 @@ autoload -Uz compinit && compinit
 
 # regular expressions
 autoload -U regexp-replace
+setopt re_match_pcre
 
 # colors
 autoload -U colors && colors
@@ -236,7 +237,7 @@ watchdog-self-destroy() {
         fi
 
         if [[ $TIMER_SELF_DESTROY == 1 ]]; then
-            print '\nShell session will be closed in one minute...'
+            print $fg[red]'\n!!! Shell session will be closed in one minute !!!'
         elif [[ $TIMER_SELF_DESTROY == 0 ]]; then
             echo 'exit' > $IPC_FILE
         fi
