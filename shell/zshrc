@@ -183,6 +183,19 @@ rm() {
     done
 }
 
+# function which cleans the ~/.trash directory used by
+# the above rm and removes files older than 30 days
+clean-trash() {
+    local current_time=$(date +%s)
+    for file in ~/.trash/*; do
+        local change_time=$(stat -c %Z $file)
+        local age=$(( (current_time - change_time) / (60. * 60. * 24) ))
+        if [[ $age > 30 ]]; then
+            /bin/rm -rf $file
+        fi
+    done
+}
+
 # reload the ~/.zshrc file
 reload() {
     if [[ -f ~/.zshrc ]]; then
