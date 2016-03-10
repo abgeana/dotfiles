@@ -39,5 +39,5 @@ for idx, (group, targets) in enumerate(hosts.items()):
             exec_cmd( tmux_cmd + ['rename-window', '-t', '%s:%i' % (group, idx2), target])
         else:
             exec_cmd( tmux_cmd + ['new-window', '-t', group, '-n', target] )
-        exec_cmd( tmux_cmd + ['select-window', '-t', target] )
-        exec_cmd( tmux_cmd + ['send-keys', '-t', target, 'alias con="ssh %s"' % (target,), 'Enter'] )
+        exec_cmd( tmux_cmd + ['select-window', '-t', '%s:%s' % (group, target)] )
+        exec_cmd( tmux_cmd + ['send-keys', '-t', '%s:%s' % (group, target), 'alias con="ssh %s"' % (target,), 'Enter'] )
