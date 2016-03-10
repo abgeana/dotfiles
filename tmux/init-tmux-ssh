@@ -1,0 +1,43 @@
+#! env python
+
+import subprocess
+from time import sleep
+
+def exec_cmd(cmd):
+    p = subprocess.Popen(cmd, stdout = subprocess.PIPE)
+    sleep(0.2)
+    return p.communicate()[0]
+
+# get the current user
+user = exec_cmd( ['whoami'] )
+user = user[:-1]    # remove trailing '\n'
+
+# read names of hosts from file
+hfile = '/home/%s/.ssh/hosts' % (user,)  # file with my ssh hosts
+with open(hfile, 'r') as fhandle:
+    code = fhandle.read()
+exec(code) # sets the 'hosts' variable
+
+tmux_cmd = ['tmux', '-S', '/tmp/tmux-ssh']
+
+for idx, (group, targets) in enumerate(hosts.items()):
+    if idx == 0:
+        # rename existing session to ssh
+        exec_cmd( tmux_cmd + ['rename-session', group] )
+    else:
+        # for future reference:
+        # -d    the new session is attached to the current terminal
+        #       unless -d is given; without -d, you get the "unset $TMUX" message
+        # -s    sets the name of the new group
+        exec_cmd( tmux_cmd + ['new-session', '-d', '-s', group] )
+
+    # now change to the newly created session
+    exec_cmd( tmux_cmd + ['switch-client', '-t', group] )
+
+    for idx2, target in enumerate(targets):
+        if idx2 == 0:
+            exec_cmd( tmux_cmd + ['rename-window', '-t', '%s:%i' % (group, idx2), target])
+        else:
+            exec_cmd( tmux_cmd + ['new-window', '-t', group, '-n', target] )
+        exec_cmd( tmux_cmd + ['select-window', '-t', target] )
+        exec_cmd( tmux_cmd + ['send-keys', '-t', target, 'alias con="ssh %s"' % (target,), 'Enter'] )
