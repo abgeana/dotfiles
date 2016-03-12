@@ -208,14 +208,22 @@ reload() {
 totp() {
     local seed=0
     if [[ $# == 0 ]]; then
-        echo -n "Enter your seed: "
-        read -s seed
-        echo ""
+        while read -r input; do
+            seed=$( echo $input | grep 'totp' )
+            if [[ ! -z $seed ]]; then
+                seed=$( echo $seed | awk '{ split($0, a, " "); print a[2] }' )
+            fi
+        done
     else
         seed=$1
     fi
-    oathtool --totp -b $seed | xsel -ib
-    echo "Done."
+
+    if [[ ! -z $seed ]]; then
+        oathtool --totp -b $seed | xsel -ib
+        echo "Done."
+    else
+        echo "No seed has been provided."
+    fi
 }
 
 # the code below allows the destruction of root
