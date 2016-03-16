@@ -80,8 +80,9 @@ fi
 # misc
 export ZSH_BINARY=$(which zsh)  # needed for .tmux.common
 export GPG_TTY=$(tty)           # needed for gpg-agent; see man page
-if [[ ! -z $(which nvim) ]]; then
-    export EDITOR=$(which nvim) # use neovim if available
+NVIM_BIN=$(which nvim)
+if [[ $? == 0 ]]; then
+    export EDITOR=NVIM_BIN      # use neovim if available
     alias vim='nvim'
 else
     export EDITOR=$(which vim)  # otherwise fallback to vim
