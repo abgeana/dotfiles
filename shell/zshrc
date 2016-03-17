@@ -80,7 +80,7 @@ fi
 # misc
 export ZSH_BINARY=$(which zsh)  # needed for .tmux.common
 export GPG_TTY=$(tty)           # needed for gpg-agent; see man page
-NVIM_BIN=$(which nvim)
+NVIM_BIN=$(which nvim 2> /dev/null)
 if [[ $? == 0 ]]; then
     export EDITOR=NVIM_BIN      # use neovim if available
     alias vim='nvim'
@@ -322,8 +322,8 @@ if [[ $(uname -a) =~ ".*Linux.*" ]]; then
 
     if [[ $(hostname) =~ 'hthvm\-.*' ]]; then
         COLOR_HOST=208
-    elif [[ $(hostname) =~ 'atlvm\-.*' ]]; then
-        COLOR_HOST=201
+    elif [[ $(hostname) =~ 'panvm\-.*' ]]; then
+        COLOR_HOST=27
     else
         typeset -A HOST_COLORS
         HOST_COLORS=(
@@ -331,9 +331,7 @@ if [[ $(uname -a) =~ ".*Linux.*" ]]; then
             heretic         156
             gebeleizis      227 # to be removed
             hathor          227
-            atlas           124
-            erra86          201 # to be removed
-            erra64          201 # to be removed
+            pan              51
             apozeu           36
             homero           21
             tanya           134
