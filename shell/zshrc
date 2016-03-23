@@ -66,6 +66,9 @@ alias cat='cat -v'
 alias unset-proxy='unset http_proxy https_proxy HTTP_PROXY HTTPS_PROXY'
 alias unset-hist='unset HISTFILE'
 alias brm='/bin/rm'
+alias less='less -R'
+alias gdb='gdb -q'
+alias grep='grep --color=always'
 
 if [[ $(uname -a) =~ ".*Cygwin.*" ]]; then
     alias clear='echo -e "\033c"'

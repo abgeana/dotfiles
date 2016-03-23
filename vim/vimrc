@@ -1,3 +1,10 @@
+" some additional relevant links with good explanations
+" map vs. remap vs. noremap         http://stackoverflow.com/questions/3776117
+" colortest.vim                     :help colorest
+" hitest.vim                        :help hitest
+" colors available in (g)vim        http://vim.wikia.com/wiki/View_all_colors_available_to_gvim
+" cool vim things                   http://www.oualline.com/vim/10/top_10.html
+
 " allow buffers with changes to be hidden
 " http://usevim.com/2012/10/19/vim101-set-hidden/
 set hidden
@@ -32,8 +39,7 @@ autocmd BufRead,BufWrite * if ! &bin | silent! %s/\s\+$//ge | endif
 " these can be obtained with cat
 " also ontopic is http://vim.wikia.com/wiki/Mapping_fast_keycodes_in_terminal_Vim
 " do not just type, instead enter Insert mode and type Ctrl-v followed by key stroke
-let uname = system('uname -a')
-if uname =~# '.*Linux.*'
+if $USER_TERM == '' || $USER_TERM == 'rxvt'
     set <F1>=[11~
     set <F2>=[12~
     set <F3>=[13~
@@ -46,7 +52,7 @@ if uname =~# '.*Linux.*'
     set <F10>=[21~
     set <F11>=[23~
     set <F12>=[24~
-elseif uname =~# '.*Cygwin.*'
+elseif $USER_TERM == 'mintty'
     set <F1>=OP
     set <F2>=OQ
     set <F3>=OR
@@ -59,6 +65,8 @@ elseif uname =~# '.*Cygwin.*'
     set <F10>=[21~
     set <F11>=[23~
     set <F12>=[24~
+else
+    echo 'There was an error setting the $USER_TERM'
 endif
 
 " tabs and spaces
@@ -76,7 +84,7 @@ set nocindent
 " searching
 set incsearch               " incremental search
 set ignorecase              " search ignoring case
-set hlsearch                " highlight the search
+set nohlsearch              " start without highlighting the search item
 set showmatch               " show matching bracket
 set diffopt=filler,iwhite   " ignore all whitespace and sync
 
@@ -136,6 +144,55 @@ augroup resCur
     autocmd!
     autocmd BufWinEnter * call ResCur()
 augroup END
+
+" split the current tmux window and add a pane below then cd to the cwd
+function TmuxPaneBelow()
+    silent exec '!tmux split-window -v -p 20'
+    silent exec '!tmux send-keys -t 1 "cd ' . getcwd() . '"'
+    silent exec '!tmux send-keys -t 1 Enter'
+endfunction
+map <C-w>t :call TmuxPaneBelow()<CR>
+
+" ability to sudo write to a file without opening vim as root
+" http://stackoverflow.com/questions/2600783
+cnoremap w!! w !sudo tee > /dev/null %
+
+" make a useful status line
+set statusline=%F\ [%Y,%{&ff}]\ %m%r%h%=[%l,%v][%p%%]
+
+" always show the status line
+set laststatus=2
+
+" make a better tab line
+" http://stackoverflow.com/questions/7237416
+set tabline=%!MyTabLine()
+
+function MyTabLine()
+    let s = ''
+    for i in range(tabpagenr('$'))
+        " select the highlighting
+        if i + 1 == tabpagenr()
+            let s .= '%#TabLineSel#'
+        else
+            let s .= '%#TabLine#'
+        endif
+
+        " the label is made by MyTabLabel() defined below
+        let s .= ' %{MyTabLabel(' . (i + 1) . ')} '
+    endfor
+
+    " after the last tab fill with TabLineFill and reset tab page nr
+    let s .= '%#TabLineFill#%T'
+
+    return s
+endfunction
+
+function MyTabLabel(n)
+    let buflist = tabpagebuflist(a:n)
+    let winnr = tabpagewinnr(a:n)
+    let label =  bufname(buflist[winnr - 1])
+    return fnamemodify(label, ":t")
+endfunction
 
 " prevent various Vim features from keeping the contents of pass(1) password
 " files (or any other purely temporary files) in plaintext on the system
