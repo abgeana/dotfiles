@@ -5,6 +5,9 @@
 " colors available in (g)vim        http://vim.wikia.com/wiki/View_all_colors_available_to_gvim
 " cool vim things                   http://www.oualline.com/vim/10/top_10.html
 
+" pathogen.vim
+execute pathogen#infect()
+
 " allow buffers with changes to be hidden
 " http://usevim.com/2012/10/19/vim101-set-hidden/
 set hidden
@@ -84,7 +87,7 @@ set nocindent
 " searching
 set incsearch               " incremental search
 set ignorecase              " search ignoring case
-set nohlsearch              " start without highlighting the search item
+set hlsearch!               " start without highlighting the search item
 set showmatch               " show matching bracket
 set diffopt=filler,iwhite   " ignore all whitespace and sync
 
@@ -106,7 +109,8 @@ set showcmd
 set t_Co=256
 
 " set the colorscheme
-colorscheme darkblue
+set background=dark
+colorscheme solarized
 
 " remember more undos
 set undolevels=1000
@@ -158,7 +162,7 @@ map <C-w>t :call TmuxPaneBelow()<CR>
 cnoremap w!! w !sudo tee > /dev/null %
 
 " make a useful status line
-set statusline=%F\ [%Y,%{&ff}]\ %m%r%h%=[%l,%v][%p%%]
+set statusline=%F\ [%Y,%{&ff}]\ %m%r%h%=[\ %l/%L\ ,\ %v\ ][\ %p%%\ ]
 
 " always show the status line
 set laststatus=2
@@ -235,10 +239,6 @@ if has('viminfo')
         augroup END
     endif
 endif
-
-" configs for external tools
-" pathogen.vim
-"execute pathogen#infect()
 
 " clang format
 map <C-K> :pyf /usr/share/vim/addons/syntax/clang-format-3.7.py<CR>
