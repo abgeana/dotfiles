@@ -44,7 +44,6 @@ set-option -g status-bg colour8                             # base02
 set-window-option -g window-status-fg colour244             # base0
 set-window-option -g window-status-bg default
 ## active window title colors
-set-window-option -g window-status-current-fg $TMUX_COLOR
 set-window-option -g window-status-current-bg default
 ## pane border
 set-option -g pane-border-fg colour235                      # base02
