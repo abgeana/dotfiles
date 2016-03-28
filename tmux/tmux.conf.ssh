@@ -1,3 +1,6 @@
+# status line foreground color
+set-option -g status-fg white
+
 # set Ctrl+A as prefix
 set-option -g prefix C-a
 
@@ -7,10 +10,6 @@ bind C-b send-prefix
 
 # set status bar at the top
 set-option -g status-position top
-
-# some pretty terminal images
-set-option -g status-fg white
-set-option -g status-bg black
 
 # load the common configs
 source-file ~/.tmux.common
