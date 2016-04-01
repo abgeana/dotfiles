@@ -116,6 +116,11 @@ bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 
+# border styles for windows (normal ones and floating ones)
+# http://i3wm.org/docs/userguide.html#_border_style_for_new_windows
+new_window pixel 1
+new_float pixel 1
+
 # resize window (you can also use the mouse for that)
 mode "resize" {
         # These bindings trigger as soon as you enter the resize mode
