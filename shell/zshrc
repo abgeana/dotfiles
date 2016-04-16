@@ -83,6 +83,7 @@ fi
 # misc
 export ZSH_BINARY=$(which zsh)  # needed for .tmux.common
 export GPG_TTY=$(tty)           # needed for gpg-agent; see man page
+
 NVIM_BIN=$(which nvim 2> /dev/null)
 if [[ $? == 0 ]]; then
     export EDITOR=NVIM_BIN      # use neovim if available
@@ -216,11 +217,12 @@ reload() {
 # calculate time based otp codes and put the result in the clipboard
 totp() {
     local seed=0
+    local rawseed=0
     if [[ $# == 0 ]]; then
         while read -r input; do
-            seed=$( echo $input | grep 'totp' )
-            if [[ ! -z $seed ]]; then
-                seed=$( echo $seed | awk '{ split($0, a, " "); print a[2] }' )
+            rawseed=$( echo $input | grep 'totp' )
+            if [[ ! -z $rawseed ]]; then
+                seed=$( echo $rawseed | awk '{ split($0, a, " "); print a[2] }' )
             fi
         done
     else
@@ -286,6 +288,11 @@ if [[ $(id -u) == 0 ]]; then
     echo 'Started self destroy watchdog...'
     start-watchdog-self-destroy
 fi
+
+# this function performs a grep with all the right flags and pipes through less
+grl () {
+    grep -r -n "$@" | less
+}
 
 # this function will add "sudo " before the command when pressing alt-s
 # if using rxvt, make sure the searchable-scrollback extension is removed
