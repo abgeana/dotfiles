@@ -35,7 +35,6 @@
 ! Active settings
 
 URxvt*termName:                         screen-256color
-URxvt*meta8:                            false
 URxvt*scrollBar:                        false
 URxvt*cursorBlink:                      true
 URxvt*cursorUnderline:                  false
@@ -54,14 +53,17 @@ URxvt*intensityStyles:                  false
 ! this one break the solarized theme if you set it to true
 URxvt*transparent:                      false
 
+! use proper escape sequences instead of setting the most significat bit
+URxvt*meta8:                            false
+
 ! fonts and no bold/italic/italic-bold
 ! if a glyph is missing from, add another fallback font which has the glyph
 ! fonts and glyphs can be easily explored with gucharmap
-URxvt*font:                             xft:Terminus:size=8:antialias=true,xft:Symbola:pixelsize=10:antialias=true,-*-unifont-*-*-*-*-*-*-*-*-*-*-*-*
-URxvt*boldFont:                         xft:Terminus:size=8:antialias=true,xft:Symbola:pixelsize=10:antialias=true,-*-unifont-*-*-*-*-*-*-*-*-*-*-*-*
-URxvt*italicFont:                       xft:Terminus:size=8:antialias=true,xft:Symbola:pixelsize=10:antialias=true,-*-unifont-*-*-*-*-*-*-*-*-*-*-*-*
-URxvt*boldItalicFont:                   xft:Terminus:size=8:antialias=true,xft:Symbola:pixelsize=10:antialias=true,-*-unifont-*-*-*-*-*-*-*-*-*-*-*-*
-URxvt*imFont:                           xft:Terminus:size=8:antialias=true,xft:Symbola:pixelsize=10:antialias=true,-*-unifont-*-*-*-*-*-*-*-*-*-*-*-*
+URxvt*font:                             xft:Terminus:size=8:antialias=true,xft:Liberation Mono:pixelsize=12:antialias=true,xft:Symbola:pixelsize=10:antialias=true,-*-unifont-*-*-*-*-*-*-*-*-*-*-*-*
+URxvt*boldFont:                         xft:Terminus:size=8:antialias=true,xft:Liberation Mono:pixelsize=12:antialias=true,xft:Symbola:pixelsize=10:antialias=true,-*-unifont-*-*-*-*-*-*-*-*-*-*-*-*
+URxvt*italicFont:                       xft:Terminus:size=8:antialias=true,xft:Liberation Mono:pixelsize=12:antialias=true,xft:Symbola:pixelsize=10:antialias=true,-*-unifont-*-*-*-*-*-*-*-*-*-*-*-*
+URxvt*boldItalicFont:                   xft:Terminus:size=8:antialias=true,xft:Liberation Mono:pixelsize=12:antialias=true,xft:Symbola:pixelsize=10:antialias=true,-*-unifont-*-*-*-*-*-*-*-*-*-*-*-*
+URxvt*imFont:                           xft:Terminus:size=8:antialias=true,xft:Liberation Mono:pixelsize=12:antialias=true,xft:Symbola:pixelsize=10:antialias=true,-*-unifont-*-*-*-*-*-*-*-*-*-*-*-*
 
 ! this was changed while testing the Symbola font but then I had to set it back to 0 in the config
 URxvt*letterSpace:                      0
