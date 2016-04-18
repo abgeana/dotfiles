@@ -69,6 +69,9 @@ alias brm='/bin/rm'
 alias less='less -R'
 alias gdb='gdb -q'
 alias grep='grep --color=always'
+alias -g silent='> /dev/null 2>&1'
+alias -g noerr='2> /dev/null'
+alias -g stdboth='2>&1'
 
 if [[ $(uname -a) =~ ".*Cygwin.*" ]]; then
     alias clear='echo -e "\033c"'
