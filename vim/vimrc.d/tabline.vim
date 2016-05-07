@@ -13,7 +13,7 @@ function MyTabLine()
         endif
 
         " the label is made by MyTabLabel() defined below
-        let s .= ' %{MyTabLabel(' . (i + 1) . ')} '
+        let s .= ' [' . (i + 1) . ']%{MyTabLabel(' . (i + 1) . ')} '
     endfor
 
     " after the last tab fill with TabLineFill and reset tab page nr
