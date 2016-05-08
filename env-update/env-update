@@ -97,12 +97,13 @@ def update(cfg, sections):
                 except IOError:
                     pass
 
-                out = ('   ' + v).ljust(30)
+                out = v
                 out = '%s%s%s' % (fg('cyan'), out, attr('reset'))
                 if ok:
-                    out += ('%s[  OK  ]%s' % (fg('green'), attr('reset')))
+                    out = ('%s[  OK  ]%s  ' % (fg('green'), attr('reset'))) + out
                 else:
-                    out += ('%s[ FAIL ]%s' % (fg('red'), attr('reset')))
+                    out = ('%s[ FAIL ]%s  ' % (fg('red'), attr('reset'))) + out
+                out = '   ' + out
                 print(out)
 
 def link(src, dst):
