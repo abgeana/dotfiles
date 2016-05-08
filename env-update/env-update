@@ -1,125 +1,122 @@
 #! env python
 
 from __future__ import print_function
-import sys, os, requests
-from os.path import join as j, basename
+
+import os
+import ConfigParser, argparse, requests, subprocess
+
+from os.path import expanduser as exp
 from colored import fg, attr
 
-class File(object):
+def parse_args():
+    parser = argparse.ArgumentParser(description = 'Update environment configuration files.')
+    parser.add_argument('-c', '--config', nargs = 1, help = 'configuration file for this update utility')
+    parser.add_argument('-ls', '--list', nargs = '*', help = 'show all configuration sections supported for update')
+    parser.add_argument('-u', '--update', nargs = '*', help = 'configuration files to be updated')
+    parser.add_argument('-ln', '--link', action = 'store_true', help = 'create links from repository clone')
+    parser.add_argument('-r', '--repo-dir', nargs = 1, help = 'location of repository clone')
+    args = parser.parse_args()
+    return args
 
-    def __init__(self, remote, local):
-        self.remote = remote
-        self.local = local
+def parse_configs(f):
+    cfg = ConfigParser.ConfigParser()
+    with open(f, 'r') as fp:
+        cfg.readfp(fp)
+    return cfg
 
-class Config(object):
+def listing(cfg, l):
+    print('Configuration sections available for update:')
+    if len(l) == 0:
+        for s in cfg.sections():
+            if s != 'config':
+                out = '    %s%s%s' % (fg('blue'), s, attr('reset'))
+                if cfg.has_option(s, 'desc'):
+                    out = out.ljust(30) + '%s%s%s' % (fg('cyan'), cfg.get(s, 'desc'), attr('reset'))
+                print(out)
+    else:
+        for s in l:
+            if s != 'config':
+                print( '%s%s%s' % (fg('blue'), s, attr('reset')) )
+                for o in cfg.options(s):
+                    if o == 'desc':
+                        continue
+                    v = cfg.get(s, o)
+                    if ';' in v:
+                        v = v[:v.find(';')]
+                    out = '    %s%s%s' % (fg('cyan'), o, attr('reset'))
+                    out = out.ljust(30)
+                    out += '%s%s%s' % (fg('green'), exp(v), attr('reset'))
+                    print(out)
 
-    _base_url = 'https://raw.githubusercontent.com/alegen/alegen-configs/master/'
+def chmod(f, mod):
+    subprocess.call( ('chmod %s %s' % (mod, f)).split(' ') )
 
-    def __init__(self, program, folder, *files):
-        self.description = program
-        self.folder = folder
-        self.files = files
+def chown(f, own):
+    subprocess.call( 'chown root:root %s' % f )
 
-    def update(self):
-        print('Updating %s...' % self.description)
-        for f in self.files:
-            print('%-30s ' % basename(f.local), end = '')
-            if self._download_file(f.local, f.remote):
-                print('%s[  OK  ]%s' % (fg('green'), attr('reset')))
-            else:
-                print('%s[ FAIL ]%s'% (fg('red'), attr('reset')))
-        print()
+def update(cfg, sections):
+    if len(sections) == 0:
+        sections = cfg.sections()
+    base_url = cfg.get('config', 'base_url')
 
-    def _download_file(self, local, remote):
-        if self.folder is not None:
-            remote_url = Config._base_url + self.folder + '/' + remote
-        else:
-            remote_url = Config._base_url + '/' + remote
+    for s in sections:
+        if s != 'config':
+            url = base_url + '/' + s + '/' if s != 'root' else base_url + '/'
+            print(url)
+            for o in cfg.options(s):
+                if o == 'desc':
+                    continue
 
-        response = requests.get(remote_url)
-        try:
-            if response.status_code == 200:
-                with open(local, 'w') as f:
-                    f.write( response.text.encode('utf-8') )
-                    return True
-            else:
-                return False
-        except IOError:
-            return False
+                if o.count(';') > 0:
+                    tok = o.split(';')
+                    dir_chmod = tok[2] if len(tok) == 3 else int(cfg.get('config', 'dir_chmod'), 8)
+                    file_chmod = tok[1]
+                    o = tok[0]
+                else:
+                    dir_chmod = int(cfg.get('config', 'dir_chmod'), 8)
+                    file_chmod = cfg.get('config', 'file_chmod')
+
+                response = requests.get(url + o)
+                ok = False
+
+                try:
+                    if response.status_code == 200:
+                        f = exp(cfg.get(s, o))
+                        try:
+                            os.makedirs( os.path.dirname(f), mode = dir_chmod )
+                        except OSError:
+                            pass
+                        with open(f, 'w') as fp:
+                            fp.write( response.text.encode('utf-8') )
+                        chmod(f, file_chmod)
+                        if os.geteuid() == 0:
+                            chown(f)
+                        ok = True
+                except IOError as e:
+                    print(e)
+
+                print( cfg.get(s, o).ljust(75), end = '')
+                if ok:
+                    print( '%s[  OK  ]%s' % (fg('green'), attr('reset')) )
+                else:
+                    print( '%s[ FAIL ]%s' % (fg('red'), attr('reset')) )
+
+def link(src, dst):
+    pass
 
 def main():
-    home = os.getenv('HOME')
-    configs = {}
-    update_list = []
+    args = parse_args()
 
-    configs['self'] = Config('update script', 'scripts',
-        File('env-update', j('/bin', 'env-update'))
-    )
-
-    configs['scripts'] = Config('all scripts', 'scripts',
-        File('env-update',  j('/bin', 'env-update')),
-        File('cbtype',      j('/bin', 'cbtype')),
-        File('chkb',        j('/bin', 'chkb')),
-        File('todo',        j('/bin', 'todo')),
-        File('todo-ssh',    j('/bin', 'todo-ssh')),
-        File('todo.conf',   j(home,   '.todo.conf')),
-    )
-
-    configs['tmux'] = Config('tmux multiplexer', 'tmux',
-        File('tmux.conf',       j(home,   '.tmux.conf')),
-        File('tmux.conf.ssh',   j(home,   '.tmux.conf.ssh')),
-        File('tmux.common',     j(home,   '.tmux.common')),
-        File('ssh-tmux',        j('/bin', 'ssh-tmux'))
-    )
-
-    configs['vim'] = Config('vim editor', 'vim',
-        File('vimrc', j(home, '.vimrc'))
-    )
-
-    configs['shell'] = Config('zsh shell', 'shell',
-        File('inputrc',             j(home, '.inputrc')),
-        File('ipython_config.py',   j(home, '.ipython', 'profile_default', 'ipython_config.py')),
-        File('zshrc',               j(home, '.zshrc')),
-        File('dircolors',           j(home, '.dircolors'))
-    )
-
-    configs['i3wm'] = Config('i3 status bar', 'i3wm',
-        File('i3status.conf',   j(home, '.i3status.conf')),
-        File('config',          j(home, '.i3', 'config')),
-        File('i3wrapper.py',    j(home, '.i3', 'i3wrapper.py')),
-        File('net_ip.py',       j(home, '.i3', 'net_ip.py'))
-    )
-
-    configs['irssi'] = Config('irssi IRC client', 'irssi',
-        File('reddress.theme', j(home, '.irssi', 'reddress.theme'))
-    )
-
-    configs['x11'] = Config('X11', 'X11',
-        File('Xresources', j(home, '.Xresources'))
-    )
-
-    configs['gpg'] = Config('GnuPG', 'gnupg',
-        File('gpg-agent.conf',  j(home, '.gnupg', 'gpg-agent.conf')),
-        File('gpg.conf',        j(home, '.gnupg', 'gpg.conf'))
-    )
-
-    configs['reveng'] = Config('reverse engineering', 'reveng',
-        File('radare2rc', j(home, '.radare2rc'))
-    )
-
-    if len(sys.argv) > 1:
-        for idx in range( 1, len(sys.argv) ):
-            update_list.append(sys.argv[idx])
-        update_list = set(update_list)
-
-        for item in update_list:
-            if item in configs:
-                configs[item].update()
+    if args.config is None:
+        cfg = parse_configs('/etc/env-update.cfg')
     else:
-        print("Usage: env-update [ list of configs ]")
-        print("Known configs:")
-        for key, val in configs.items():
-            print( "\t%s\t - %s" % (key, val.description) )
+        cfg = parse_configs(args.config[0])
+
+    if args.list is not None:
+        listing(cfg, args.list)
+
+    if args.update is not None:
+        update(cfg, args.update)
 
 if __name__ == '__main__':
     main()
