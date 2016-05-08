@@ -1,4 +1,4 @@
-#! env python
+#! /usr/bin/python
 
 from __future__ import print_function
 
@@ -51,27 +51,29 @@ def listing(cfg, l):
 def chmod(f, mod):
     subprocess.call( ('chmod %s %s' % (mod, f)).split(' ') )
 
-def chown(f, own):
-    subprocess.call( 'chown root:root %s' % f )
+def chown(f):
+    subprocess.call( ('chown root:root %s' % f ).split(' ') )
 
 def update(cfg, sections):
     if len(sections) == 0:
         sections = cfg.sections()
     base_url = cfg.get('config', 'base_url')
 
+    print('Updating...')
     for s in sections:
         if s != 'config':
+            print( '%s%s%s' % (fg('blue'), s, attr('reset')) )
             url = base_url + '/' + s + '/' if s != 'root' else base_url + '/'
-            print(url)
             for o in cfg.options(s):
                 if o == 'desc':
                     continue
 
-                if o.count(';') > 0:
-                    tok = o.split(';')
+                v = cfg.get(s, o)
+                if v.count(';') > 0:
+                    tok = v.split(';')
                     dir_chmod = tok[2] if len(tok) == 3 else int(cfg.get('config', 'dir_chmod'), 8)
                     file_chmod = tok[1]
-                    o = tok[0]
+                    v = tok[0]
                 else:
                     dir_chmod = int(cfg.get('config', 'dir_chmod'), 8)
                     file_chmod = cfg.get('config', 'file_chmod')
@@ -81,7 +83,7 @@ def update(cfg, sections):
 
                 try:
                     if response.status_code == 200:
-                        f = exp(cfg.get(s, o))
+                        f = exp(v)
                         try:
                             os.makedirs( os.path.dirname(f), mode = dir_chmod )
                         except OSError:
@@ -92,14 +94,16 @@ def update(cfg, sections):
                         if os.geteuid() == 0:
                             chown(f)
                         ok = True
-                except IOError as e:
-                    print(e)
+                except IOError:
+                    pass
 
-                print( cfg.get(s, o).ljust(75), end = '')
+                out = ('   ' + v).ljust(30)
+                out = '%s%s%s' % (fg('cyan'), out, attr('reset'))
                 if ok:
-                    print( '%s[  OK  ]%s' % (fg('green'), attr('reset')) )
+                    out += ('%s[  OK  ]%s' % (fg('green'), attr('reset')))
                 else:
-                    print( '%s[ FAIL ]%s' % (fg('red'), attr('reset')) )
+                    out += ('%s[ FAIL ]%s' % (fg('red'), attr('reset')))
+                print(out)
 
 def link(src, dst):
     pass
