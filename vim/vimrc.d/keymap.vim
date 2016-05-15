@@ -1,11 +1,13 @@
 " map vs. remap vs. noremap - http://stackoverflow.com/questions/3776117
 
-" F1 to highlight occurences of word under cursor and F2 to disable highlighting
-"map <F1> :setl hlsearch<CR>#*
-"map <F2> :setl hlsearch!<CR>
-map <F1> <Leader>m
-map <F2> :setl hlsearch<CR>#*
-map <F3> :MarkClear<CR>:setl nohlsearch<CR>
+if FileIsPresent('mark.vim')
+    map <F1> :setl hlsearch<CR>#*
+    map <F2> :setl hlsearch!<CR>
+else
+    map <F1> <Leader>m
+    map <F2> :setl hlsearch<CR>#*
+    map <F3> :MarkClear<CR>:setl nohlsearch<CR>
+endif
 
 " to disable autoindentation and autocommenting press F3, to enable it back press F4
 map <F5> :set formatoptions-=cro nocindent noautoindent nosmartindent inde=<CR>
