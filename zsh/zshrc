@@ -1,0 +1,13 @@
+#! /usr/bin/zsh
+
+# if certain configs need to be applied first, then apply them in the init.zsh file
+source ~/.zshrc.d/init.zsh
+
+for f in $(ls ~/.zshrc.d); do
+    if [[ $f != 'init.zsh' && $f != 'final.zsh' ]]; then
+        source ~/.zshrc.d/$f
+    fi
+done
+
+# if certain configs need to be applied last, then apply them in the final.zsh file
+source ~/.zshrc.d/final.zsh
