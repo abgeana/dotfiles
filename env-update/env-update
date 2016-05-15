@@ -31,7 +31,7 @@ def listing(cfg, l):
             if s != 'config':
                 out = '    %s%s%s' % (fg('blue'), s, attr('reset'))
                 if cfg.has_option(s, 'desc'):
-                    out = out.ljust(30) + '%s%s%s' % (fg('cyan'), cfg.get(s, 'desc'), attr('reset'))
+                    out = out.ljust(40) + '%s%s%s' % (fg('cyan'), cfg.get(s, 'desc'), attr('reset'))
                 print(out)
     else:
         for s in l:
@@ -44,7 +44,7 @@ def listing(cfg, l):
                     if ';' in v:
                         v = v[:v.find(';')]
                     out = '    %s%s%s' % (fg('cyan'), o, attr('reset'))
-                    out = out.ljust(30)
+                    out = out.ljust(50)
                     out += '%s%s%s' % (fg('green'), exp(v), attr('reset'))
                     print(out)
 
