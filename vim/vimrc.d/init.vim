@@ -14,7 +14,7 @@ function FileIsPresent(script)
     for dir in split( &rtp, ',' )
         if isdirectory(dir)
             for file in split( system('find ' . dir . ' -type f'), ' ' )
-                if file =~ ('.*' . a:script)
+                if file =~ ('.*/' . a:script)
                     return 1
                 endif
             endfor
