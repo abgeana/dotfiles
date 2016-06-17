@@ -12,8 +12,6 @@ if [[ $(uname -a) =~ ".*Linux.*" ]]; then
         COLOR_USER='196'
     fi
 
-    COLOR_HOST='255' # this is the default
-
     if [[ $(hostname) =~ 'hthvm\-.*' ]]; then
         COLOR_HOST=208
     elif [[ $(hostname) =~ 'panvm\-.*' ]]; then
@@ -37,6 +35,10 @@ if [[ $(uname -a) =~ ".*Linux.*" ]]; then
                 COLOR_HOST=$HOST_COLORS[$key]
             fi
         done
+
+        if [[ -z "$COLOR_HOST" ]]; then
+            COLOR_HOST=$(python -c "import hashlib; import socket; m = hashlib.md5(); m.update(socket.gethostname()); print ord(m.digest()[0])")
+        fi
     fi
 
     export PROMPT="%F{255}[ %* ]%F{ $COLOR_USER } %n %F{ $COLOR_EXTRA } @ %F{ $COLOR_HOST } %m %F{ $COLOR_EXTRA }: %~ %f "
