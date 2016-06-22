@@ -9,7 +9,7 @@ set $mod Mod4
 font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
 
 # switch langauges
-bindsym $mod+F1 exec /bin/ch_kblayout.sh
+bindsym $mod+F1 exec /bin/chkb
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -56,6 +56,12 @@ bindsym $mod+Shift+Left move left
 bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
+
+# move workspace to different monitors (outputs)
+bindsym $mod+Shift+u move workspace to output left
+bindsym $mod+Shift+i move workspace to output down
+bindsym $mod+Shift+o move workspace to output up
+bindsym $mod+Shift+p move workspace to output right
 
 # split in horizontal orientation
 bindsym $mod+i split h
