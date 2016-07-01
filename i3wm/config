@@ -9,7 +9,7 @@ set $mod Mod4
 font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
 
 # switch langauges
-bindsym $mod+F1 exec /bin/ch_kblayout.sh
+bindsym $mod+F1 exec /bin/chkb
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -57,6 +57,12 @@ bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
+# move workspace to different monitors (outputs)
+bindsym $mod+Shift+u move workspace to output left
+bindsym $mod+Shift+i move workspace to output down
+bindsym $mod+Shift+o move workspace to output up
+bindsym $mod+Shift+p move workspace to output right
+
 # split in horizontal orientation
 bindsym $mod+i split h
 
@@ -91,12 +97,12 @@ bindsym $mod+0 workspace number 10
 
 # rename workspaces
 # https://faq.i3wm.org/question/1774/rename-workspace-with-i3-input-using-numbers-and-text.1.html
-bindsym $mod+Shift+n exec i3-input -F 'rename workspace to "%s"' -P 'New name for this workspace: '
+bindsym $mod+n exec i3-input -F 'rename workspace to "%s"' -P 'New name for the currently active workspace: '
 
 # change current window name
 # https://askubuntu.com/questions/626505
 # https://unix.stackexchange.com/questions/38867
-bindsym $mod+Shift+w exec i3-input -F 'exec xdotool getactivewindow set_window --name "%s"' -P 'New name for the currently active window: '
+bindsym $mod+Shift+n exec i3-input -F 'exec xdotool getactivewindow set_window --name "%s"' -P 'New name for the currently active window: '
 
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace number 1
