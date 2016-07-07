@@ -20,6 +20,9 @@ def parse_args():
 
 def parse_configs(f):
     cfg = ConfigParser.ConfigParser()
+    # next line is needed in order to make option names case-sensitive
+    # https://stackoverflow.com/questions/1611799
+    cfg.optionxform = str
     with open(f, 'r') as fp:
         cfg.readfp(fp)
     return cfg
