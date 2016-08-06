@@ -22,7 +22,7 @@ alias -g noerr='2> /dev/null'
 alias -g stdboth='2>&1'
 
 # if we have neovim installed, alias vim to nvim
-NVIM_BIN=$(which nvim)
+NVIM_BIN=$(which nvim 2> /dev/null)
 if [[ $? == 0 ]]; then
     alias vim='nvim'
 fi

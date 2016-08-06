@@ -1,6 +1,6 @@
 # this function permits the command 'lsw $arg' which performs 'ls -l $(which $arg)'
 lsw() {
-    local w=$(which $1 )
+    local w=$(which $1 2> /dev/null)
     if [[ $? == 0 ]]; then
         ls -l $w
     else

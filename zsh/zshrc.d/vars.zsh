@@ -6,7 +6,7 @@ export SAVEHIST=$HISTSIZE
 export HISTFILESIZE=
 
 # zsh binary distro independent location (needed for .tmux.common)
-export ZSH_BINARY=$(which zsh)
+export ZSH_BINARY=$(which zsh 2> /dev/null)
 
 # needed for gpg-agent (see man gpg-agent)
 export GPG_TTY=$(tty)
@@ -17,10 +17,10 @@ if [[ -f "$HOME/.gpg-agent-info" ]]; then
 fi
 
 # for $EDITOR, check for availability of neovim, otherwise fallback to vim
-NVIM_BIN=$(which nvim)
+NVIM_BIN=$(which nvim 2> /dev/null)
 if [[ $? == 0 ]]; then
     export EDITOR=$NVIM_BIN
     alias vim='nvim'
 else
-    export EDITOR=$(which vim)
+    export EDITOR=$(which vim 2> /dev/null)
 fi
