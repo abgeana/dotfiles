@@ -12,6 +12,9 @@ fi
 # default is '*?_-.[]~=/&;!#$%^(){}<>'
 WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'  # remove /
 
+# set time between esc key press and mode change registration to 0.1 seconds
+export KEYTIMEOUT=1
+
 # autoload calls for functions distributed by zsh
 # explanations for autoload flags in:
 #   man zshbuilins
