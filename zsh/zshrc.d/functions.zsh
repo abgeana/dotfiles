@@ -153,3 +153,99 @@ reload() {
         source ~/.zshrc
     fi
 }
+
+# colorized man pages
+# details on http://boredzo.org/blog/archives/2016-08-15/colorized-man-pages-understood-and-customized
+man() {
+    env                                             \
+        LESS_TERMCAP_mb=$(printf "\e[1;31m")        \
+        LESS_TERMCAP_md=$(printf "\e[1;31m")        \
+        LESS_TERMCAP_me=$(printf "\e[0m")           \
+        LESS_TERMCAP_se=$(printf "\e[0m")           \
+        LESS_TERMCAP_so=$(printf "\e[1;8;31m")      \
+        LESS_TERMCAP_ue=$(printf "\e[0m")           \
+        LESS_TERMCAP_us=$(printf "\e[1;32m")        \
+        man "$@"
+}
+
+# open luks encrypted devices easily
+luksopen() {
+    local need_sudo=0
+
+    if [[ $# != 3 ]]; then
+        echo 'Usage: luksopen [device in /dev] [volume name] [mount point]'
+        return
+    fi
+
+    if [[ $(id -u) != 0 ]]; then
+        which sudo &> /dev/null
+        if [[ $? != 0 ]]; then
+            echo 'You are not root and you do not have sudo installed.'
+            return
+        else
+            need_sudo=1
+            sudo -n true 2> /dev/null
+            if [[ $? != 0 ]]; then
+                echo 'You need to type the password for sudo first!'
+            fi
+        fi
+    fi
+
+    if [[ $need_sudo ]]; then
+        sudo cryptsetup luksOpen /dev/$1 $2
+        if [[ $? == 0 ]]; then
+            sudo mount /dev/mapper/$2 $3
+        else
+            echo "Could not open $1"
+        fi
+    else
+        cryptsetup luksOpen /dev/$1 $2
+        if [[ $? == 0 ]]; then
+            mount /dev/mapper/$2 $3
+        else
+            echo "Could not open $1"
+        fi
+    fi
+}
+
+# close luks devices easily
+luksclose() {
+    local need_sudo=0
+
+    if [[ $# != 1 ]]; then
+        echo 'Usage: luksclose [volume name]'
+        return
+    fi
+
+    if [[ $(id -u) != 0 ]]; then
+        which sudo &> /dev/null
+        if [[ $? != 0 ]]; then
+            echo 'You are not root and you do not have sudo installed.'
+            return
+        else
+            need_sudo=1
+            sudo -n true 2> /dev/null
+            if [[ $? != 0 ]]; then
+                echo 'You need to type the password for sudo first!'
+            fi
+        fi
+    fi
+
+    local mount_point=$(mount -l | grep $1 | awk '{ print $3 }')
+
+    if [[ $need_sudo ]]; then
+        sudo umount $mount_point
+        if [[ $? != 0 ]]; then
+            sudo cryptsetup luksClose $1
+        else
+            echo "Could not close $1"
+        fi
+    else
+        umount $mount_point
+        if [[ $? != 0 ]]; then
+            cryptsetup luksClose $1
+        else
+            echo "Could not close $1"
+        fi
+    fi
+}

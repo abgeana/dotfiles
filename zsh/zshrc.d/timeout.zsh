@@ -1,5 +1,4 @@
 # timeouts to do things every $TMOUT seconds
-#
 TMOUT=1
 
 TRAPALRM() {
