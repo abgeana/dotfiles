@@ -10,7 +10,7 @@ if FileIsPresent('mark.vim')
 endif
 
 " clang format
-if filereadable('/usr/share/vim/addons/syntax/clang-format-3.7.py')
-    map <C-f> :pyf /usr/share/vim/addons/syntax/clang-format-3.7.py<CR>
-    imap <C-f> <c-o>:pyf/usr/share/vim/addons/syntax/clang-format-3.7.py<CR>
+if filereadable('/usr/share/vim/addons/syntax/clang-format-3.5.py')
+    map <A-f> :pyf /usr/share/vim/addons/syntax/clang-format-3.5.py<CR>
+    imap <A-f> <c-o>:pyf/usr/share/vim/addons/syntax/clang-format-3.5.py<CR>
 endif
