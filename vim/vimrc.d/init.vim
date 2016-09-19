@@ -29,13 +29,13 @@ function FileIsPresent(script)
     return 0
 endfunction
 
-" pathogen ( required for future configs, needs to be in init.vim )
+" vundle plugins
 if FileIsPresent('vundle.vim')
-    " set the runtime path to include Vundle and initialize
+    " set the runtime path to include vundle and initialize
     set rtp+=~/.vim/bundle/Vundle.vim
     call vundle#begin()
 
-    " let Vundle manage Vundle, required
+    " let vundle manage vundle, required
     Plugin 'VundleVim/Vundle.vim'
     " nerdtree file viewer
     Plugin 'scrooloose/nerdtree'
