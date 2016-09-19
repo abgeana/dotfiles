@@ -18,7 +18,7 @@ map <F5> :set formatoptions-=cro nocindent noautoindent nosmartindent inde=<CR>
 map <F6> :set formatoptions+=cro nocindent autoindent smartindent inde=    <CR>
 
 " enter command mode with ; instead of :
-noremap ; :
+noremap ; q:
 
 " move cursor on wrapped lines
 map <silent> <A-k> gk
