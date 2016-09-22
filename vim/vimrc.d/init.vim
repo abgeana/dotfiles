@@ -45,6 +45,14 @@ if FileIsPresent('vundle.vim')
     Plugin 'MattesGroeger/vim-bookmarks'
     " unite magic
     Plugin 'Shougo/unite.vim'
+    " vim git integration
+    Plugin 'tpope/vim-fugitive'
+    " automatic session management
+    Plugin 'tpope/vim-obsession'
+    " my own version of mark.vim for fancy colors
+    Plugin 'alegen/mark.vim'
+    " tags listing on the side
+    Plugin 'vim-scripts/taglist.vim'
 
     call vundle#end()
 endif

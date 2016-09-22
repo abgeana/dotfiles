@@ -48,7 +48,11 @@ set undolevels=1000
 set noerrorbells
 
 " make a useful status line
-set statusline=%F\ [%Y,%{&ff}]\ %m%r%h%=[\ %l/%L\ ,\ %v\ ][\ %p%%\ ]
+if FileIsPresent('fugitive.vim')
+    set statusline=[\ buffer\ %n\ ]\ %F\ [%Y,%{&ff}]\ %m%r%h%=%{fugitive#statusline()}[\ %l/%L\ ,\ %v\ ][\ %p%%\ ]
+else
+    set statusline=[\ buffer\ %n\ ]\ %F\ [%Y,%{&ff}]\ %m%r%h%=[\ %l/%L\ ,\ %v\ ][\ %p%%\ ]
+endif
 
 " always show the status line
 set laststatus=2

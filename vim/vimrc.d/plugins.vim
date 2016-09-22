@@ -1,7 +1,9 @@
 " nerdtree
 if FileIsPresent('nerdtree.vim')
     let g:NERDTreeMinimalUI=1
-    map <C-z> :NERDTreeToggle<CR>
+    " the ^[ is an escape character and may be typed by pressing ctrl+v and then alt+key
+    set <m-n>=n
+    map <m-n> :NERDTreeToggle<CR>
 endif
 
 " mark

@@ -5,7 +5,7 @@ if FileIsPresent('mark.vim')
     " the regular search highlighting
     map <F1> <Leader>m
     map <F2> :setl hlsearch<CR>#*
-    map <F3> :set nohlsearch<CR>
+    map <F3> :setl hlsearch!<CR>
     map <F4> :MarkClear<CR>:setl nohlsearch<CR>
 else
     " if the plugin is not available, use only search highlighting
@@ -18,21 +18,22 @@ map <F5> :set formatoptions-=cro nocindent noautoindent nosmartindent inde=<CR>
 map <F6> :set formatoptions+=cro nocindent autoindent smartindent inde=    <CR>
 
 " enter command mode with ; instead of :
-noremap ; q:
+noremap ; q:i
 
 " move cursor on wrapped lines
-map <silent> <A-k> gk
-map <silent> <A-j> gj
+map <silent> <C-k> gk
+map <silent> <C-j> gj
+
+" use ctrl+[d,u] instead of ctrl+[f,b]
+" this is mainly because tmux uses ctrl+b
+noremap <C-d> <C-f>
+noremap <C-u> <C-b>
 
 " break the arrow keys habbit once and for all...
 noremap <Up> <NOP>
 noremap <Down> <NOP>
 noremap <Left> <NOP>
 noremap <Right> <NOP>
-
-" use Ctrl-[j,k] instead of Ctrl-[e,y]
-noremap <C-j> <C-e>
-noremap <C-k> <C-y>
 
 " ability to sudo write to a file without opening vim as root
 " http://stackoverflow.com/questions/2600783
