@@ -53,6 +53,11 @@ if FileIsPresent('vundle.vim')
     Plugin 'alegen/mark.vim'
     " tags listing on the side
     Plugin 'vim-scripts/taglist.vim'
+    " markdown helper
+    Plugin 'godlygeek/tabular'
+    Plugin 'plasticboy/vim-markdown'
+    " easier motions
+    Plugin 'easymotion/vim-easymotion'
 
     call vundle#end()
 endif
