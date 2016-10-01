@@ -36,6 +36,8 @@ if FileIsPresent('vundle.vim')
     call vundle#begin()
 
     " let vundle manage vundle, required
+    " to install vundle, run the following command
+    " git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
     Plugin 'VundleVim/Vundle.vim'
     " nerdtree file viewer
     Plugin 'scrooloose/nerdtree'
