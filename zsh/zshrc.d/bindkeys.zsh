@@ -2,10 +2,10 @@
 # to specify key bindings to work in command mode, use '-M vicmd'
 
 # history searching
-bindkey '^R' history-incremental-search-backward
-bindkey '^T' history-incremental-search-forward
-bindkey -M vicmd '^R' history-incremental-search-backward
-bindkey -M vicmd '^T' history-incremental-search-forward
+bindkey '^R' history-incremental-pattern-search-backward
+bindkey '^T' history-incremental-pattern-search-forward
+bindkey -M vicmd '^R' history-incremental-pattern-search-backward
+bindkey -M vicmd '^T' history-incremental-pattern-search-forward
 
 # go up and down in history
 bindkey -M vicmd 'k' history-beginning-search-backward

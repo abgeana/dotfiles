@@ -112,7 +112,7 @@ clean-trash() {
     for file in ~/.trash/*; do
         local change_time=$(stat -c %Z $file)
         local age=$(( (current_time - change_time) / (60. * 60. * 24) ))
-        if [[ $age > 30 ]]; then
+        if [[ $age -gt 30 ]]; then
             /bin/rm -rf $file
         fi
     done
