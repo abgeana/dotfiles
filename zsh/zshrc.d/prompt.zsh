@@ -14,20 +14,18 @@ if [[ $(uname -a) =~ ".*Linux.*" ]]; then
 
     if [[ $(hostname) =~ 'hthvm\-.*' ]]; then
         COLOR_HOST=208
-    elif [[ $(hostname) =~ 'panvm\-.*' ]]; then
-        COLOR_HOST=27
+    elif [[ $(hostname) =~ 'rgvm\-.*' ]]; then
+        COLOR_HOST=201
     else
         typeset -A HOST_COLORS
         HOST_COLORS=(
             bendis          156
             heretic         156
-            gebeleizis      227 # to be removed
             hathor          227
-            pan              51
+            rogue           206
             apozeu           36
             homero           21
             tanya           134
-            brainiac         58
         )
 
         for key in "${(@k)HOST_COLORS}"; do
