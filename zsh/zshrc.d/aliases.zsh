@@ -15,6 +15,7 @@ alias brm='/bin/rm'
 alias gdb='gdb -q'
 alias grep='grep --color=always'
 alias less='less -R'
+alias fm='vifm'
 
 # global aliases defined with '-g' (i.e. can be placed anywhere in other commands)
 alias -g silent='> /dev/null 2>&1'
