@@ -17,9 +17,9 @@ highlight TopLineSel        cterm=none              ctermfg=blue        ctermbg=
 highlight StatusLine        cterm=none              ctermfg=blue        ctermbg=none
 highlight Border            cterm=none              ctermfg=blue        ctermbg=none
 highlight Selected          cterm=bold              ctermfg=magenta     ctermbg=default
-highlight CurrLine          cterm=bold              ctermfg=default     ctermbg=1
+highlight CurrLine          cterm=bold              ctermfg=default     ctermbg=black
 highlight WildMenu          cterm=underline,reverse ctermfg=white       ctermbg=black
-highlight CmdLine           cterm=none              ctermfg=white       ctermbg=black
+highlight CmdLine           cterm=none              ctermfg=white       ctermbg=none
 highlight ErrorMsg          cterm=none              ctermfg=red         ctermbg=black
 highlight Directory         cterm=none              ctermfg=33          ctermbg=default
 highlight Link              cterm=none              ctermfg=37          ctermbg=default
