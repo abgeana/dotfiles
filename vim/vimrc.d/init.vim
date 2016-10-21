@@ -60,6 +60,8 @@ if FileIsPresent('vundle.vim')
     Plugin 'plasticboy/vim-markdown'
     " easier motions
     Plugin 'easymotion/vim-easymotion'
+    " vifm madness
+    Plugin 'vifm/vifm.vim'
 
     call vundle#end()
 endif
