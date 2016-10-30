@@ -19,8 +19,8 @@ if FileIsPresent('nerdtree.vim')
     let g:NERDTreeMinimalUI=1
     let g:NERDTreeShowLineNumbers=1
     " the ^[ is an escape character and may be typed by pressing ctrl+v and then alt+key
-    set <m-e>=e
-    map <m-e> :NERDTreeToggle<CR>
+    set <m-x>=x
+    map <m-x> :NERDTreeToggle<CR>
 endif
 
 " clang format
