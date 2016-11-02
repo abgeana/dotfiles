@@ -14,7 +14,7 @@ if [[ $(uname -a) =~ ".*Linux.*" ]]; then
 
     if [[ $(hostname) =~ 'hthvm\-.*' ]]; then
         COLOR_HOST=208
-    elif [[ $(hostname) =~ 'rgvm\-.*' ]]; then
+    elif [[ $(hostname) =~ 'rogvm\-.*' ]]; then
         COLOR_HOST=201
     else
         typeset -A HOST_COLORS
