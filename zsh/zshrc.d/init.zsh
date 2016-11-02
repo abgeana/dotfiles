@@ -58,8 +58,8 @@ setopt hist_ignore_all_dups
 setopt hist_ignore_space
 # this line makes sure the right prompt of previous lines is removed
 setopt transient_rprompt
-# automatically get completion when pressing tab instead of a list of options
-#setopt menu_complete
+# allow corrections to be displayed on the screen
+setopt correct
 
 # zstyle changes
 # explanations for the zstyle command in:
