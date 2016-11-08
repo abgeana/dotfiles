@@ -62,6 +62,10 @@ if FileIsPresent('vundle.vim')
     Plugin 'easymotion/vim-easymotion'
     " vifm madness
     Plugin 'vifm/vifm.vim'
+    " support for the vala language
+    Plugin 'arrufat/vala.vim'
+    " restore cursor position and folds
+    Plugin 'vim-scripts/restore_view.vim'
 
     call vundle#end()
 endif

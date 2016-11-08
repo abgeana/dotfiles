@@ -5,8 +5,9 @@ set hidden
 " disable the mouse completely
 set mouse=
 
-" use markers for folding
-set foldmethod=marker
+" use manual folding and show the fold column
+set foldmethod=manual
+set foldcolumn=1
 
 " backspace behaviour
 " http://vim.wikia.com/wiki/Erasing_previously_entered_characters_in_insert_mode
@@ -59,3 +60,6 @@ set laststatus=2
 
 " we have a fast terminal
 set ttyfast
+
+" viewoptions suggested by the restore_view.vim plugin
+set viewoptions=cursor,folds,slash,unix

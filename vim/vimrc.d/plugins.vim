@@ -16,8 +16,13 @@ endif
 
 " nerdtree
 if FileIsPresent('nerdtree.vim')
+    " do not display header
     let g:NERDTreeMinimalUI=1
+    " show line numbers in the file viewer
     let g:NERDTreeShowLineNumbers=1
+    " make splits behave same as with ctrl-w
+    let g:NERDTreeMapOpenSplit='s'
+    let g:NERDTreeMapOpenVSplit='v'
     " the ^[ is an escape character and may be typed by pressing ctrl+v and then alt+key
     set <m-x>=x
     map <m-x> :NERDTreeToggle<CR>
