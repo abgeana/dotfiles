@@ -76,6 +76,9 @@ set suggestoptions=visual,view,otherpane,keys,marks,registers
 set ignorecase
 set smartcase
 
+" Ignore case of paths during completion.
+set caseoptions=pG
+
 " Don't highlight search results automatically
 
 set nohlsearch
