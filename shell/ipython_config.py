@@ -1,54 +1,62 @@
 '''
     This is not meant to be executed on its own. Instead, place this in the appropriate ipython profile directory.
-    Configuration documentation available online at: http://ipython.org/ipython-doc/dev/config
     For a default profile on a fresh box:
         1) execute "ipython profile create"
         2) copy this file to ~/.ipython/profile_default
+
+    Most up-to-date documentation on how to configure IPython is found at:
+    https://ipython.readthedocs.io/en/stable/index.html
 '''
 
-# get Config object
-c = get_config()
+import os
+from IPython.terminal.interactiveshell import TerminalInteractiveShell
+from IPython.terminal.prompts import Prompts, Token
 
-###
-#   interactive shell configs
-###
-c.InteractiveShell.autoindent = True        # auto-indentation where appropriate
-c.InteractiveShell.confirm_exit = False     # exit without asking
-c.InteractiveShell.editor = 'vim'           # vim as editor
-c.InteractiveShellApp.exec_lines = [        # startup execution of stuff
+# custom prompt
+# the class below is inspired from the default Prompts class source code
+# more info at https://ipython.readthedocs.io/en/stable/config/details.html
+class AlegenPrompt(Prompts):
+
+    def in_prompt_tokens(self, cli=None):
+        return [
+            (Token.Prompt, '[ '),
+            (Token.PromptNum, str(self.shell.execution_count)),
+            (Token.Prompt, ' >>> '),
+        ]
+
+    def continuation_prompt_tokens(self, cli = None, width = None):
+        if width is None:
+            width = self._width()
+        return [
+            (Token.Prompt, (' ' * (width - 5)) + '...: '),
+        ]
+
+    def rewrite_prompt_tokens(self):
+        width = self._width()
+        return [
+            (Token.Prompt, ('-' * (width - 2)) + '> '),
+        ]
+
+    def out_prompt_tokens(self):
+        return [
+            (Token.OutPrompt, '[ '),
+            (Token.OutPromptNum, str(self.shell.execution_count)),
+            (Token.OutPrompt, ' <<< '),
+        ]
+
+TerminalInteractiveShell.autoindent = True              # auto-indentation where appropriate
+TerminalInteractiveShell.confirm_exit = False           # exit without asking
+TerminalInteractiveShell.editor = 'vim'                 # vim as editor
+TerminalInteractiveShell.editing_mode = 'vi'            # vim as editor
+TerminalInteractiveShell.prompts_class = AlegenPrompt
+
+c = get_config()
+c.TerminalIPythonApp.display_banner = False             # do not display the banner
+c.InteractiveShellApp.exec_lines = [
     'import numpy as np',
     'import os, os.path',
     'import sys'
 ]
-
-###
-#   terminal app configs
-###
-c.TerminalIPythonApp.display_banner = False # do not display the banner
-
-###
-#   aliases
-###
-
-c.AliasManager.user_aliases = [
+c.AliasManager.user_aliases = [                         # aliases
     ('lss', 'ls --color=tty -Alh')
 ]
-
-###
-#   the prompt
-###
-
-# color variables to make life easier
-cLCyan  = '{color.LightCyan}'
-cLBlue  = '{color.LightBlue}'
-cRed    = '{color.Red}'
-cGreen  = '{color.Green}'
-cBlue   = '{color.Blue}'
-cWhite  = '{color.White}'
-
-# prompt variables
-prompt_start = cLCyan + '[IP] '
-c.PromptManager.in_template = cLCyan + 'IPython ' + cGreen + '[\#' + cGreen + ']' + cLCyan + ' <<< '
-c.PromptManager.in2_template = cLCyan + '<<< '
-c.PromptManager.out_template = cGreen + '[\#' + cGreen + ']' + cLCyan + ' >>> '
-c.PromptManager.justify = True

@@ -28,6 +28,23 @@ if FileIsPresent('nerdtree.vim')
     map <m-x> :NERDTreeToggle<CR>
 endif
 
+" sneak
+if FileIsPresent('sneak.vim')
+    let g:sneak#streak = 1
+    let g:sneak#s_next = 1
+endif
+
+" easymotion
+if FileIsPresent('EasyMotion.vim')
+    " easiest way to get these is to look at colors displayed in
+    " :so $VIMRUNTIME/syntax/hitest.vim
+    hi link EasyMotionTarget        Title
+    hi link EasyMotionShade         Comment
+    hi link EasyMotionTarget2First  Question
+    hi link EasyMotionTarget2Second MatchParen
+    hi link EasyMotionMoveHL        Search
+endif
+
 " clang format
 if filereadable('/usr/share/vim/addons/syntax/clang-format-3.5.py')
     set <m-f>=f

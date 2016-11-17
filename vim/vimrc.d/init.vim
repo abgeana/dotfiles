@@ -60,6 +60,7 @@ if FileIsPresent('vundle.vim')
     Plugin 'plasticboy/vim-markdown'
     " easier motions
     Plugin 'easymotion/vim-easymotion'
+    Plugin 'justinmk/vim-sneak'
     " vifm madness
     Plugin 'vifm/vifm.vim'
     " support for the vala language
