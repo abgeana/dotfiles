@@ -67,6 +67,8 @@ if FileIsPresent('vundle.vim')
     Plugin 'arrufat/vala.vim'
     " restore cursor position and folds
     Plugin 'vim-scripts/restore_view.vim'
+    " my own mirror of cscope_maps.vim
+    Plugin 'alegen/vim-cscope-maps'
 
     call vundle#end()
 endif
