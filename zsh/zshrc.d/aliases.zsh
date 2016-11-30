@@ -13,9 +13,11 @@ alias unset-proxy='unset http_proxy https_proxy HTTP_PROXY HTTPS_PROXY'
 alias unset-hist='unset HISTFILE'
 alias brm='/bin/rm'
 alias gdb='gdb -q'
+alias arm-gdb='arm-none-eabi-gdb -q'
 alias grep='grep --color=always'
 alias less='less -R'
 alias fm='vifm'
+alias cal='cal --week --monday'
 
 # global aliases defined with '-g' (i.e. can be placed anywhere in other commands)
 alias -g silent='> /dev/null 2>&1'
