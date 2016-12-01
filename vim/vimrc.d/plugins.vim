@@ -32,6 +32,7 @@ endif
 if FileIsPresent('sneak.vim')
     let g:sneak#streak = 1
     let g:sneak#s_next = 1
+    let g:sneak#use_ic_scs = 1
 endif
 
 " easymotion
