@@ -14,10 +14,17 @@ set foldcolumn=1
 set backspace=indent,eol,start
 
 " tabs and spaces
+" dynamic configuration
+let g:indent_width=4
+function IndentWidthFunc(w)
+    let g:indent_width=a:w
+    let &tabstop=g:indent_width       " control the number of space chars inserted when TAB is pressed
+    let &shiftwidth=g:indent_width    " the number of space characters inserted for indentation
+    let &softtabstop=g:indent_width   " stop at multiple of 4 when pressing TAB key
+endfunction
+command -nargs=1 IndentWidth call IndentWidthFunc(<f-args>)
+IndentWidth 4
 set expandtab       " insert space chars whenever TAB is pressed
-set tabstop=4       " control the number of space chars inserted when TAB is pressed
-set shiftwidth=4    " the number of space characters inserted for indentation
-set softtabstop=4   " stop at multiple of 4 when pressing TAB key
 retab               " when opening a file, convert tab chars to spaces
 
 " autoindentation
