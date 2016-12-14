@@ -70,3 +70,10 @@ set ttyfast
 
 " viewoptions suggested by the restore_view.vim plugin
 set viewoptions=cursor,folds,slash,unix
+
+" avoid problems with esc key and meta key bindings
+" <esc>+key will be the same as <alt>+key if the delay between pressing <esc>
+" and key is less than the value in timeoutlen
+set timeout
+set nottimeout
+set timeoutlen=150
