@@ -29,6 +29,11 @@ autoload -Uz colors
 autoload -Uz add-zsh-hook
 # for using regular expressions
 autoload -Uz regexp-replace
+# for editing the command line in $EDITOR
+autoload -Uz edit-command-line
+
+# enable editing the command line in $EDITOR
+zle -N edit-command-line
 
 # call initialization functions distributed by zsh
 # these are declared by autoload calls above
