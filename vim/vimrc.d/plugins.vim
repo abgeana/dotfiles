@@ -46,6 +46,13 @@ if FileIsPresent('EasyMotion.vim')
     hi link EasyMotionMoveHL        Search
 endif
 
+" taglist
+if FileIsPresent('taglist.vim')
+    let g:Tlist_Use_Right_Window = 1
+    let g:Tlist_WinWidth = 60
+    let g:Tlist_Sort_Type = "name"
+endif
+
 " clang format
 if filereadable('/usr/share/vim/addons/syntax/clang-format-3.5.py')
     set <m-f>=f
