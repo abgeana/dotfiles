@@ -40,7 +40,7 @@ if FileIsPresent('vundle.vim')
     " git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
     Plugin 'VundleVim/Vundle.vim'
     " nerdtree file viewer
-    Plugin 'scrooloose/nerdtree'
+    Plugin 'alegen/nerdtree'
     " solarized color scheme
     Plugin 'altercation/vim-colors-solarized'
     " bookmarks and tags in files
