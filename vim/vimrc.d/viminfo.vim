@@ -8,9 +8,9 @@
 "  n... :  where to save the viminfo files
 if has('nvim')
     " this is the nvim version with extra stuff
-    set viminfo='10,\"100,:20,h,%,n~/.nviminfo
+    set viminfo='10,\"100,:20,h,n~/.nviminfo
 else
     " this is the regular vim version to make sure it does not complain if
     " nvim is also used on the system
-    set viminfo='10,\"100,:20,h,%,n~/.viminfo
+    set viminfo='10,\"100,:20,h,n~/.viminfo
 endif
