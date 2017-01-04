@@ -18,6 +18,10 @@ alias grep='grep --color=always'
 alias less='less -R'
 alias fm='vifm'
 alias cal='cal --week --monday'
+alias ff='find . -type f -name'
+alias fd='find . -type d -name'
+alias ffi='find . -type f -iname'
+alias fdi='find . -type d -iname'
 
 # global aliases defined with '-g' (i.e. can be placed anywhere in other commands)
 alias -g silent='> /dev/null 2>&1'
