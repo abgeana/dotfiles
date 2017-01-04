@@ -76,4 +76,4 @@ set viewoptions=cursor,folds,slash,unix
 " and key is less than the value in timeoutlen
 set timeout
 set nottimeout
-set timeoutlen=150
+set timeoutlen=200

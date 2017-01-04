@@ -55,6 +55,8 @@ if FileIsPresent('vundle.vim')
     Plugin 'alegen/mark.vim'
     " tags listing on the side
     Plugin 'vim-scripts/taglist.vim'
+    " open a file at a specified line
+    Plugin 'vim-scripts/file-line'
     " markdown helper
     Plugin 'godlygeek/tabular'
     Plugin 'plasticboy/vim-markdown'

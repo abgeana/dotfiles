@@ -24,4 +24,4 @@ noremap <Right> <NOP>
 
 " ability to sudo write to a file without opening vim as root
 " http://stackoverflow.com/questions/2600783
-cnoremap w!! w !sudo tee > /dev/null %
+cnoremap sw w !sudo tee > /dev/null %

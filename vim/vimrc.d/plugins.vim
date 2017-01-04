@@ -5,12 +5,12 @@ if FileIsPresent('mark.vim')
     " if the mark plugin is available use it together with
     " the regular search highlighting
     map <F1> <Leader>m
-    map <F2> :setl hlsearch<CR>#*
+    map <F2> :setl hlsearch<CR>:let @/ = expand("<cword>")<CR>
     map <F3> :setl hlsearch!<CR>
     map <F4> :MarkClear<CR>:setl nohlsearch<CR>
 else
     " if the plugin is not available, use only search highlighting
-    map <F1> :setl hlsearch<CR>#*
+    map <F1> :setl hlsearch<CR>:let @/ = expand("<cword>")<CR>
     map <F2> :setl hlsearch!<CR>
 endif
 
