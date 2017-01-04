@@ -1,6 +1,7 @@
 # code for the left side of the prompt
 
 COLOR_EXTRA='118'
+HOSTNAME=$(hostname -s)
 
 if [[ $(uname -a) =~ ".*Linux.*" ]]; then
 
@@ -12,9 +13,9 @@ if [[ $(uname -a) =~ ".*Linux.*" ]]; then
         COLOR_USER='196'
     fi
 
-    if [[ $(hostname) =~ 'hthvm\-.*' ]]; then
+    if [[ $HOSTNAME =~ 'hthvm\-.*' ]]; then
         COLOR_HOST=208
-    elif [[ $(hostname) =~ 'rogvm\-.*' ]]; then
+    elif [[ $HOSTNAME =~ 'rogvm\-.*' ]]; then
         COLOR_HOST=201
     else
         typeset -A HOST_COLORS
@@ -29,13 +30,13 @@ if [[ $(uname -a) =~ ".*Linux.*" ]]; then
         )
 
         for key in "${(@k)HOST_COLORS}"; do
-            if [[ $(hostname) == $key ]]; then
+            if [[ $HOSTNAME == $key ]]; then
                 COLOR_HOST=$HOST_COLORS[$key]
             fi
         done
 
         if [[ -z "$COLOR_HOST" ]]; then
-            COLOR_HOST=$(python -c "import hashlib; import socket; m = hashlib.md5(); m.update(socket.gethostname()); print ord(m.digest()[0])")
+            COLOR_HOST=$(python -c "import hashlib; m = hashlib.md5(); m.update('$HOSTNAME'); print ord(m.digest()[0])")
         fi
     fi
 
