@@ -5,7 +5,8 @@ if FileIsPresent('mark.vim')
     " if the mark plugin is available use it together with
     " the regular search highlighting
     map <F1> <Leader>m
-    map <F2> :setl hlsearch<CR>:let @/ = expand("<cword>")<CR>
+    nnoremap <F2> :call DoSearch(0)<CR>:setl hlsearch<CR>
+    vnoremap <F2> :call DoSearch(1)<CR><Esc>:setl hlsearch<CR>
     map <F3> :setl hlsearch!<CR>
     map <F4> :MarkClear<CR>:setl nohlsearch<CR>
 else

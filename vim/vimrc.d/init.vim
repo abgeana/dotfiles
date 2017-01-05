@@ -15,20 +15,6 @@ set nocompatible
 " define the leader to space
 let mapleader="\<Space>"
 
-" function which checks if a certain script is present
-function FileIsPresent(script)
-    for dir in split( &rtp, ',' )
-        if isdirectory(dir)
-            for file in split( system('find ' . dir . ' -type f'), ' ' )
-                if file =~ ('.*/' . a:script)
-                    return 1
-                endif
-            endfor
-        endif
-    endfor
-    return 0
-endfunction
-
 " vundle plugins
 if FileIsPresent('vundle.vim')
     " set the runtime path to include vundle and initialize

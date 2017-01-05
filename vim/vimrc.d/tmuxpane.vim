@@ -4,4 +4,5 @@ function TmuxPaneBelow()
     silent exec '!tmux send-keys -t 1 "cd ' . getcwd() . '"'
     silent exec '!tmux send-keys -t 1 Enter'
 endfunction
+
 map <C-w>t :call TmuxPaneBelow()<CR>
