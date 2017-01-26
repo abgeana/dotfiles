@@ -50,7 +50,7 @@ verify-watchdog-self-destroy() {
     # this is needed to exit from root shells when the watchdog times out (see watchdog.zsh)
     if [[ $(id -u) == 0 ]]; then
         local IPC_CONTENT=$(cat $IPC_FILE 2> /dev/null)
-        if [[ $IPC_CONTENT == 'exit' ]]; then
+        if [[ $IPC_CONTENT == exit ]]; then
             exit
         fi
     fi
