@@ -11,7 +11,7 @@ watchdog-self-destroy() {
 
         IPC_CONTENT=$(cat $IPC_FILE)
         echo '' > $IPC_FILE
-        if [[ $IPC_CONTENT == "kick" ]]; then
+        if [[ $IPC_CONTENT == kick ]]; then
             TIMER_SELF_DESTROY=15
         else
             TIMER_SELF_DESTROY=$(($TIMER_SELF_DESTROY-1))
@@ -40,7 +40,7 @@ clean-watchdog-self-destroy-files() {
     for f in `ls /tmp/ipc-watchdog-self-destroy-*`; do
         local oldpid=$(echo $f | awk '{ split($0, a, "-"); print a[5] }')
         local pidcmd=$(ps -p $oldpid -o comm=)
-        if [[ $pidcmd != 'zsh' ]]; then
+        if [[ $pidcmd != zsh ]]; then
             rm $f
         fi
     done

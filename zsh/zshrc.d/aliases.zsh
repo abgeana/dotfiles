@@ -35,7 +35,7 @@ if [[ $? == 0 ]]; then
 fi
 
 # aliases specific for cygwin
-if [[ $(uname -a) =~ ".*Cygwin.*" ]]; then
+if [[ $(uname -a) =~ .*Cygwin.* ]]; then
     alias clear='echo -e "\033c"'
     alias psh='echo "\n" | powershell'
 fi

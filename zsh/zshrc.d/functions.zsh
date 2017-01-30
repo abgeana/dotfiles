@@ -16,7 +16,7 @@ save_prev_command() {
     # $1 line as it was written
     # $2 line with alias expanded and truncated with a certain size limit
     # $3 full line with alias expanded
-    if [[ $2 != 'fuck' ]]; then
+    if [[ $2 != fuck ]]; then
         PREVIOUS_COMMAND=$2
     fi
 }
@@ -36,7 +36,7 @@ fuck() {
 # this function will add "sudo " before the command when pressing alt-s
 # if using rxvt, make sure the searchable-scrollback extension is removed
 insert_sudo() {
-    if [[ $BUFFER != "sudo "* ]]; then
+    if [[ $BUFFER != sudo\ * ]]; then
         BUFFER="sudo $BUFFER"
         CURSOR+=5
     fi
