@@ -54,6 +54,18 @@ if FileIsPresent('taglist.vim')
     let g:Tlist_Sort_Type = "name"
 endif
 
+" vim-bookmarks
+if FileIsPresent('bookmark.vim')
+    let g:bookmark_save_per_working_dir = 1
+    let g:bookmark_auto_save = 1
+    let g:bookmark_center = 1
+endif
+
+" vim-markdown
+if FileIsPresent('markdown.vim')
+    let g:vim_markdown_folding_disabled = 1
+endif
+
 " clang format
 if filereadable('/usr/share/vim/addons/syntax/clang-format-3.5.py')
     set <m-f>=f
