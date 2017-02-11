@@ -33,6 +33,12 @@ bind -r C-j resize-pane -D 5
 bind -r C-k resize-pane -U 5
 bind -r C-l resize-pane -R 5
 
+# going back to the previous window and session
+# for the session i used the solution from this post
+# https://unix.stackexchange.com/questions/91222
+bind b last-window
+bind B switch-client -l
+
 # the colors below are based on the solarized theme
 # https://github.com/solarized/tmux-colors-solarized
 ## status line background
