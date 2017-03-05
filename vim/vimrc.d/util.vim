@@ -1,15 +1,10 @@
 " function which checks if a certain script is present
-function FileIsPresent(script)
-    for dir in split( &rtp, ',' )
-        if isdirectory(dir)
-            for file in split( system('find ' . dir . ' -type f'), ' ' )
-                if file =~ ('.*/' . a:script)
-                    return 1
-                endif
-            endfor
-        endif
-    endfor
-    return 0
+function FileIsPresent(path)
+    let l:path = a:path
+    if l:path[0] == '~'
+        let l:path = $HOME . l:path[1:]
+    endif
+    return filereadable(l:path)
 endfunction
 
 " function used to get the visual selection

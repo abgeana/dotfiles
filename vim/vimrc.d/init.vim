@@ -16,7 +16,7 @@ set nocompatible
 let mapleader="\<Space>"
 
 " vundle plugins
-if FileIsPresent('vundle.vim')
+if FileIsPresent('~/.vim/bundle/Vundle.vim/autoload/vundle.vim')
     " set the runtime path to include vundle and initialize
     set rtp+=~/.vim/bundle/Vundle.vim
     call vundle#begin()
@@ -29,8 +29,6 @@ if FileIsPresent('vundle.vim')
     Plugin 'alegen/nerdtree'
     " solarized color scheme
     Plugin 'altercation/vim-colors-solarized'
-    " bookmarks and tags in files
-    Plugin 'MattesGroeger/vim-bookmarks'
     " unite magic
     Plugin 'Shougo/unite.vim'
     " vim git integration

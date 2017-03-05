@@ -56,7 +56,7 @@ set undolevels=1000
 set noerrorbells
 
 " make a useful status line
-if FileIsPresent('fugitive.vim')
+if FileIsPresent('~/.vim/bundle/vim-fugitive/plugin/fugitive.vim')
     set statusline=[\ buffer\ %n\ ]\ %F\ [%Y,%{&ff}]\ %m%r%h%=%{fugitive#statusline()}[\ %l/%L\ ,\ %v\ ][\ %p%%\ ]
 else
     set statusline=[\ buffer\ %n\ ]\ %F\ [%Y,%{&ff}]\ %m%r%h%=[\ %l/%L\ ,\ %v\ ][\ %p%%\ ]

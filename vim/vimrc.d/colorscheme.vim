@@ -1,7 +1,7 @@
 " set the colorscheme
 set background=dark
 
-if FileIsPresent('solarized.vim')
+if FileIsPresent('~/.vim/bundle/vim-colors-solarized/colors/solarized.vim')
     colorscheme solarized
 else
     colorscheme darkblue
