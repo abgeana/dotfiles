@@ -65,8 +65,8 @@ set-option -g pane-border-fg colour235 #base02
 set-option -g pane-active-border-fg colour240 #base01
 
 # put X11 clipboard contents into tmux paste buffer
-bind C-p run "xsel -ob | tmux load-buffer -; tmux paste-buffer"
-#bind C-p run "xclip -out -selection clipboard | tmux load-buffer -; tmux paste-buffer"
+bind C-p run "xsel -ob | tmux load-buffer -; tmux paste-buffer; tmux delete-buffer"
+#bind C-p run "xclip -out -selection clipboard | tmux load-buffer -; tmux paste-buffer; tmux delete-buffer"
 # move tmux copy buffer into X11 clipboard
 # the xclip version requires the redirection to /dev/null
 # see https://stackoverflow.com/questions/20157617 for explanation
