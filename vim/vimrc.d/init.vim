@@ -37,8 +37,6 @@ if FileIsPresent('~/.vim/bundle/Vundle.vim/autoload/vundle.vim')
     Plugin 'tpope/vim-obsession'
     " my own version of mark.vim for fancy colors
     Plugin 'alegen/mark.vim'
-    " tags listing on the side
-    Plugin 'vim-scripts/taglist.vim'
     " open a file at a specified line
     Plugin 'vim-scripts/file-line'
     " markdown helper
@@ -55,6 +53,11 @@ if FileIsPresent('~/.vim/bundle/Vundle.vim/autoload/vundle.vim')
     Plugin 'vim-scripts/restore_view.vim'
     " my own mirror of cscope_maps.vim
     Plugin 'alegen/vim-cscope-maps'
+
+    if FileIsPresent('/usr/bin/ctags-exuberant')
+        " tags listing on the side
+        Plugin 'vim-scripts/taglist.vim'
+    endif
 
     call vundle#end()
 endif
