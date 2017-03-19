@@ -77,3 +77,12 @@ set viewoptions=cursor,folds,slash,unix
 set timeout
 set nottimeout
 set timeoutlen=200
+
+" highlight the line on which the cursor is
+set cursorline
+
+" show a visual menu of autocomplete options
+set wildmenu
+
+" do not redraw too much
+set lazyredraw

@@ -45,8 +45,6 @@ if FileIsPresent('~/.vim/bundle/Vundle.vim/autoload/vundle.vim')
     " easier motions
     Plugin 'easymotion/vim-easymotion'
     Plugin 'justinmk/vim-sneak'
-    " vifm madness
-    Plugin 'vifm/vifm.vim'
     " support for the vala language
     Plugin 'arrufat/vala.vim'
     " restore cursor position and folds
@@ -57,6 +55,11 @@ if FileIsPresent('~/.vim/bundle/Vundle.vim/autoload/vundle.vim')
     if FileIsPresent('/usr/bin/ctags-exuberant')
         " tags listing on the side
         Plugin 'vim-scripts/taglist.vim'
+    endif
+
+    if FileIsPresent('/usr/local/bin/vifm')
+        " vifm madness
+        Plugin 'vifm/vifm.vim'
     endif
 
     call vundle#end()
