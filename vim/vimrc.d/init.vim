@@ -38,7 +38,7 @@ if FileIsPresent('~/.vim/bundle/Vundle.vim/autoload/vundle.vim')
     " my own version of mark.vim for fancy colors
     Plugin 'alegen/mark.vim'
     " open a file at a specified line
-    Plugin 'vim-scripts/file-line'
+    Plugin 'alegen/file-line'
     " markdown helper
     Plugin 'godlygeek/tabular'
     Plugin 'plasticboy/vim-markdown'
