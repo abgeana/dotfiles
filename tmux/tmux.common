@@ -64,6 +64,20 @@ set-window-option -g clock-mode-colour colour64             # green
 set-option -g pane-border-fg colour235 #base02
 set-option -g pane-active-border-fg colour240 #base01
 
+# do not rename windows when processes change
+set-option -g allow-rename off
+
+# start counting from 1 instead of 0
+set-option -g base-index 1
+
+# renumber windows automatically (no more swap/move-window)
+set-option -g renumber-windows on
+
+# it got me angry that i could not set word-separators to sync with the
+# iskeyword option from vim; as a result i set word-separators to space only
+# such that it emulates the behaviour of W (capital w) from vim
+set-option -g word-separators ' '
+
 # put X11 clipboard contents into tmux paste buffer
 bind C-p run "xsel -ob | tmux load-buffer -; tmux paste-buffer; tmux delete-buffer"
 #bind C-p run "xclip -out -selection clipboard | tmux load-buffer -; tmux paste-buffer; tmux delete-buffer"
