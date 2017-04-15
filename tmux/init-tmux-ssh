@@ -36,7 +36,9 @@ for idx, (group, targets) in enumerate(hosts.items()):
 
     for idx2, target in enumerate(targets):
         if idx2 == 0:
-            exec_cmd( tmux_cmd + ['rename-window', '-t', '%s:%i' % (group, idx2), target])
+            # idx2 + 1 because tmux starts numbering of windows from 1, not 0
+            # set by line "set-option -g base-index 1" in the tmux config file
+            exec_cmd( tmux_cmd + ['rename-window', '-t', '%s:%i' % (group, idx2 + 1), target])
         else:
             exec_cmd( tmux_cmd + ['new-window', '-t', group, '-n', target] )
         exec_cmd( tmux_cmd + ['select-window', '-t', '%s:%s' % (group, target)] )
