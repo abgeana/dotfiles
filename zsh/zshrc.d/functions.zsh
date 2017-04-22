@@ -249,3 +249,18 @@ luksclose() {
         fi
     fi
 }
+
+# create new tmux session and switch to it
+tn() {
+    if [[ $# != 1 ]]; then
+        echo 'Usage: tn [new session name]'
+        return
+    fi
+
+    if [[ $TMUX ]]; then
+        tmux new-session -d -s $1
+        tmux switch-client -t $1
+    else
+        echo '$TMUX is not set, meaning you are probably not in a tmux session'
+    fi
+}

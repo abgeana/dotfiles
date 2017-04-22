@@ -36,3 +36,10 @@ function DoSearch(visual)
         let @/ = GetVisualSelection()
     endif
 endfunction
+
+" function and command which simply clones the
+" git repository of the vundle plugin manager
+function VundleGitCloneFunc()
+    !git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+endfunction
+command VundleGitClone call VundleGitCloneFunc()
