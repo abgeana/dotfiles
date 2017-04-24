@@ -33,6 +33,16 @@ bind -r C-j resize-pane -D 5
 bind -r C-k resize-pane -U 5
 bind -r C-l resize-pane -R 5
 
+# show sessions and windows in a tree with space
+unbind -T prefix s
+bind -T prefix space choose-tree
+
+# splits with vim keys and to the same working directory
+unbind -T prefix '"'
+bind -T prefix s split-window -v -c '#{pane_current_path}'
+unbind -T prefix '%'
+bind -T prefix v split-window -h -c '#{pane_current_path}'
+
 # going back to the previous window and session
 # for the session i used the solution from this post
 # https://unix.stackexchange.com/questions/91222
