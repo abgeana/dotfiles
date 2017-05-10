@@ -264,3 +264,21 @@ tn() {
         echo '$TMUX is not set, meaning you are probably not in a tmux session'
     fi
 }
+
+# start a markdown note file and append the date and time to the file name
+note() {
+    local timestamp="$(date +%Y-%m-%d_%H-%M-%S)"
+
+    if [[ $# != 1 ]]; then
+        vim "$timestamp.md"
+    else
+        vim "$1 $timestamp.md"
+    fi
+}
+
+# start a vim session with the contents of the current tmux pane
+# acronym for "pane edit"
+pe() {
+    tmux capture-pane -p -S - | \
+    vim -c 'call TmuxCapturePaneSetup()' -
+}
