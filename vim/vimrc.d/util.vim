@@ -43,3 +43,26 @@ function VundleGitCloneFunc()
     !git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 endfunction
 command VundleGitClone call VundleGitCloneFunc()
+
+" function which sets up vim and the buffer contents
+" to be used with the tmux capture-pane command
+function TmuxCapturePaneSetup()
+    " be able to exit vim quickly
+    cnoremap q q!
+    " copy directly to the clipboard
+    vnoremap y "+y
+    " hide the status line
+    set laststatus=0
+
+    " go to the end of the buffer
+    normal G
+    " go to the beginning of the line
+    normal 0
+    " remove all lines which are empty
+    while getline('.') == ''
+        normal dd
+    endwhile
+
+    " scroll the last line to the bottom of the screen
+    normal zb
+endfunction
