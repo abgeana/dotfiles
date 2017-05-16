@@ -1,8 +1,3 @@
-# specific host & user settings outside version control
-if [[ -f ~/.zshrc.add ]]; then
-    source ~/.zshrc.add
-fi
-
 # load custom dircolors file if present
 if [[ -f ~/.dircolors ]]; then
     eval "export $(dircolors --sh ~/.dircolors)"

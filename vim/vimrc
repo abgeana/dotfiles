@@ -19,3 +19,9 @@ endfor
 
 " if certain configs need to be applied last, then apply them in the final.vim file
 source ~/.vimrc.d/final.vim
+
+" optional machine specific configs to be kept out of version control
+" sourcing this last means that default settings can be overwritten
+if FileIsPresent('~/.vimrc.add')
+    exec 'source ~/.vimrc.add'
+endif
