@@ -15,6 +15,11 @@ set nocompatible
 " define the leader to space
 let mapleader="\<Space>"
 
+" optional machine specific configs to be kept out of version control
+if FileIsPresent('~/.vimrc.add')
+    exec 'source ~/.vimrc.add'
+endif
+
 " vundle plugins
 if FileIsPresent('~/.vim/bundle/Vundle.vim/autoload/vundle.vim')
     " set the runtime path to include vundle and initialize
