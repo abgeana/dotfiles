@@ -51,6 +51,8 @@ if FileIsPresent('~/.vim/bundle/Vundle.vim/autoload/vundle.vim')
     Plugin 'vim-scripts/restore_view.vim'
     " my own mirror of cscope_maps.vim
     Plugin 'alegen/vim-cscope-maps'
+    " ability to interpret ansi escape color sequences
+    Plugin 'alegen/AnsiEsc.vim'
 
     if FileIsPresent('/usr/bin/ctags-exuberant')
         " tags listing on the side

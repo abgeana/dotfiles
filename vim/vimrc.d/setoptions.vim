@@ -25,7 +25,7 @@ endfunction
 command -nargs=1 IndentWidth call IndentWidthFunc(<f-args>)
 IndentWidth 4
 set expandtab       " insert space chars whenever TAB is pressed
-retab               " when opening a file, convert tab chars to spaces
+"retab              " when opening a file, convert tab chars to spaces
 
 " autoindentation
 set autoindent
