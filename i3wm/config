@@ -124,8 +124,11 @@ bindsym $mod+Shift+r restart
 
 # border styles for windows (normal ones and floating ones)
 # http://i3wm.org/docs/userguide.html#_border_style_for_new_windows
-new_window pixel 1
+new_window pixel 2
 new_float pixel 1
+
+# hide container borders adjacent to the screen edges
+hide_edge_borders smart
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -155,6 +158,25 @@ bindsym $mod+r mode "resize"
 
 # Start i3bar to display a workspace bar (plus the system information i3status finds out, if available)
 bar {
-        status_command i3status
-#        status_command i3status | /home/alegen/.i3/i3wrapper.py
+    status_command i3status
+#    status_command i3status | /home/alegen/.i3/i3wrapper.py
+
+    # solarized colors
+    # https://github.com/tobiaszwaszak/i3wm/blob/master/config
+    colors {
+        background          #002b36
+        statusline          #839496
+        separator           #586e75
+        focused_workspace   #b58900 #b58900 #002b36
+        active_workspace    #586e75 #586e75 #002b36
+        inactive_workspace  #073642 #002b36 #839496
+        urgent_workspace    #dc322f #dc322f #fdf6e3
+    }
 }
+
+# solarized colors
+# https://github.com/tobiaszwaszak/i3wm/blob/master/config
+client.focused              #002b36 #586e75 #fdf6e3 #268bd2
+client.focused_inactive     #002b36 #073642 #839496 #073642
+client.unfocused            #002b36 #073642 #839496 #073642
+client.urgent               #002b36 #dc322f #fdf6e3 #002b36
