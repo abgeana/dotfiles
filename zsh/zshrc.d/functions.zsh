@@ -282,3 +282,23 @@ pe() {
     tmux capture-pane -p -S - | \
     vim -c 'call TmuxCapturePaneSetup()' -
 }
+
+# this function lets me use ctrl-z to push processes to background
+# and to also pull them to foreground
+# https://github.com/robbyrussell/oh-my-zsh/blob/master/plugins/fancy-ctrl-z/fancy-ctrl-z.plugin.zsh
+fancy-ctrl-z () {
+    if [[ $#BUFFER -eq 0 ]]; then
+        # set the buffer (command to be executed) to the 'fg' command
+        BUFFER='fg'
+        # finish editing the buffer (normally this causes the buffer to be executed as a shell command)
+        zle accept-line
+    else
+        # push the entire current multiline construct onto the buffer stack and return to the top-level (PS1) prompt
+        zle push-input
+        # clear the screen
+        zle clear-screen
+    fi
+}
+
+# define new widget for calling the fancy-ctrl-z function
+zle -N fancy-ctrl-z

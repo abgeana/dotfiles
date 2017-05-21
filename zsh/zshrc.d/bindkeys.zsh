@@ -25,3 +25,7 @@ bindkey -M vicmd '^[e' edit-command-line
 # alt-s for executing the insert_sudo_widget (defined in functions.zsh)
 bindkey -M viins '^[s' insert_sudo_widget
 bindkey -M vicmd '^[s' insert_sudo_widget
+
+# ctrl-z for executing the fancy-ctrl-z widget (defined in functions.zsh)
+bindkey -M viins '^Z' fancy-ctrl-z
+bindkey -M vicmd '^Z' fancy-ctrl-z
