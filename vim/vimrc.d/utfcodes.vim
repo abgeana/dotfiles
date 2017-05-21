@@ -94,5 +94,5 @@ endfunction
 
 " for the mapping in visual mode, the backspaces are required
 " to remove the range that is printed when going to the command line
-vmap <C-z> :<BS><BS><BS><BS><BS>call VisualReplace()<CR>
-nmap <C-z> :call NormalReplace()<CR>
+vmap <C-x> :<BS><BS><BS><BS><BS>call VisualReplace()<CR>
+nmap <C-x> :call NormalReplace()<CR>
