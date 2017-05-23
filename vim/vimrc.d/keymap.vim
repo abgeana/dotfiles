@@ -25,3 +25,7 @@ noremap <Right> <NOP>
 " ability to sudo write to a file without opening vim as root
 " http://stackoverflow.com/questions/2600783
 cnoremap sw w !sudo tee > /dev/null %
+
+" change the behavior of the enter key when the completion popup menu is visible to select the entry
+" http://vim.wikia.com/wiki/Make_Vim_completion_popup_menu_work_just_like_in_an_IDE
+inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"

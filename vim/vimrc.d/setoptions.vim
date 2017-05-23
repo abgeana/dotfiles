@@ -35,6 +35,7 @@ set nocindent
 " searching
 set incsearch               " incremental search
 set ignorecase              " search ignoring case
+set smartcase               " do not ignore case if text has one capital letter
 set nohlsearch              " start without highlighting the search item
 set showmatch               " show matching bracket
 set diffopt=filler,iwhite   " ignore all whitespace and sync
@@ -86,3 +87,8 @@ set wildmenu
 
 " do not redraw too much
 set lazyredraw
+
+" configure the completion menu
+" menuone - use the popup menu also when there is only one match
+" longest - only insert the longest common text of the matches
+set completeopt=menuone,longest
