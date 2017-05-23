@@ -26,6 +26,10 @@ noremap <Right> <NOP>
 " http://stackoverflow.com/questions/2600783
 cnoremap sw w !sudo tee > /dev/null %
 
-" change the behavior of the enter key when the completion popup menu is visible to select the entry
+" improve the vim completion menu with some custom remappings
 " http://vim.wikia.com/wiki/Make_Vim_completion_popup_menu_work_just_like_in_an_IDE
+" change the behavior of the enter key when the completion popup menu is visible to select the entry
 inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+" let me keep typing and enter selects the entry directly
+inoremap <expr> <C-n> pumvisible() ? '<C-n>' :
+    \ '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
