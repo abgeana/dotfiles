@@ -62,6 +62,8 @@ setopt hist_ignore_space
 setopt transient_rprompt
 # allow corrections to be displayed on the screen
 setopt correct
+# do not ask if i agree to rm all (i already have the special rm function)
+setopt rm_star_silent
 
 # zstyle changes
 # explanations for the zstyle command in:
