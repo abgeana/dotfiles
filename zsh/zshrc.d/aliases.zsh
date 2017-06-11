@@ -34,6 +34,12 @@ if [[ $? == 0 ]]; then
     alias vim='nvim'
 fi
 
+# if we have vimx on fedora, alias vim to vimx
+VIMX_BIN=$(which vimx 2> /dev/null)
+if [[ $? == 0 ]]; then
+    alias vim='vimx'
+fi
+
 # aliases specific for cygwin
 if [[ $(uname -a) =~ .*Cygwin.* ]]; then
     alias clear='echo -e "\033c"'
