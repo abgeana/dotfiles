@@ -1,6 +1,7 @@
 #! env python
 
 import subprocess
+import json
 from time import sleep
 
 def exec_cmd(cmd):
@@ -13,10 +14,9 @@ user = exec_cmd( ['whoami'] )
 user = user[:-1]    # remove trailing '\n'
 
 # read names of hosts from file
-hfile = '/home/%s/.ssh/hosts' % (user,)  # file with my ssh hosts
+hfile = '/home/%s/.ssh/tmux-ssh-hosts' % (user,)  # file with my ssh hosts
 with open(hfile, 'r') as fhandle:
-    code = fhandle.read()
-exec(code) # sets the 'hosts' variable
+    hosts = json.loads( fhandle.read() )
 
 tmux_cmd = ['tmux', '-S', '/tmp/tmux-ssh']
 
@@ -35,11 +35,14 @@ for idx, (group, targets) in enumerate(hosts.items()):
     exec_cmd( tmux_cmd + ['switch-client', '-t', group] )
 
     for idx2, target in enumerate(targets):
+        # tmux_idx = idx2 + 1 because tmux starts numbering of windows from 1, not 0
+        # set by line "set-option -g base-index 1" in the tmux config file
+        tmux_idx = idx2 + 1
         if idx2 == 0:
-            # idx2 + 1 because tmux starts numbering of windows from 1, not 0
-            # set by line "set-option -g base-index 1" in the tmux config file
-            exec_cmd( tmux_cmd + ['rename-window', '-t', '%s:%i' % (group, idx2 + 1), target])
+            # first window already exists so we rename it
+            exec_cmd( tmux_cmd + ['rename-window', '-t', '%s:%i' % (group, tmux_idx), target])
         else:
-            exec_cmd( tmux_cmd + ['new-window', '-t', group, '-n', target] )
+            # future windows need to be created
+            exec_cmd( tmux_cmd + ['new-window', '-t', '%s:%i' % (group, tmux_idx), '-n', target] )
         exec_cmd( tmux_cmd + ['select-window', '-t', '%s:%s' % (group, target)] )
         exec_cmd( tmux_cmd + ['send-keys', '-t', '%s:%s' % (group, target), 'alias con="ssh %s"' % (target,), 'Enter'] )
