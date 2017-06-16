@@ -32,8 +32,6 @@ if FileIsPresent('~/.vim/bundle/Vundle.vim/autoload/vundle.vim')
     Plugin 'alegen/nerdtree'
     " my own version of mark.vim for fancy colors
     Plugin 'alegen/mark.vim'
-    " open a file at a specified line
-    Plugin 'alegen/file-line'
     " my own mirror of cscope_maps.vim
     Plugin 'alegen/vim-cscope-maps'
     " ability to interpret ansi escape color sequences
@@ -60,8 +58,10 @@ if FileIsPresent('~/.vim/bundle/Vundle.vim/autoload/vundle.vim')
     Plugin 'justinmk/vim-sneak'
     " support for the vala language
     Plugin 'arrufat/vala.vim'
-    " restore cursor position and folds
-    Plugin 'vim-scripts/restore_view.vim'
+    " persistent editing state (views, cursos position, folds, etc.)
+    Plugin 'kopischke/vim-stay'
+    " handle line and column numbers within file names
+    Plugin 'kopischke/vim-fetch'
 
     if FileIsPresent('/usr/bin/ctags-exuberant')
         " tags listing on the side
