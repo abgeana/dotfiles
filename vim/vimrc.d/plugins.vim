@@ -59,9 +59,18 @@ if FileIsPresent('~/.vim/bundle/vim-markdown/ftplugin/markdown.vim')
     let g:vim_markdown_folding_disabled = 1
 endif
 
+" DeleteTrailingWhitespace
+if FileIsPresent('~/.vim/bundle/DeleteTrailingWhitespace.vim/plugin/DeleteTrailingWhitespace.vim')
+    " i want to eradicate all trailing spaces all the time
+    let g:DeleteTrailingWhitespace = 1
+    " automatically do it for me when i save a file
+    let g:DeleteTrailingWhitespace_Action = 'delete'
+endif
+
 " clang format
 if filereadable('/usr/share/vim/addons/syntax/clang-format-3.5.py')
     set <m-f>=f
     map <m-f> :pyf /usr/share/vim/addons/syntax/clang-format-3.5.py<CR>
     imap <m-f> <c-o>:pyf/usr/share/vim/addons/syntax/clang-format-3.5.py<CR>
 endif
+

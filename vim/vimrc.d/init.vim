@@ -21,12 +21,29 @@ if FileIsPresent('~/.vim/bundle/Vundle.vim/autoload/vundle.vim')
     set rtp+=~/.vim/bundle/Vundle.vim
     call vundle#begin()
 
-    " let vundle manage vundle, required
+    " let vundle manage vundle, required (needs to be first)
     " to install vundle, run the following command
     " git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+    " or simply use the VundleGitClone command
     Plugin 'VundleVim/Vundle.vim'
+
+    " section with plugins from my own repositories (or mirrors/forks)
     " nerdtree file viewer
     Plugin 'alegen/nerdtree'
+    " my own version of mark.vim for fancy colors
+    Plugin 'alegen/mark.vim'
+    " open a file at a specified line
+    Plugin 'alegen/file-line'
+    " my own mirror of cscope_maps.vim
+    Plugin 'alegen/vim-cscope-maps'
+    " ability to interpret ansi escape color sequences
+    Plugin 'alegen/AnsiEsc.vim'
+    " delete trailing whitespaces; this is better than the "autocmd" line
+    " since it does not move the cursor when saving a file
+    " https://stackoverflow.com/questions/35390415
+    Plugin 'alegen/DeleteTrailingWhitespace.vim'
+
+    " section with plugins from repositories maintained by other people
     " solarized color scheme
     Plugin 'altercation/vim-colors-solarized'
     " unite magic
@@ -35,10 +52,6 @@ if FileIsPresent('~/.vim/bundle/Vundle.vim/autoload/vundle.vim')
     Plugin 'tpope/vim-fugitive'
     " automatic session management
     Plugin 'tpope/vim-obsession'
-    " my own version of mark.vim for fancy colors
-    Plugin 'alegen/mark.vim'
-    " open a file at a specified line
-    Plugin 'alegen/file-line'
     " markdown helper
     Plugin 'godlygeek/tabular'
     Plugin 'plasticboy/vim-markdown'
@@ -49,10 +62,6 @@ if FileIsPresent('~/.vim/bundle/Vundle.vim/autoload/vundle.vim')
     Plugin 'arrufat/vala.vim'
     " restore cursor position and folds
     Plugin 'vim-scripts/restore_view.vim'
-    " my own mirror of cscope_maps.vim
-    Plugin 'alegen/vim-cscope-maps'
-    " ability to interpret ansi escape color sequences
-    Plugin 'alegen/AnsiEsc.vim'
 
     if FileIsPresent('/usr/bin/ctags-exuberant')
         " tags listing on the side
