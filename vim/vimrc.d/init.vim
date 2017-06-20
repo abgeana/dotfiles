@@ -40,6 +40,8 @@ if FileIsPresent('~/.vim/bundle/Vundle.vim/autoload/vundle.vim')
     " since it does not move the cursor when saving a file
     " https://stackoverflow.com/questions/35390415
     Plugin 'alegen/DeleteTrailingWhitespace.vim'
+    " smali syntax highlighting
+    Plugin 'alegen/vim-smali'
 
     " section with plugins from repositories maintained by other people
     " solarized color scheme
