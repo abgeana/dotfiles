@@ -22,10 +22,22 @@ bindkey -M vicmd '^T' history-incremental-pattern-search-forward
 bindkey -M viins '^[e' edit-command-line
 bindkey -M vicmd '^[e' edit-command-line
 
-# alt-s for executing the insert_sudo_widget (defined in functions.zsh)
-bindkey -M viins '^[s' insert_sudo_widget
-bindkey -M vicmd '^[s' insert_sudo_widget
+# alt-s for executing the insert-sudo widget (defined in functions.zsh)
+bindkey -M viins '^[s' insert-sudo
+bindkey -M vicmd '^[s' insert-sudo
 
 # ctrl-z for executing the fancy-ctrl-z widget (defined in functions.zsh)
 bindkey -M viins '^Z' fancy-ctrl-z
 bindkey -M vicmd '^Z' fancy-ctrl-z
+
+# alt-q for executing the quote-word widget (defined in functions.zsh)
+bindkey -M viins '^[q' quote-word
+bindkey -M vicmd '^[q' quote-word
+
+# alt-q for executing the quote-word widget (defined in functions.zsh)
+bindkey -M viins '^[q' quote-word
+bindkey -M vicmd '^[q' quote-word
+
+# alt-shift-q for executing the unquote-word widget (defined in functions.zsh)
+bindkey -M viins '^[Q' unquote-word
+bindkey -M vicmd '^[Q' unquote-word

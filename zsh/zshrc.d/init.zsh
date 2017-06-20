@@ -26,6 +26,8 @@ autoload -Uz add-zsh-hook
 autoload -Uz regexp-replace
 # for editing the command line in $EDITOR
 autoload -Uz edit-command-line
+# to modify the word under the cursor
+autoload -Uz modify-current-argument
 
 # enable editing the command line in $EDITOR
 zle -N edit-command-line

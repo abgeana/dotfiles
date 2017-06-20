@@ -35,7 +35,7 @@ fuck() {
 
 # this function will add "sudo " before the command when pressing alt-s
 # if using rxvt, make sure the searchable-scrollback extension is removed
-insert_sudo() {
+insert-sudo() {
     if [[ $BUFFER != sudo\ * ]]; then
         BUFFER="sudo $BUFFER"
         CURSOR+=5
@@ -43,7 +43,7 @@ insert_sudo() {
 }
 
 # define new widget for calling the insert_sudo function
-zle -N insert_sudo_widget insert_sudo
+zle -N insert-sudo
 
 # this function shows all 255 color codes
 show-colors() {
@@ -283,7 +283,7 @@ pe() {
     vim -c 'call TmuxCapturePaneSetup()' -
 }
 
-# this function lets me use ctrl-z to push processes to background
+# this function lets me use ctrl-z to push processes to the background
 # and to also pull them to foreground
 # inspired from https://github.com/robbyrussell/oh-my-zsh/blob/master/plugins/fancy-ctrl-z/fancy-ctrl-z.plugin.zsh
 fancy-ctrl-z () {
@@ -301,3 +301,21 @@ fancy-ctrl-z () {
 
 # define new widget for calling the fancy-ctrl-z function
 zle -N fancy-ctrl-z
+
+# this function will escape the word under the cursor when alt-q is pressed
+# based on https://www.zsh.org/mla/users/2007/msg00976.html (see _quote_word)
+quote-word() {
+    q=qqqq
+    modify-current-argument '${('$q[1,${NUMERIC:-1}]')ARG}'
+}
+
+# define new widget for calling the quote-word function
+zle -N quote-word
+
+# this function does the opposite of quote-word defined above
+function unquote-word() {
+    modify-current-argument '${(Q)ARG}'
+}
+
+# define new widget for calling the unquote-word function
+zle -N unquote-word
