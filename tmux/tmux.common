@@ -17,9 +17,11 @@ set-option -g escape-time 0
 set-window-option -g aggressive-resize on
 
 # vi-like visual select + yank in copy mode
-bind -t vi-copy v begin-selection
-bind -t vi-copy y copy-selection
-bind -t vi-copy C-v rectangle-toggle
+# conditional syntax from https://stackoverflow.com/questions/35016458
+# true return 0, false return 1
+if-shell "if [[ `tmux -V | cut -d' ' -f2` -lt 2.4 ]]; then false; else true; fi" \
+    'bind -t vi-copy v begin-selection; bind -t vi-copy y copy-selection; bind -t vi-copy C-v rectangle-toggle' \
+    'bind -T copy-mode-vi v send-keys -X begin-selection; bind -T copy-mode-vi y send-keys -X copy-selection-and-cancel'
 
 # map vim movement keys as pane movement keys
 bind -r h select-pane -L
