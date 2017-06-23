@@ -34,10 +34,6 @@ bindkey -M vicmd '^Z' fancy-ctrl-z
 bindkey -M viins '^[q' quote-word
 bindkey -M vicmd '^[q' quote-word
 
-# alt-q for executing the quote-word widget (defined in functions.zsh)
-bindkey -M viins '^[q' quote-word
-bindkey -M vicmd '^[q' quote-word
-
 # alt-shift-q for executing the unquote-word widget (defined in functions.zsh)
 bindkey -M viins '^[Q' unquote-word
 bindkey -M vicmd '^[Q' unquote-word
