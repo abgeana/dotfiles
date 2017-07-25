@@ -45,7 +45,7 @@ URxvt*cursorColor:                      S_base1
 URxvt*pointerColorBackground:           S_base01
 URxvt*pointerColorForeground:           S_base1
 URxvt*shading:                          15
-URxvt*perl-ext-common:                  default,clipboard
+URxvt*perl-ext-common:                  clipboard,resize-font
 URxvt*internalBorder:                   0
 URxvt*externalBorder:                   0
 URxvt*intensityStyles:                  false
@@ -75,6 +75,13 @@ URxvt*iso14755:                         false
 URxvt*iso14755_52:                      false
 URxvt*keysym.Shift-Control-C:           perl:clipboard:copy
 URxvt*keysym.Shift-Control-V:           perl:clipboard:paste
+
+! font resize plugin
+! this extension can be fount at https://github.com/simmel/urxvt-resize-font
+URxvt*keysym.C-minus:                   resize-font:smaller
+URxvt*keysym.C-plus:                    resize-font:bigger
+URxvt*keysym.C-equal:                   resize-font:reset
+URxvt*keysym.C-question:                resize-font:show
 
 ! black dark/light
 URxvt*color0:                           S_base02
