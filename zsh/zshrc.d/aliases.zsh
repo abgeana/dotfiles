@@ -6,7 +6,6 @@ alias lla='ls --quoting-style=literal --color=tty -Alh'
 alias cd..='cd ..'
 alias tmux='tmux -2'
 alias tmux-ssh='tmux -2 -f ~/.tmux.conf.ssh -S /tmp/tmux-ssh'
-alias tb='tmux attach-session -t base || tmux new-session -s base'
 alias dhcp='dhclient -r && dhclient'
 alias cat='cat -v'
 alias unset-proxy='unset http_proxy https_proxy HTTP_PROXY HTTPS_PROXY'
@@ -32,12 +31,14 @@ alias -g stdboth='2>&1'
 NVIM_BIN=$(which nvim 2> /dev/null)
 if [[ $? == 0 ]]; then
     alias vim='nvim'
+    VIM_BIN=$NVIM_BIN
 fi
 
 # if we have vimx on fedora, alias vim to vimx
 VIMX_BIN=$(which vimx 2> /dev/null)
 if [[ $? == 0 ]]; then
     alias vim='vimx'
+    VIM_BIN=$VIMX_BIN
 fi
 
 # aliases specific for cygwin

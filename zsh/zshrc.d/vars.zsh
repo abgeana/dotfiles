@@ -16,11 +16,6 @@ if [[ -f "$HOME/.gpg-agent-info" ]]; then
     export SSH_AUTH_SOCK
 fi
 
-# for $EDITOR, check for availability of neovim, otherwise fallback to vim
-NVIM_BIN=$(which nvim 2> /dev/null)
-if [[ $? == 0 ]]; then
-    export EDITOR=$NVIM_BIN
-    alias vim='nvim'
-else
-    export EDITOR=$(which vim 2> /dev/null)
-fi
+# for $EDITOR, check for availability of neovim, vimx, or otherwise fallback to vim
+# the $VIM_BIN variable is set in aliases.zsh (which just so happens to be executed before vars.zsh)
+EDITOR=$VIM_BIN
