@@ -44,9 +44,10 @@ bind -T prefix s split-window -v -c '#{pane_current_path}'
 unbind -T prefix '%'
 bind -T prefix v split-window -h -c '#{pane_current_path}'
 
-# going back to the previous window and session
+# going back to the previous pane, window and session
 # for the session i used the solution from this post
 # https://unix.stackexchange.com/questions/91222
+bind u last-pane
 bind b last-window
 bind B switch-client -l
 
