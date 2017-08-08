@@ -36,7 +36,6 @@ fi
 
 # if VIM_BIN has not been set above...
 if [[ -z $VIM_BIN ]]; then
-    echo 'vimx'
     # if we have vimx on fedora, alias vim to vimx
     VIMX_BIN=$(which vimx 2> /dev/null)
     if [[ $? == 0 ]]; then
