@@ -24,9 +24,13 @@ if FileIsPresent('~/.vim/bundle/nerdtree/plugin/NERD_tree.vim')
     " make splits behave same as with ctrl-w
     let g:NERDTreeMapOpenSplit='s'
     let g:NERDTreeMapOpenVSplit='v'
-    " the ^[ is an escape character and may be typed by pressing ctrl+v and then alt+key
-    set <m-x>=x
-    map <m-x> :NERDTreeToggle<CR>
+
+    if has('nvim') == 0
+        " the ^[ is an escape character and may be typed by pressing ctrl+v and then alt+key
+        map x :NERDTreeToggle<CR>
+    else
+        map <A-x> :NERDTreeToggle<CR>
+    endif
 endif
 
 " sneak

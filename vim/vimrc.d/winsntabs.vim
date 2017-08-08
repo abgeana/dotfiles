@@ -51,7 +51,10 @@ function MoveToNextTab()
     exe "b".l:cur_buf
 endfunc
 
-set <m-n>=n
-noremap <m-n> :call MoveToPrevTab()<CR>
-set <m-m>=m
-noremap <m-m> :call MoveToNextTab()<CR>
+if has('nvim') == 0
+    noremap , :call MoveToPrevTab()<CR>
+    noremap . :call MoveToNextTab()<CR>
+else
+    noremap <A-,> :call MoveToPrevTab()<CR>
+    noremap <A-.> :call MoveToNextTab()<CR>
+endif
