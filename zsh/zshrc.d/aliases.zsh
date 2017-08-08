@@ -34,11 +34,15 @@ if [[ $? == 0 ]]; then
     VIM_BIN=$NVIM_BIN
 fi
 
-# if we have vimx on fedora, alias vim to vimx
-VIMX_BIN=$(which vimx 2> /dev/null)
-if [[ $? == 0 ]]; then
-    alias vim='vimx'
-    VIM_BIN=$VIMX_BIN
+# if VIM_BIN has not been set above...
+if [[ -z $VIM_BIN ]]; then
+    echo 'vimx'
+    # if we have vimx on fedora, alias vim to vimx
+    VIMX_BIN=$(which vimx 2> /dev/null)
+    if [[ $? == 0 ]]; then
+        alias vim='vimx'
+        VIM_BIN=$VIMX_BIN
+    fi
 fi
 
 # aliases specific for cygwin
