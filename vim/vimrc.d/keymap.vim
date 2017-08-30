@@ -8,8 +8,19 @@ map <F6> :set formatoptions+=cro nocindent autoindent smartindent inde=    <CR>
 noremap ; q:i
 
 " move cursor on wrapped lines
-map <silent> <C-k> gk
-map <silent> <C-j> gj
+" the ^[ is an escape character and may be typed by pressing ctrl+v and then alt+key
+" though this only seems to work in vim; in neovim just copy/paste it
+if has('nvim') == 0
+    noremap <silent> k gk
+    noremap <silent> j gj
+else
+    noremap <silent> <A-k> gk
+    noremap <silent> <A-j> gj
+endif
+
+" move the complete window
+noremap <silent> <C-k> <C-y>
+noremap <silent> <C-j> <C-e>
 
 " use ctrl+[d,u] instead of ctrl+[f,b]
 " this is mainly because tmux uses ctrl+b

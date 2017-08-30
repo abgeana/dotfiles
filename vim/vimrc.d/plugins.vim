@@ -26,7 +26,6 @@ if FileIsPresent('~/.vim/bundle/nerdtree/plugin/NERD_tree.vim')
     let g:NERDTreeMapOpenVSplit='v'
 
     if has('nvim') == 0
-        " the ^[ is an escape character and may be typed by pressing ctrl+v and then alt+key
         map x :NERDTreeToggle<CR>
     else
         map <A-x> :NERDTreeToggle<CR>
