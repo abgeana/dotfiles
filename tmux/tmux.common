@@ -51,6 +51,9 @@ bind u last-pane
 bind b last-window
 bind B switch-client -l
 
+# append new window after the current active window
+bind C new-window -a
+
 # the colors below are based on the solarized theme
 # https://github.com/solarized/tmux-colors-solarized
 ## status line background
