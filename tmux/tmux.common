@@ -34,6 +34,10 @@ bind -r C-j resize-pane -D 5
 bind -r C-k resize-pane -U 5
 bind -r C-l resize-pane -R 5
 
+# scrolling up and down (similar to my vim setup)
+bind-key -T copy-mode-vi C-j send-keys -X scroll-down
+bind-key -T copy-mode-vi C-k send-keys -X scroll-up
+
 # show sessions and windows in a tree with space
 unbind -T prefix s
 bind -T prefix space choose-tree
