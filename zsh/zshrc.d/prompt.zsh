@@ -13,18 +13,15 @@ if [[ $(uname -a) =~ ".*Linux.*" ]]; then
         COLOR_USER='196'
     fi
 
-    if [[ $HOSTNAME =~ hthvm\-.* ]]; then
-        COLOR_HOST=208
-    elif [[ $HOSTNAME =~ rogvm\-.* ]]; then
-        COLOR_HOST=201
+    if [[ $HOSTNAME =~ rogvm\-.* ]]; then
+        COLOR_HOST=220
     else
         typeset -A HOST_COLORS
         HOST_COLORS=(
             bendis          156
             heretic         156
             hathor          227
-            rogue           206
-            apozeu           36
+            rogue           202
             homero           21
             tanya           134
         )
