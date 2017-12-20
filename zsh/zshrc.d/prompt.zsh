@@ -22,6 +22,7 @@ if [[ $(uname -a) =~ ".*Linux.*" ]]; then
             heretic         156
             hathor           41
             rogue           202
+            decebal          92
             tanya           134
         )
 
