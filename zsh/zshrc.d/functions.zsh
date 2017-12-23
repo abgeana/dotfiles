@@ -293,7 +293,6 @@ tb() {
     ts 'base'
 }
 
-
 # start a markdown note file and append the date and time to the file name
 note() {
     local timestamp="$(date +%Y-%m-%d_%H-%M-%S)"
@@ -342,7 +341,7 @@ quote-word() {
 zle -N quote-word
 
 # this function does the opposite of quote-word defined above
-function unquote-word() {
+unquote-word() {
     modify-current-argument '${(Q)ARG}'
 }
 
