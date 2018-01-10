@@ -1,9 +1,9 @@
-COLOR_EXTRA='118'
+COLOR_BASE=87
 HOSTNAME=$(hostname -s)
 if [[ $(id -u) == 0 ]]; then
-    COLOR_USER='51'
+    COLOR_USER=$COLOR_BASE
 else
-    COLOR_USER='196'
+    COLOR_USER=196
 fi
 
 if [[ $HOSTNAME =~ rogvm\-.* ]]; then
@@ -30,4 +30,9 @@ else
     fi
 fi
 
-export PROMPT="%F{255}[ %F{ $COLOR_USER }%n%F{ $COLOR_EXTRA } @ %F{ $COLOR_HOST }%m%F{ $COLOR_EXTRA } %F{255}] %F{ $COLOR_EXTRA }%2d %f "
+# some good places to find exotic unicode symbols:
+# http://shapecatcher.com/
+# http://panmental.de/symbols/info.htm
+# http://xahlee.info/comp/unicode_arrows.html
+# example unicode arrows from ◀ ▶ ▲ ▼
+export PROMPT=" %F{ $COLOR_USER }% ○ %F{ $COLOR_HOST }%m%F{ $COLOR_BASE } ▶%f "
