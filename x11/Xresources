@@ -59,6 +59,7 @@ URxvt*meta8:                            false
 ! fonts and no bold/italic/italic-bold
 ! if a glyph is missing from, add another fallback font which has the glyph
 ! fonts and glyphs can be easily explored with gucharmap
+! to install the font, copy the files to a folder in /usr/share/fonts and run fc-cache
 ! list of fonts i have looked at are:
 !   * Hack (size 9)
 !   * Iosevka Term (size 13)
