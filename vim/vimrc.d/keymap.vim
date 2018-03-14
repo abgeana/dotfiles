@@ -44,3 +44,9 @@ inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 " let me keep typing and enter selects the entry directly
 inoremap <expr> <C-n> pumvisible() ? '<C-n>' :
     \ '<C-n><C-r>=pumvisible() ? "\<lt>Down>" : ""<CR>'
+
+" mapping to call the YankLocation() function defined in util.vim
+nnoremap yl :call YankLocation()<CR>
+
+" remap gf to open a file under the cursor and with line number
+nnoremap gf gF

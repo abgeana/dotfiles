@@ -64,6 +64,11 @@ if FileIsPresent('~/.vim/bundle/Vundle.vim/autoload/vundle.vim')
     Plugin 'kopischke/vim-stay'
     " handle line and column numbers within file names
     Plugin 'kopischke/vim-fetch'
+    " code formatting plugin
+    Plugin 'google/vim-maktaba'
+    Plugin 'google/vim-codefmt'
+    " sourcetrail plugin
+    Plugin 'CoatiSoftware/vim-sourcetrail'
 
     if FileIsPresent('/usr/bin/ctags-exuberant')
         " tags listing on the side

@@ -69,11 +69,3 @@ if FileIsPresent('~/.vim/bundle/DeleteTrailingWhitespace.vim/plugin/DeleteTraili
     " automatically do it for me when i save a file
     let g:DeleteTrailingWhitespace_Action = 'delete'
 endif
-
-" clang format
-if filereadable('/usr/share/vim/addons/syntax/clang-format-3.5.py')
-    set <m-f>=f
-    map <m-f> :pyf /usr/share/vim/addons/syntax/clang-format-3.5.py<CR>
-    imap <m-f> <c-o>:pyf/usr/share/vim/addons/syntax/clang-format-3.5.py<CR>
-endif
-

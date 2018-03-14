@@ -1,0 +1,5 @@
+" example setting noexpandtab for a specific folder (and subfolders)
+" autocmd BufRead,BufNewFile /path/* set noexpandtab
+
+" remember to set expandtab for python files though
+" autocmd BufRead,BufNewFile /path/*.py set expandtab

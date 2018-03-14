@@ -66,3 +66,15 @@ function TmuxCapturePaneSetup()
     " scroll the last line to the bottom of the screen
     normal zb
 endfunction
+
+" function to get the full path of the file in the current buffer with the
+" location of the cursor in the buffer; the information is placed into the
+" clipboard
+function YankLocation()
+    " get the path of the file in the current buffer
+    let fpath = expand('%:p')
+    " append the location of the cursor
+    let fpath = fpath . ':' . line('.') . ':' . col('.')
+    " place it in the clipboard
+    let @+ = fpath
+endfunction
