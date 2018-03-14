@@ -1,0 +1,12 @@
+# pass specific variables
+# export PASSWORD_STORE_DIR="/path"
+# export PASSWORD_STORE_KEY="id"
+# export PASSWORD_STORE_CLIP_TIME="15"
+
+# http proxy
+# export HTTP_PROXY=http://address/
+# export HTTPS_PROXY=http://address/
+# export NO_PROXY=address1.com,address2.org
+# export http_proxy=http://address/
+# export https_proxy=http://address/
+# export no_proxy=address1.com,address2.org

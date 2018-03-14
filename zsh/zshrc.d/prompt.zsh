@@ -30,9 +30,9 @@ else
     fi
 fi
 
+# unicode arrows ◀ ▶ ▲ ▼
 # some good places to find exotic unicode symbols:
 # http://shapecatcher.com/
 # http://panmental.de/symbols/info.htm
 # http://xahlee.info/comp/unicode_arrows.html
-# example unicode arrows from ◀ ▶ ▲ ▼
 export PROMPT=" %F{ $COLOR_USER }% ○ %F{ $COLOR_HOST }%m%F{ $COLOR_BASE } ▶%f "

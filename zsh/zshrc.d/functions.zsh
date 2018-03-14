@@ -300,7 +300,7 @@ note() {
     if [[ $# != 1 ]]; then
         vim "$timestamp.md"
     else
-        vim "$1 $timestamp.md"
+        vim "$timestamp $1.md"
     fi
 }
 
@@ -319,8 +319,9 @@ fancy-ctrl-z () {
     if [[ $#BUFFER -eq 0 ]]; then
         # if there are background jobs
         if [[ $(jobs | wc -l) -gt 0 ]]; then
-            # run fg
-            fg
+            # run fg like this, otherwise vim complains
+            BUFFER="fg"
+            zle accept-line
         else
             print '\nYou have no background jobs.'
         fi
