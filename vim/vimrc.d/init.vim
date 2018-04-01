@@ -33,7 +33,8 @@ if FileIsPresent('~/.vim/bundle/Vundle.vim/autoload/vundle.vim')
     " my own version of mark.vim for fancy colors
     Plugin 'alegen/mark.vim'
     " my own mirror of cscope_maps.vim
-    Plugin 'alegen/vim-cscope-maps'
+    " currently replaced by the GNU GLOBAL plugin
+    "Plugin 'alegen/vim-cscope-maps'
     " ability to interpret ansi escape color sequences
     Plugin 'alegen/AnsiEsc.vim'
     " delete trailing whitespaces; this is better than the "autocmd" line
@@ -67,6 +68,8 @@ if FileIsPresent('~/.vim/bundle/Vundle.vim/autoload/vundle.vim')
     " code formatting plugin
     Plugin 'google/vim-maktaba'
     Plugin 'google/vim-codefmt'
+    " GNU GLOBAL plugin
+    Plugin 'vim-scripts/gtags.vim'
     " sourcetrail plugin
     Plugin 'CoatiSoftware/vim-sourcetrail'
 
