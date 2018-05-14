@@ -1,9 +1,7 @@
-#! /usr/bin/python
-
-from __future__ import print_function
+#! env python3
 
 import os
-import ConfigParser, argparse, requests, subprocess
+import configparser, argparse, requests, subprocess
 
 from os.path import expanduser as exp
 from colored import fg, attr
@@ -13,13 +11,11 @@ def parse_args():
     parser.add_argument('-c', '--config', nargs = 1, help = 'configuration file for this update utility')
     parser.add_argument('-ls', '--list', nargs = '*', help = 'show all configuration sections supported for update')
     parser.add_argument('-u', '--update', nargs = '*', help = 'configuration files to be updated')
-    parser.add_argument('-ln', '--link', action = 'store_true', help = 'create links from repository clone')
-    parser.add_argument('-r', '--repo-dir', nargs = 1, help = 'location of repository clone')
     args = parser.parse_args()
     return args
 
 def parse_configs(f):
-    cfg = ConfigParser.ConfigParser()
+    cfg = configparser.ConfigParser()
     # next line is needed in order to make option names case-sensitive
     # https://stackoverflow.com/questions/1611799
     cfg.optionxform = str
@@ -32,7 +28,7 @@ def listing(cfg, l):
     if len(l) == 0:
         for s in cfg.sections():
             if s != 'config':
-                out = '    %s%s%s' % (fg('blue'), s, attr('reset'))
+                out = '    {}{}{}'.format(fg('blue'), s, attr('reset'))
                 if cfg.has_option(s, 'desc'):
                     out = out.ljust(40) + '%s%s%s' % (fg('cyan'), cfg.get(s, 'desc'), attr('reset'))
                 print(out)
@@ -92,7 +88,7 @@ def update(cfg, sections):
                         except OSError:
                             pass
                         with open(f, 'w') as fp:
-                            fp.write( response.text.encode('utf-8') )
+                            fp.write(response.text)
                         chmod(f, file_chmod)
                         if os.geteuid() == 0:
                             chown(f)
