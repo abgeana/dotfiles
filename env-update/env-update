@@ -1,18 +1,27 @@
 #! env python3
 
 import os
-import configparser, argparse, requests, subprocess
+import configparser
+import argparse
+import requests
+import subprocess
 
 from os.path import expanduser as exp
 from colored import fg, attr
 
+
 def parse_args():
-    parser = argparse.ArgumentParser(description = 'Update environment configuration files.')
-    parser.add_argument('-c', '--config', nargs = 1, help = 'configuration file for this update utility')
-    parser.add_argument('-ls', '--list', nargs = '*', help = 'show all configuration sections supported for update')
-    parser.add_argument('-u', '--update', nargs = '*', help = 'configuration files to be updated')
+    parser = argparse.ArgumentParser(
+        description='Update environment configuration files.')
+    parser.add_argument('-c', '--config', nargs=1,
+                        help='configuration file for this update utility')
+    parser.add_argument('-ls', '--list', nargs='*',
+                        help='show all configuration sections supported for update')
+    parser.add_argument('-u', '--update', nargs='*',
+                        help='configuration files to be updated')
     args = parser.parse_args()
     return args
+
 
 def parse_configs(f):
     cfg = configparser.ConfigParser()
@@ -23,6 +32,7 @@ def parse_configs(f):
         cfg.readfp(fp)
     return cfg
 
+
 def listing(cfg, l):
     print('Configuration sections available for update:')
     if len(l) == 0:
@@ -30,12 +40,13 @@ def listing(cfg, l):
             if s != 'config':
                 out = '    {}{}{}'.format(fg('blue'), s, attr('reset'))
                 if cfg.has_option(s, 'desc'):
-                    out = out.ljust(40) + '%s%s%s' % (fg('cyan'), cfg.get(s, 'desc'), attr('reset'))
+                    out = out.ljust(40) + '%s%s%s' % (fg('cyan'),
+                                                      cfg.get(s, 'desc'), attr('reset'))
                 print(out)
     else:
         for s in l:
             if s != 'config':
-                print( '%s%s%s' % (fg('blue'), s, attr('reset')) )
+                print('%s%s%s' % (fg('blue'), s, attr('reset')))
                 for o in cfg.options(s):
                     if o == 'desc':
                         continue
@@ -47,11 +58,14 @@ def listing(cfg, l):
                     out += '%s%s%s' % (fg('green'), exp(v), attr('reset'))
                     print(out)
 
+
 def chmod(f, mod):
-    subprocess.call( ('chmod %s %s' % (mod, f)).split(' ') )
+    subprocess.call(('chmod %s %s' % (mod, f)).split(' '))
+
 
 def chown(f):
-    subprocess.call( ('chown root:root %s' % f ).split(' ') )
+    subprocess.call(('chown root:root %s' % f).split(' '))
+
 
 def update(cfg, sections):
     if len(sections) == 0:
@@ -61,7 +75,7 @@ def update(cfg, sections):
     print('Updating...')
     for s in sections:
         if s != 'config':
-            print( '%s%s%s' % (fg('blue'), s, attr('reset')) )
+            print('%s%s%s' % (fg('blue'), s, attr('reset')))
             url = base_url + '/' + s + '/' if s != 'root' else base_url + '/'
             for o in cfg.options(s):
                 if o == 'desc':
@@ -70,7 +84,8 @@ def update(cfg, sections):
                 v = cfg.get(s, o)
                 if v.count(';') > 0:
                     tok = v.split(';')
-                    dir_chmod = tok[2] if len(tok) == 3 else int(cfg.get('config', 'dir_chmod'), 8)
+                    dir_chmod = tok[2] if len(tok) == 3 else int(
+                        cfg.get('config', 'dir_chmod'), 8)
                     file_chmod = tok[1]
                     v = tok[0]
                 else:
@@ -84,7 +99,7 @@ def update(cfg, sections):
                     if response.status_code == 200:
                         f = exp(v)
                         try:
-                            os.makedirs( os.path.dirname(f), mode = dir_chmod )
+                            os.makedirs(os.path.dirname(f), mode=dir_chmod)
                         except OSError:
                             pass
                         with open(f, 'w') as fp:
@@ -99,14 +114,17 @@ def update(cfg, sections):
                 out = v
                 out = '%s%s%s' % (fg('cyan'), out, attr('reset'))
                 if ok:
-                    out = ('%s[  OK  ]%s  ' % (fg('green'), attr('reset'))) + out
+                    out = ('%s[  OK  ]%s  ' %
+                           (fg('green'), attr('reset'))) + out
                 else:
                     out = ('%s[ FAIL ]%s  ' % (fg('red'), attr('reset'))) + out
                 out = '   ' + out
                 print(out)
 
+
 def link(src, dst):
     pass
+
 
 def main():
     args = parse_args()
@@ -121,6 +139,7 @@ def main():
 
     if args.update is not None:
         update(cfg, args.update)
+
 
 if __name__ == '__main__':
     main()
