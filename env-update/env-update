@@ -6,24 +6,23 @@ import argparse
 import requests
 import subprocess
 
-from os.path import expanduser as exp
+from os.path import expanduser
 from colored import fg, attr
 
 
 def parse_args():
-    parser = argparse.ArgumentParser(
-        description='Update environment configuration files.')
-    parser.add_argument('-c', '--config', nargs=1,
-                        help='configuration file for this update utility')
-    parser.add_argument('-ls', '--list', nargs='*',
-                        help='show all configuration sections supported for update')
-    parser.add_argument('-u', '--update', nargs='*',
-                        help='configuration files to be updated')
+    """parse_args parses the supported command line arguments."""
+    parser = argparse.ArgumentParser(description='Update environment configuration files.')
+    parser.add_argument(
+        '-c', '--config', type=str, default='/etc/env-update.cfg', help='configuration file for this update utility')
+    parser.add_argument('-l', '--list', nargs='*', help='show all configuration sections supported for update')
+    parser.add_argument('-u', '--update', nargs='*', help='configuration files to be updated')
     args = parser.parse_args()
     return args
 
 
-def parse_configs(f):
+def parse_config(f):
+    """parse_config loads the configuration file for the script."""
     cfg = configparser.ConfigParser()
     # next line is needed in order to make option names case-sensitive
     # https://stackoverflow.com/questions/1611799
@@ -33,112 +32,165 @@ def parse_configs(f):
     return cfg
 
 
-def listing(cfg, l):
-    print('Configuration sections available for update:')
-    if len(l) == 0:
-        for s in cfg.sections():
-            if s != 'config':
-                out = '    {}{}{}'.format(fg('blue'), s, attr('reset'))
-                if cfg.has_option(s, 'desc'):
-                    out = out.ljust(40) + '%s%s%s' % (fg('cyan'),
-                                                      cfg.get(s, 'desc'), attr('reset'))
-                print(out)
-    else:
-        for s in l:
-            if s != 'config':
-                print('%s%s%s' % (fg('blue'), s, attr('reset')))
-                for o in cfg.options(s):
-                    if o == 'desc':
-                        continue
-                    v = cfg.get(s, o)
-                    if ';' in v:
-                        v = v[:v.find(';')]
-                    out = '    %s%s%s' % (fg('cyan'), o, attr('reset'))
-                    out = out.ljust(50)
-                    out += '%s%s%s' % (fg('green'), exp(v), attr('reset'))
-                    print(out)
+class Updater:
+    """Updater implements the functionality to perform updates of dot files."""
 
+    def __init__(self, cfg):
+        self._cfg = cfg
 
-def chmod(f, mod):
-    subprocess.call(('chmod %s %s' % (mod, f)).split(' '))
+    def do_list(self, sections):
+        """do_list prints contents of the configuration file based on the -l/--list argument."""
+        if len(sections) == 0:
+            self._list_all_sections()
+        else:
+            for section in sections:
+                self._list_section(section)
 
+    def do_update(self, sections):
+        """do_update updates dot files based on the -u/--update argument."""
+        if len(sections) == 0:
+            return
+        for section in sections:
+            self._update_section(section)
 
-def chown(f):
-    subprocess.call(('chown root:root %s' % f).split(' '))
+    def _parse_config_value(self, value):
+        """_parse_config_value splits a configuration value into tokens."""
+        tokens = value.split(';')
 
+        path = tokens[0]
 
-def update(cfg, sections):
-    if len(sections) == 0:
-        sections = cfg.sections()
-    base_url = cfg.get('config', 'base_url')
+        if len(tokens) == 1:
+            file_chmod = self._cfg.get('config', 'file_chmod')
+            dir_chmod = int(self._cfg.get('config', 'dir_chmod'), 8)
+        else:
+            file_chmod = tokens[1]
 
-    print('Updating...')
-    for s in sections:
-        if s != 'config':
-            print('%s%s%s' % (fg('blue'), s, attr('reset')))
-            url = base_url + '/' + s + '/' if s != 'root' else base_url + '/'
-            for o in cfg.options(s):
-                if o == 'desc':
-                    continue
+        if len(tokens) == 3:
+            dir_chmod = tokens[2]
+        else:
+            dir_chmod = int(self._cfg.get('config', 'dir_chmod'), 8)
 
-                v = cfg.get(s, o)
-                if v.count(';') > 0:
-                    tok = v.split(';')
-                    dir_chmod = tok[2] if len(tok) == 3 else int(
-                        cfg.get('config', 'dir_chmod'), 8)
-                    file_chmod = tok[1]
-                    v = tok[0]
-                else:
-                    dir_chmod = int(cfg.get('config', 'dir_chmod'), 8)
-                    file_chmod = cfg.get('config', 'file_chmod')
+        return path, dir_chmod, file_chmod
 
-                response = requests.get(url + o)
-                ok = False
+    def _color_text(self, color, text):
+        """_color_text uses the colored library to set the terminal color for the specified text."""
+        return '{}{}{}'.format(fg(color), text, attr('reset'))
 
-                try:
-                    if response.status_code == 200:
-                        f = exp(v)
-                        try:
-                            os.makedirs(os.path.dirname(f), mode=dir_chmod)
-                        except OSError:
-                            pass
-                        with open(f, 'w') as fp:
-                            fp.write(response.text)
-                        chmod(f, file_chmod)
-                        if os.geteuid() == 0:
-                            chown(f)
-                        ok = True
-                except IOError:
-                    pass
+    def _list_all_sections(self):
+        """_list_all_sections prints all the sections from the configuration file."""
+        for section in self._cfg.sections():
+            if section == 'config':
+                continue
 
-                out = v
-                out = '%s%s%s' % (fg('cyan'), out, attr('reset'))
-                if ok:
-                    out = ('%s[  OK  ]%s  ' %
-                           (fg('green'), attr('reset'))) + out
-                else:
-                    out = ('%s[ FAIL ]%s  ' % (fg('red'), attr('reset'))) + out
-                out = '   ' + out
-                print(out)
+            colored_section = self._color_text('blue', section)
+            print('{:<30}'.format(colored_section), end='')
 
+            if self._cfg.has_option(section, 'desc'):
+                desc = self._cfg.get(section, 'desc')
+                colored_desc = self._color_text('cyan', desc)
+                print(colored_desc, end='')
 
-def link(src, dst):
-    pass
+            print()
+
+    def _list_section(self, section):
+        """_list_section prints the content of one section from the configuration file, except for the config
+        section."""
+        if section == 'config':
+            return
+
+        print(self._color_text('blue', section))
+        for option in self._cfg.options(section):
+            if option == 'desc':
+                continue
+
+            value = self._cfg.get(section, option)
+            path, _, _, = self._parse_config_value(value)
+            colored_path = self._color_text('green', path)
+            colored_option = self._color_text('cyan', option)
+
+            print('    {:<40}{}'.format(colored_option, colored_path))
+
+    def _print_update_status(self, is_ok, value):
+        """_print_update_status displays the status of a file download operation."""
+        path, _, _ = self._parse_config_value(value)
+        colored_path = self._color_text('cyan', path)
+
+        status, status_color = ('[✔]', 'green') if is_ok else ('[✘]', 'red')
+        colored_status = self._color_text(status_color, status)
+
+        print('  {}  {}'.format(colored_status, colored_path))
+
+    def _update_section(self, section):
+        """_update_section updates all the files for the specified section in the configuration file."""
+        if section == 'config':
+            return
+
+        print(self._color_text('blue', 'updating {}'.format(section)))
+
+        for option in self._cfg.options(section):
+            if option == 'desc':
+                continue
+            self._update_file(section, option)
+
+    def _update_file(self, section, option):
+        """_update_file updates the specified file from the specified section."""
+        value = self._cfg.get(section, option)
+
+        url = '{}/{}/{}'.format(self._cfg.get('config', 'base_url'), section, option)
+        text, is_ok = self._download_file(url)
+
+        if is_ok:
+            is_ok = self._write_file(value, text)
+
+        self._print_update_status(is_ok, value)
+
+    def _download_file(self, url):
+        """_download_file attempts to download a file from the specified url."""
+        try:
+            response = requests.get(url)
+            if response.status_code == 200:
+                return response.text, True
+        except IOError:
+            pass
+
+        return None, False
+
+    def _write_file(self, value, text):
+        """_write_file creates or updates a file with the specified text. It also sets the file mode bits, and the owner
+        to root if the process is running as root."""
+        path, dir_chmod, file_chmod = self._parse_config_value(value)
+        full_path = expanduser(path)
+
+        try:
+            os.makedirs(os.path.dirname(full_path), mode=dir_chmod)
+        except OSError:
+            pass
+
+        try:
+            with open(full_path, 'w') as fp:
+                fp.write(text)
+        except PermissionError:
+            return False
+
+        chmod_cmd = 'chmod {} {}'.format(file_chmod, full_path)
+        subprocess.call(chmod_cmd.split(' '))
+        if os.geteuid() == 0:
+            chown_cmd = 'chown root:root {}'.format(full_path)
+            subprocess.call(chown.split(' '))
+
+        return True
 
 
 def main():
     args = parse_args()
-
-    if args.config is None:
-        cfg = parse_configs('/etc/env-update.cfg')
-    else:
-        cfg = parse_configs(args.config[0])
+    cfg = parse_config(args.config)
+    updater = Updater(cfg)
 
     if args.list is not None:
-        listing(cfg, args.list)
+        updater.do_list(args.list)
 
     if args.update is not None:
-        update(cfg, args.update)
+        updater.do_update(args.update)
 
 
 if __name__ == '__main__':
