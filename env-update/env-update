@@ -184,7 +184,7 @@ class Updater:
         subprocess.call(chmod_cmd.split(' '))
         if os.geteuid() == 0:
             chown_cmd = 'chown root:root {}'.format(full_path)
-            subprocess.call(chown.split(' '))
+            subprocess.call(chown_cmd.split(' '))
 
         return True
 
