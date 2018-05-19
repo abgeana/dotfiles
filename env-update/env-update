@@ -98,6 +98,10 @@ class Updater:
         if section == 'config':
             return
 
+        if section not in self._cfg.sections():
+            print(self._color_text('red', 'section {} does not exist'.format(section)))
+            return
+
         print(self._color_text('blue', section))
         for option in self._cfg.options(section):
             if option == 'desc':
@@ -125,7 +129,11 @@ class Updater:
         if section == 'config':
             return
 
-        print(self._color_text('blue', 'updating {}'.format(section)))
+        if section not in self._cfg.sections():
+            print(self._color_text('red', 'section {} does not exist'.format(section)))
+            return
+        else:
+            print(self._color_text('blue', 'updating {}'.format(section)))
 
         for option in self._cfg.options(section):
             if option == 'desc':
