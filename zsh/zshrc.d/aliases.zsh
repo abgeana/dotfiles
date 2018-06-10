@@ -3,24 +3,29 @@ alias ls='ls --quoting-style=literal --color=tty'
 alias ll='ls --quoting-style=literal --color=tty -lh'
 alias la='ls --quoting-style=literal --color=tty -Ah'
 alias lla='ls --quoting-style=literal --color=tty -Alh'
-alias cd..='cd ..'
+
 alias tmux='tmux -2'
 alias tmux-ssh='tmux -2 -f ~/.tmux.conf.ssh -S /tmp/tmux-ssh'
-alias dhcp='dhclient -r && dhclient'
-alias cat='cat -v'
-alias unset-proxy='unset http_proxy https_proxy HTTP_PROXY HTTPS_PROXY'
-alias unset-hist='unset HISTFILE'
-alias brm='/bin/rm -irf'
+
 alias gdb='gdb -q'
 alias arm-gdb='arm-none-eabi-gdb -q'
-alias grep='grep --color=always'
-alias less='less -R'
-alias fm='vifm'
-alias cal='ncal -M -w -3'
+
 alias ff='find . -type f -name'
 alias fd='find . -type d -name'
 alias ffi='find . -type f -iname'
 alias fdi='find . -type d -iname'
+
+alias unset-proxy='unset http_proxy https_proxy no_proxy HTTP_PROXY HTTPS_PROXY NO_PROXY'
+alias unset-hist='unset HISTFILE HISTSIZE'
+
+# randomly useful
+alias cd..='cd ..'
+alias dhcp='dhclient -r && dhclient'
+alias cat='cat -v'
+alias brm='/bin/rm -irf'
+alias grep='grep --color=always'
+alias less='less -R'
+alias cal='ncal -M -w -3'
 
 # global aliases defined with '-g' (i.e. can be placed anywhere in other commands)
 alias -g silent='> /dev/null 2>&1'
