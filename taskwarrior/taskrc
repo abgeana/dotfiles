@@ -1,0 +1,50 @@
+# files
+data.location=~/.task
+
+# color theme
+include /usr/share/taskwarrior/dark-256.theme
+
+# to figure out which labels/columns are shown for a report, use
+#   task show report.completed.labels
+#   task show report.completed.columns
+
+# all report
+report.all.labels = ID,UUID,St,Created,Completed,D,Project,Tags,Due,Description
+report.all.columns = id,uuid.short,status.short,entry,end,depends.indicator,project,tags,due,description
+
+# list report
+report.all.labels = ID,Created,Completed,Project,Tags,Due,Description
+report.all.columns = id,entry,end,project,tags,due,description
+
+# completed report
+report.completed.labels = UUID,Created,Completed,Project,Due,Description
+report.completed.columns = uuid.short,entry,end,project,due,description
+report.completed.description = Completed
+
+# gtd inbox report
+report.in.labels = ID,Created,Description
+report.in.columns = id,entry,description
+report.in.description = Inbox
+report.in.filter = status:pending +in
+
+# gtd maybe report
+report.maybe.labels = ID,Created,Description
+report.maybe.columns = id,entry,description
+report.maybe.description = Maybe
+report.maybe.filter = status:pending +maybe
+
+# next report (shown by default)
+# the same as the inbox report
+report.next.labels = ID,Created,Description
+report.next.columns = id,entry,description
+report.next.description = Inbox
+report.next.filter = status:pending +in
+
+# gtd next report (labeled nxt)
+report.nxt.labels = ID,Project,Created,Description
+report.nxt.columns = id,project,entry,description
+report.nxt.description = Next
+report.nxt.filter = status:pending +nxt
+
+# disable nag messages
+nag=
