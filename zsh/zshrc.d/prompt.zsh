@@ -1,7 +1,6 @@
-COLOR_BASE=87
 HOSTNAME=$(hostname -s)
 if [[ $(id -u) == 0 ]]; then
-    COLOR_USER=$COLOR_BASE
+    COLOR_USER=87
 else
     COLOR_USER=196
 fi
@@ -35,4 +34,9 @@ fi
 # http://shapecatcher.com/
 # http://panmental.de/symbols/info.htm
 # http://xahlee.info/comp/unicode_arrows.html
-export PROMPT=" %F{ $COLOR_USER }% ○ %F{ $COLOR_HOST }%m%F{ $COLOR_BASE } ▶%f "
+if [[ $(id -u) == 0 || "$(which task)" =~ ".*not found" ]]; then
+    export PROMPT=" %F{ $COLOR_USER }% ○ %F{ $COLOR_HOST }%m%F{ $COLOR_USER } ▶%f "
+else
+    # use single quotes to re-evaluate properly every time
+    export PROMPT=' %F{ $COLOR_USER }% $(gtd_report) %F{ $COLOR_HOST }%m%F{ $COLOR_USER } ▶%f '
+fi
