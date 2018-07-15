@@ -7,15 +7,13 @@ fi
 
 if [[ $HOSTNAME =~ rogvm\-.* ]]; then
     COLOR_HOST=214
+elif [[ $HOSTNAME =~ avpc\-.* ]]; then
+    COLOR_HOST=51
 else
     typeset -A HOST_COLORS
     HOST_COLORS=(
         bendis          156
-        heretic         156
-        hathor           41
         rogue           202
-        decebal          92
-        tanya           134
     )
 
     for key in "${(@k)HOST_COLORS}"; do
@@ -34,7 +32,8 @@ fi
 # http://shapecatcher.com/
 # http://panmental.de/symbols/info.htm
 # http://xahlee.info/comp/unicode_arrows.html
-if [[ $(id -u) == 0 || "$(which task)" =~ ".*not found" ]]; then
+TASK_BIN=$(which task 2> /dev/null)
+if [[ $? == 0 || $(id -u) == 0 ]]; then
     export PROMPT=" %F{ $COLOR_USER }% ○ %F{ $COLOR_HOST }%m%F{ $COLOR_USER } ▶%f "
 else
     # use single quotes to re-evaluate properly every time
