@@ -1,14 +1,14 @@
-HOSTNAME=$(hostname -s)
+SHNAME=$(hostname -s)
 if [[ $(id -u) == 0 ]]; then
     COLOR_USER=87
 else
     COLOR_USER=196
 fi
 
-if [[ $HOSTNAME =~ rogvm\-.* ]]; then
-    COLOR_HOST=214
-elif [[ $HOSTNAME =~ avpc\-.* ]]; then
+if [[ $(hostname) =~ .*\.alegen\.net ]]; then
     COLOR_HOST=51
+elif [[ $SHNAME =~ rogvm\-.* ]]; then
+    COLOR_HOST=214
 else
     typeset -A HOST_COLORS
     HOST_COLORS=(
@@ -17,13 +17,13 @@ else
     )
 
     for key in "${(@k)HOST_COLORS}"; do
-        if [[ $HOSTNAME == $key ]]; then
+        if [[ $SHNAME == $key ]]; then
             COLOR_HOST=$HOST_COLORS[$key]
         fi
     done
 
     if [[ -z $COLOR_HOST ]]; then
-        COLOR_HOST=$(python -c "import hashlib; m = hashlib.md5(); m.update('$HOSTNAME'); print ord(m.digest()[0])")
+        COLOR_HOST=$(python -c "import hashlib; m = hashlib.md5(); m.update('$SHNAME'); print ord(m.digest()[0])")
     fi
 fi
 
