@@ -1,48 +1,122 @@
-#! env python
+#! env python3
 
-import subprocess
+import argparse
 import json
-from time import sleep
+import os.path
+import subprocess
 
-def exec_cmd(cmd):
-    p = subprocess.Popen(cmd, stdout = subprocess.PIPE)
-    sleep(0.2)
-    return p.communicate()[0]
 
-# get the current user
-user = exec_cmd( ['whoami'] )
-user = user[:-1]    # remove trailing '\n'
+class CommandRunner:
+    """CommandRunner implements the functionality for executing commands with specified arguments. Furthermore it
+    performs string formatting using python3 format strings and tokens."""
 
-# read names of hosts from file
-hfile = '/home/%s/.ssh/tmux-ssh-hosts' % (user,)  # file with my ssh hosts
-with open(hfile, 'r') as fhandle:
-    hosts = json.loads( fhandle.read() )
+    def __init__(self, *cmd_prefix):
+        self.args = dict()
+        self._cmd_prefix = cmd_prefix
 
-tmux_cmd = ['tmux', '-S', '/tmp/tmux-ssh']
+    def _process_cmd(self, *raw_cmd):
+        """_process_cmd performs the formatting of command tokens based on values stored in the self.args member. The
+        command prefix specified as arguments in the constructor are also prepended."""
+        full_cmd = self._cmd_prefix + raw_cmd
+        processed_cmd = list()
+        for token in full_cmd:
+            processed_cmd.append(token.format(**self.args))
+        return processed_cmd
 
-for idx, (group, targets) in enumerate(hosts.items()):
-    if idx == 0:
-        # rename existing session to ssh
-        exec_cmd( tmux_cmd + ['rename-session', group] )
-    else:
-        # for future reference:
-        # -d    the new session is attached to the current terminal
-        #       unless -d is given; without -d, you get the "unset $TMUX" message
-        # -s    sets the name of the new group
-        exec_cmd( tmux_cmd + ['new-session', '-d', '-s', group] )
+    def _run_cmd(self, *cmd):
+        """run executes the command (and associated arguments) given as function arguments. The expected format is one
+        function argument for the command, and each of the command arguments."""
+        cp = subprocess.run(cmd, stdout=subprocess.PIPE)
+        return cp.stdout.decode('utf-8')
 
-    # now change to the newly created session
-    exec_cmd( tmux_cmd + ['switch-client', '-t', group] )
+    def run(self, *raw_cmd):
+        """run executes the specified command. String formatting using the self.args member is performed before
+        executing the command. The command prefix specified in the constructor is prepended to the command before
+        execution."""
+        processed_cmd = self._process_cmd(*raw_cmd)
+        return self._run_cmd(*processed_cmd)
 
-    for idx2, target in enumerate(targets):
-        # tmux_idx = idx2 + 1 because tmux starts numbering of windows from 1, not 0
-        # set by line "set-option -g base-index 1" in the tmux config file
-        tmux_idx = idx2 + 1
-        if idx2 == 0:
-            # first window already exists so we rename it
-            exec_cmd( tmux_cmd + ['rename-window', '-t', '%s:%i' % (group, tmux_idx), target])
+
+def parse_args():
+    """parse_args parses the supported command line arguments."""
+    parser = argparse.ArgumentParser(description='Initialize tmux sessions for easy ssh connections.')
+    parser.add_argument(
+        '-s', '--sessions', type=str, default='tmux_sessions.json', help='json file describing tmux sessions')
+    args = parser.parse_args()
+    return args
+
+
+def load_json(sfile):
+    """load_json parses the json file describing tmux sessions and returns a dictionary with the contents. Secondary
+    files referenced by the main file are also loaded. The function uses the python json module."""
+    if not sfile.endswith('.json'):
+        sfile += '.json'
+    user = CommandRunner().run('whoami').strip()
+    spath = '/home/{user}/.ssh/{sfile}'.format(user=user, sfile=sfile)
+
+    # parse the main file
+    with open(spath, 'r') as shandle:
+        sessions = json.load(shandle)
+
+    # parse secondary included files
+    for s in sessions.keys():
+        if type(sessions[s]) == str:
+            spath = os.path.expanduser(sessions[s])
+            with open(spath, 'r') as shandle:
+                sessions[s] = json.load(shandle)
+
+    return sessions
+
+
+def main():
+    args = parse_args()
+    sessions = load_json(args.sessions)
+    tr = CommandRunner('tmux', '-S', '/tmp/tmux-ssh')
+
+    for idx, (session_name, windows) in enumerate(sessions.items()):
+        tr.args['session_name'] = session_name
+
+        if idx == 0:
+            # rename existing
+            tr.run('rename-session', '{session_name}')
         else:
-            # future windows need to be created
-            exec_cmd( tmux_cmd + ['new-window', '-t', '%s:%i' % (group, tmux_idx), '-n', target] )
-        exec_cmd( tmux_cmd + ['select-window', '-t', '%s:%s' % (group, target)] )
-        exec_cmd( tmux_cmd + ['send-keys', '-t', '%s:%s' % (group, target), 'alias con="ssh %s"' % (target,), 'Enter'] )
+            # -d    the new session is attached to the current terminal
+            #       unless -d is given; without -d, you get the "unset $TMUX" message
+            # -s    sets the name of the new session
+            tr.run('new-session', '-d', '-s', '{session_name}')
+
+        # change to the newly created session
+        tr.run('switch-client', '-t', '{session_name}')
+
+        for idx2, window in enumerate(windows):
+            # window_idx = idx2 + 1 because tmux starts numbering of windows from 1, not 0
+            # set by line "set-option -g base-index 1" in the tmux config file
+            tr.args['window_idx'] = idx2 + 1
+            tr.args['target'] = '{session_name}:{window_idx}'.format(**tr.args)
+
+            # extract the tmux args depending on json types
+            if type(window) == str:
+                tr.args['window_name'] = window
+                tr.args['window_hostname'] = window
+            elif type(window) == dict:
+                tr.args['window_name'] = window['name']
+                tr.args['window_hostname'] = window['hostname']
+
+            if idx2 == 0:
+                # first window already exists so we rename it
+                tr.run('rename-window', '-t', '{target}', '{window_name}')
+            else:
+                # new windows need to be created
+                tr.run('new-window', '-t', '{target}', '-n', '{window_name}')
+
+            # make the 'ssh' alias for running the ssh command with the target hostname
+            # switch to the current window
+            tr.run('select-window', '-t', '{target}')
+            # 'type' an alias command
+            tr.run('send-keys', '-t', '{target}', 'alias ssh="ssh {window_hostname}"', 'Enter')
+            # 'type' the clear command
+            tr.run('send-keys', '-t', '{target}', 'clear', 'Enter')
+
+
+if __name__ == '__main__':
+    main()
