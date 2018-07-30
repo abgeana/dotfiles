@@ -53,7 +53,6 @@ TerminalInteractiveShell.prompts_class = AlegenPrompt
 c = get_config()
 c.TerminalIPythonApp.display_banner = False             # do not display the banner
 c.InteractiveShellApp.exec_lines = [
-    'import numpy as np',
     'import os, os.path',
     'import sys'
 ]
