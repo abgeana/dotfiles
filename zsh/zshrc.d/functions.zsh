@@ -355,3 +355,15 @@ unquote-word() {
 
 # define new widget for calling the unquote-word function
 zle -N unquote-word
+
+# start a tmux instance for ssh and execute the init-tmux-ssh script
+tmux-ssh() {
+    local t="tmux -S /tmp/tmux-ssh"
+
+    if [[ $# == 0 ]]; then
+        (sleep 0.4; eval "$t send-keys init-tmux-ssh Enter")&
+        eval "$t -f ~/.tmux.conf.ssh"
+    else
+        eval "$t $@"
+    fi
+}
