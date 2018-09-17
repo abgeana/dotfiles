@@ -14,6 +14,7 @@ else
     HOST_COLORS=(
         bendis          156
         rogue           202
+        molly           88
     )
 
     for key in "${(@k)HOST_COLORS}"; do
