@@ -10,9 +10,8 @@ source ~/.vimrc.d/util.vim
 " if certain configs need to be applied first, then apply them in the init.vim file
 source ~/.vimrc.d/init.vim
 
-for file in split( system('ls ~/.vimrc.d/*.vim', ' ') )
+for file in split( globpath('~/.vimrc.d/', '*.vim') )
     if file !~ '.*util.*' && file !~ '.*init.*' && file !~ '.*final.*'
-        "echo file
         exec 'source ' . file
     endif
 endfor
