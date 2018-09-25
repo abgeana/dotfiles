@@ -29,6 +29,12 @@ autoload -Uz edit-command-line
 # to modify the word under the cursor
 autoload -Uz modify-current-argument
 
+# load modules
+# explanations for modules in:
+#   man zshmodules
+#   https://linux.die.net/man/1/zshmodules
+zmodload zsh/zpty
+
 # enable editing the command line in $EDITOR
 zle -N edit-command-line
 
