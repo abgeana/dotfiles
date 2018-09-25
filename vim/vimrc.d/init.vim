@@ -46,11 +46,13 @@ if FileIsPresent('~/.vim/bundle/Vundle.vim/autoload/vundle.vim')
 
     " section with plugins from repositories maintained by other people
     " solarized color scheme
-    Plugin 'altercation/vim-colors-solarized'
+    if has('unix')
+        Plugin 'altercation/vim-colors-solarized'
+    elseif has('win32')
+        Plugin 'frankier/neovim-colors-solarized-truecolor-only'
+    endif
     " unite magic
     Plugin 'Shougo/unite.vim'
-    " vim git integration
-    Plugin 'tpope/vim-fugitive'
     " automatic session management
     Plugin 'tpope/vim-obsession'
     " markdown helper
@@ -59,19 +61,22 @@ if FileIsPresent('~/.vim/bundle/Vundle.vim/autoload/vundle.vim')
     " easier motions
     Plugin 'easymotion/vim-easymotion'
     Plugin 'justinmk/vim-sneak'
-    " support for the vala language
-    Plugin 'arrufat/vala.vim'
     " persistent editing state (views, cursos position, folds, etc.)
-    Plugin 'kopischke/vim-stay'
+    " originally kopischke/vim-stay
+    Plugin 'zhimsel/vim-stay'
     " handle line and column numbers within file names
-    Plugin 'kopischke/vim-fetch'
+    " originally kopischke/vim-fetch
+    Plugin 'wsdjeg/vim-fetch'
     " code formatting plugin
     Plugin 'google/vim-maktaba'
     Plugin 'google/vim-codefmt'
     " GNU GLOBAL plugin
     Plugin 'vim-scripts/gtags.vim'
-    " sourcetrail plugin
-    Plugin 'CoatiSoftware/vim-sourcetrail'
+
+    " support for the additional languages and file types
+    Plugin 'arrufat/vala.vim'
+    Plugin 'udalov/kotlin-vim'
+    Plugin 'keith/swift.vim'
 
     if FileIsPresent('/usr/bin/ctags-exuberant')
         " tags listing on the side
