@@ -34,12 +34,7 @@ task_sed() {
     local taskout=$(zpty -r TASK)
     zpty -d TASK
 
-    # the complicated looking sed command is from
-    # https://stackoverflow.com/a/20924022
-    # the idea is to substitute text and replace characters by spaces, to the length of the initial text
-    taskout=$(echo $taskout | sed ':a;s/\(outlook *\)[^ )]/\1 /;ta;s/ )/  /g;s/outlook /outlook)/g' -)
-    taskout=$(echo $taskout | sed ':a;s/\(http *\)[^ )]/\1 /;ta;s/ )/  /g;s/http /http)/g' -)
-
+    taskout=$(echo $taskout | python3 ~/.zshrc.d/task_stdout_replace.py)
     echo $taskout
 }
 
