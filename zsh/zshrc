@@ -3,9 +3,10 @@
 # if certain configs need to be applied first, then apply them in the init.zsh file
 source ~/.zshrc.d/init.zsh
 
-for f in $(ls ~/.zshrc.d); do
-    if [[ $f != 'init.zsh' && $f != 'final.zsh' ]]; then
-        source ~/.zshrc.d/$f
+for abs_f in $(ls ~/.zshrc.d/*.zsh); do
+    local base_f=$(basename $abs_f)
+    if [[ $base_f != 'init.zsh' && $base_f != 'final.zsh' ]]; then
+        source ~/.zshrc.d/$base_f
     fi
 done
 
