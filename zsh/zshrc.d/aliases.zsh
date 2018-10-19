@@ -20,9 +20,9 @@ alias gdb='gdb -q'
 alias arm-gdb='arm-none-eabi-gdb -q'
 alias cd..='cd ..'
 alias cat='cat -v'
-alias brm='/bin/rm -irf'
 alias grep='grep --color=always'
 alias less='less -R'
+alias rm='echo "This is not the command you are looking for."; false'
 
 # global aliases defined with '-g' (i.e. can be placed anywhere in other commands)
 alias -g silent='> /dev/null 2>&1'

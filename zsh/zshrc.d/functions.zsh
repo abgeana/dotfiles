@@ -89,35 +89,6 @@ countdown() {
     done
 }
 
-# special purpose rm which moves files to ~/.trash instead of actually removing them (life saver)
-rm() {
-    if [[ ! -d ~/.trash ]]; then
-        mkdir ~/.trash
-    fi
-    for file in "$@"; do
-        local base="$(basename $file)"
-        if [[ -a ~/.trash/$base ]]; then
-            local idx=$(/bin/ls -la ~/.trash | grep $base | wc -l)
-            mv $file "$HOME/.trash/$base ($idx)"
-        else
-            mv $file ~/.trash
-        fi
-    done
-}
-
-# function which cleans the ~/.trash directory used by the above rm
-# it removes files older than 30 days
-clean-trash() {
-    local current_time=$(date +%s)
-    for file in ~/.trash/*; do
-        local change_time=$(stat -c %Z $file)
-        local age=$(( (current_time - change_time) / (60. * 60. * 24) ))
-        if [[ $age -gt 30 ]]; then
-            /bin/rm -rf $file
-        fi
-    done
-}
-
 # calculate time based otp codes and put the result in the clipboard
 totp() {
     local seed=0
