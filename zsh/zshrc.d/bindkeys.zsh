@@ -37,3 +37,8 @@ bindkey -M vicmd '^[q' quote-word
 # alt-shift-q for executing the unquote-word widget (defined in functions.zsh)
 bindkey -M viins '^[Q' unquote-word
 bindkey -M vicmd '^[Q' unquote-word
+
+# ctrl-o for running lfcd (defined in lfcd.zsh)
+# lf does not work well if bindkey calls a widget; use -s instead
+bindkey -M viins -s '^O' 'lfcd\n'
+bindkey -M vicmd -s '^O' 'lfcd\n'
