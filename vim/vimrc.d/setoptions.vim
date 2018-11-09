@@ -78,8 +78,11 @@ set timeoutlen=200
 " highlight the line on which the cursor is
 set cursorline
 
-" show a visual menu of autocomplete options
+" when more than one match, list all matches and complete till longest common string
 set wildmenu
+
+" complete only up to point of ambiguity
+set wildmode=longest:full
 
 " do not redraw too much
 set lazyredraw

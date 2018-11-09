@@ -13,7 +13,7 @@ filetype off
 set nocompatible
 
 " define the leader to space
-let mapleader="\<Space>"
+let mapleader=","
 
 " vundle plugins
 if FileIsPresent('~/.vim/bundle/Vundle.vim/autoload/vundle.vim')

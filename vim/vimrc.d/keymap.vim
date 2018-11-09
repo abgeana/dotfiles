@@ -50,3 +50,7 @@ nnoremap yl :call YankLocation()<CR>
 
 " remap gf to open a file under the cursor and with line number
 nnoremap gf gF
+
+" remap <Leader><Esc> to <C-\><C-n> for neovim
+" see also ":help terminal" or ":help CTRL-\_CTRL-N"
+tnoremap <Leader><Esc> <C-\><C-n>
