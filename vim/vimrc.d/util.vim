@@ -48,11 +48,18 @@ command VundleGitClone call VundleGitCloneFunc()
 " to be used with the tmux capture-pane command
 function TmuxCapturePaneSetup()
     " be able to exit vim quickly
-    cnoremap q q!
+    noremap q :q!<CR>
     " copy directly to the clipboard
     vnoremap y "+y
     " hide the status line
     set laststatus=0
+
+    " go to the beginning of the buffer
+    normal 0gg
+    " remove all lines which are empty
+    while getline('.') == ''
+        normal dd
+    endwhile
 
     " go to the end of the buffer
     normal G
