@@ -56,8 +56,6 @@ setopt prompt_subst
 setopt autocd
 # expand on characters such as '~' for home directory
 setopt extendedglob
-# case insensitive globbing
-unsetopt case_glob
 # append commands to history immediately (not at exit)
 setopt inc_append_history
 # share history file between zsh sessions
@@ -81,7 +79,3 @@ setopt rm_star_silent
 # use same dircolors config for autocomplete suggestions
 # https://superuser.com/questions/700406
 zstyle ':completion:*:default' list-colors ${(s.:.)LS_COLORS}
-
-# make autocomplete suggestions case insensitive
-# https://unix.stackexchange.com/questions/185537
-zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
