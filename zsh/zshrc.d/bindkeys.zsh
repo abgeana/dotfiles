@@ -22,6 +22,10 @@ bindkey -M vicmd '^T' history-incremental-pattern-search-forward
 bindkey -M viins '^[e' edit-command-line
 bindkey -M vicmd '^[e' edit-command-line
 
+# edit tmux pane in editor
+bindkey -M viins '^[E' pane-edit
+bindkey -M vicmd '^[E' pane-edit
+
 # alt-s for executing the insert-sudo widget (defined in functions.zsh)
 bindkey -M viins '^[s' insert-sudo
 bindkey -M vicmd '^[s' insert-sudo

@@ -63,55 +63,6 @@ sz() {
     done
 }
 
-# this function prints an incremental timer
-stopwatch() {
-    date_start=$(date +%s)
-    while true; do
-        echo -ne "$(date -u --date @$(( $(date +%s) - $date_start )) +%H:%M:%S)\r"
-    done
-}
-
-# this function prints a decremental timer for the specified amount of time
-countdown() {
-    if [[ $# == 0 ]]; then
-        echo "Usage: countdown [seconds] [ minutes [hours] ]"
-        return
-    elif [[ $# == 1 ]]; then
-        local date_start=$(( $(date +%s) + $1 ))
-    elif [[ $# == 2 ]]; then
-        local date_start=$(( $(date +%s) + $1 + $2 * 60 ))
-    elif [[ $# == 3 ]]; then
-        local date_start=$(( $(date +%s) + $1 + $2 * 60 + $3 * 60 * 60 ))
-    fi
-
-    while [ $date_start -ge `date +%s` ]; do
-        echo -ne "$(date -u --date @$(( $date_start - $(date +%s) )) +%H:%M:%S)\r";
-    done
-}
-
-# calculate time based otp codes and put the result in the clipboard
-totp() {
-    local seed=0
-    local rawseed=0
-    if [[ $# == 0 ]]; then
-        while read -r input; do
-            rawseed=$( echo $input | grep 'totp' )
-            if [[ ! -z $rawseed ]]; then
-                seed=$( echo $rawseed | awk '{ split($0, a, " "); print a[2] }' )
-            fi
-        done
-    else
-        seed=$1
-    fi
-
-    if [[ ! -z $seed ]]; then
-        oathtool --totp -b $seed | xsel -ib
-        echo "Done."
-    else
-        echo "No seed has been provided."
-    fi
-}
-
 # this function performs a grep with all the right flags and pipes through less
 grl () {
     grep -r -n "$@" | less
@@ -144,88 +95,6 @@ man() {
         LESS_TERMCAP_ue=$(printf "\e[0m")           \
         LESS_TERMCAP_us=$(printf "\e[1;32m")        \
         man "$@"
-}
-
-# open luks encrypted devices easily
-luksopen() {
-    local need_sudo=0
-
-    if [[ $# != 3 ]]; then
-        echo 'Usage: luksopen [device in /dev] [volume name] [mount point]'
-        return
-    fi
-
-    if [[ $(id -u) != 0 ]]; then
-        which sudo &> /dev/null
-        if [[ $? != 0 ]]; then
-            echo 'You are not root and you do not have sudo installed.'
-            return
-        else
-            need_sudo=1
-            sudo -n true 2> /dev/null
-            if [[ $? != 0 ]]; then
-                echo 'You need to type the password for sudo first!'
-            fi
-        fi
-    fi
-
-    if [[ $need_sudo ]]; then
-        sudo cryptsetup luksOpen /dev/$1 $2
-        if [[ $? == 0 ]]; then
-            sudo mount /dev/mapper/$2 $3
-        else
-            echo "Could not open $1"
-        fi
-    else
-        cryptsetup luksOpen /dev/$1 $2
-        if [[ $? == 0 ]]; then
-            mount /dev/mapper/$2 $3
-        else
-            echo "Could not open $1"
-        fi
-    fi
-}
-
-# close luks devices easily
-luksclose() {
-    local need_sudo=0
-
-    if [[ $# != 1 ]]; then
-        echo 'Usage: luksclose [volume name]'
-        return
-    fi
-
-    if [[ $(id -u) != 0 ]]; then
-        which sudo &> /dev/null
-        if [[ $? != 0 ]]; then
-            echo 'You are not root and you do not have sudo installed.'
-            return
-        else
-            need_sudo=1
-            sudo -n true 2> /dev/null
-            if [[ $? != 0 ]]; then
-                echo 'You need to type the password for sudo first!'
-            fi
-        fi
-    fi
-
-    local mount_point=$(mount -l | grep $1 | awk '{ print $3 }')
-
-    if [[ $need_sudo ]]; then
-        sudo umount $mount_point
-        if [[ $? != 0 ]]; then
-            sudo cryptsetup luksClose $1
-        else
-            echo "Could not close $1"
-        fi
-    else
-        umount $mount_point
-        if [[ $? != 0 ]]; then
-            cryptsetup luksClose $1
-        else
-            echo "Could not close $1"
-        fi
-    fi
 }
 
 # create new tmux session and switch to it
@@ -271,23 +140,15 @@ tb() {
     ts 'base'
 }
 
-# start a markdown note file and append the date and time to the file name
-note() {
-    local timestamp="$(date +%Y-%m-%d_%H-%M-%S)"
-
-    if [[ $# != 1 ]]; then
-        vim "$timestamp.md"
-    else
-        vim "$timestamp $1.md"
-    fi
-}
-
 # start a vim session with the contents of the current tmux pane
 # acronym for "pane edit"
-pe() {
+pane-edit() {
     tmux capture-pane -p -S - | \
     vim -c 'call TmuxCapturePaneSetup()' -
 }
+
+# define new widget for calling the pe function
+zle -N pane-edit
 
 # this function lets me use ctrl-z to push processes to the background
 # and to also pull them to foreground
