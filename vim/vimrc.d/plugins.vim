@@ -1,5 +1,5 @@
 " mark
-if FileIsPresent('~/.vim/bundle/mark.vim/plugin/mark.vim')
+if FileIsPresent('~/.vim/bundle/vim-mark/plugin/mark.vim')
     " use a proper palette
     let g:mwDefaultHighlightingPalette = 'maximum'
     " if the mark plugin is available use it together with

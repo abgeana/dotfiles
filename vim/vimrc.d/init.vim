@@ -27,16 +27,11 @@ if FileIsPresent('~/.vim/bundle/Vundle.vim/autoload/vundle.vim')
     " or simply use the VundleGitClone command
     Plugin 'VundleVim/Vundle.vim'
 
-    " section with plugins from my own repositories (or mirrors/forks)
     " nerdtree file viewer
     Plugin 'alegen/nerdtree'
-    " my own version of mark.vim for fancy colors
-    Plugin 'alegen/mark.vim'
-    " my own mirror of cscope_maps.vim
-    " currently replaced by the GNU GLOBAL plugin
-    "Plugin 'alegen/vim-cscope-maps'
-    " ability to interpret ansi escape color sequences
-    Plugin 'alegen/AnsiEsc.vim'
+    " my own version of vim-mark for fancy colors
+    Plugin 'inkarkat/vim-ingo-library'
+    Plugin 'alegen/vim-mark'
     " delete trailing whitespaces; this is better than the "autocmd" line
     " since it does not move the cursor when saving a file
     " https://stackoverflow.com/questions/35390415
@@ -44,13 +39,6 @@ if FileIsPresent('~/.vim/bundle/Vundle.vim/autoload/vundle.vim')
     " smali syntax highlighting
     Plugin 'alegen/vim-smali'
 
-    " section with plugins from repositories maintained by other people
-    " solarized color scheme
-    if has('unix')
-        Plugin 'altercation/vim-colors-solarized'
-    elseif has('win32')
-        Plugin 'frankier/neovim-colors-solarized-truecolor-only'
-    endif
     " unite magic
     Plugin 'Shougo/unite.vim'
     " automatic session management
@@ -74,18 +62,15 @@ if FileIsPresent('~/.vim/bundle/Vundle.vim/autoload/vundle.vim')
     Plugin 'vim-scripts/gtags.vim'
 
     " support for the additional languages and file types
-    Plugin 'arrufat/vala.vim'
     Plugin 'udalov/kotlin-vim'
     Plugin 'keith/swift.vim'
 
-    if FileIsPresent('/usr/bin/ctags-exuberant')
-        " tags listing on the side
-        Plugin 'vim-scripts/taglist.vim'
-    endif
-
-    if FileIsPresent('/usr/local/bin/vifm')
-        " vifm madness
-        Plugin 'vifm/vifm.vim'
+    " section with plugins from repositories maintained by other people
+    " solarized color scheme
+    if has('unix')
+        Plugin 'altercation/vim-colors-solarized'
+    elseif has('win32')
+        Plugin 'frankier/neovim-colors-solarized-truecolor-only'
     endif
 
     call vundle#end()
