@@ -33,10 +33,4 @@ fi
 # http://shapecatcher.com/
 # http://panmental.de/symbols/info.htm
 # http://xahlee.info/comp/unicode_arrows.html
-TASK_BIN=$(which task 2> /dev/null)
-if [[ $? != 0 || $(id -u) == 0 ]]; then
-    export PROMPT=" %F{ $COLOR_USER }% ○ %F{ $COLOR_HOST }%m%F{ $COLOR_USER } ▶%f "
-else
-    # use single quotes to re-evaluate properly every time
-    export PROMPT=' %F{ $COLOR_USER }% $(gtd_report) %F{ $COLOR_HOST }%m%F{ $COLOR_USER } ▶%f '
-fi
+export PROMPT=" %F{ $COLOR_USER }% ○ %F{ $COLOR_HOST }%m%F{ $COLOR_USER } ▶%f "

@@ -37,17 +37,3 @@ task_sed() {
     taskout=$(echo $taskout | python3 ~/.zshrc.d/task_stdout_replace.py)
     echo $taskout
 }
-
-# function to generate a gtd report and use it in the PROMPT variable
-gtd_report() {
-    local in=$(task +in +PENDING count)
-    local maybe=$(task +maybe +PENDING count)
-    local total=$(($in+$maybe))
-
-    if [[ $total == "0" ]]; then
-        echo "○"
-    else
-        # echo "｢$total｣"
-        echo "❬$total❭"
-    fi
-}
