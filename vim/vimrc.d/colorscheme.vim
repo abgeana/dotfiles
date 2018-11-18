@@ -1,9 +1,9 @@
 " set the colorscheme
 set background=dark
 
-if has('unix') && FileIsPresent('~/.vim/bundle/vim-colors-solarized/colors/solarized.vim')
+if has('unix') && FileIsPresent('~/.vim/plugged/vim-colors-solarized/colors/solarized.vim')
     colorscheme solarized
-elseif has('win32') && FileIsPresent('~/.vim/bundle/neovim-colors-solarized-truecolor-only/colors/solarized.vim')
+elseif has('win32') && FileIsPresent('~/.vim/plugged/neovim-colors-solarized-truecolor-only/colors/solarized.vim')
     colorscheme solarized
 else
     colorscheme darkblue

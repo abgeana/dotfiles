@@ -1,5 +1,5 @@
 " mark
-if FileIsPresent('~/.vim/bundle/vim-mark/plugin/mark.vim')
+if FileIsPresent('~/.vim/plugged/vim-mark/plugin/mark.vim')
     " use a proper palette
     let g:mwDefaultHighlightingPalette = 'maximum'
     " if the mark plugin is available use it together with
@@ -16,7 +16,7 @@ else
 endif
 
 " nerdtree
-if FileIsPresent('~/.vim/bundle/nerdtree/plugin/NERD_tree.vim')
+if FileIsPresent('~/.vim/plugged/nerdtree/plugin/NERD_tree.vim')
     " do not display header
     let g:NERDTreeMinimalUI=1
     " show line numbers in the file viewer
@@ -33,14 +33,14 @@ if FileIsPresent('~/.vim/bundle/nerdtree/plugin/NERD_tree.vim')
 endif
 
 " sneak
-if FileIsPresent('~/.vim/bundle/vim-sneak/plugin/sneak.vim')
+if FileIsPresent('~/.vim/plugged/vim-sneak/plugin/sneak.vim')
     let g:sneak#streak = 1
     let g:sneak#s_next = 1
     let g:sneak#use_ic_scs = 1
 endif
 
 " easymotion
-if FileIsPresent('~/.vim/bundle/vim-easymotion/plugin/EasyMotion.vim')
+if FileIsPresent('~/.vim/plugged/vim-easymotion/plugin/EasyMotion.vim')
     " easiest way to get these is to look at colors displayed in
     " :so $VIMRUNTIME/syntax/hitest.vim
     hi link EasyMotionTarget        Title
@@ -51,19 +51,19 @@ if FileIsPresent('~/.vim/bundle/vim-easymotion/plugin/EasyMotion.vim')
 endif
 
 " taglist
-if FileIsPresent('~/.vim/bundle/taglist.vim/plugin/taglist.vim')
+if FileIsPresent('~/.vim/plugged/taglist.vim/plugin/taglist.vim')
     let g:Tlist_Use_Right_Window = 1
     let g:Tlist_WinWidth = 60
     let g:Tlist_Sort_Type = "name"
 endif
 
 " vim-markdown
-if FileIsPresent('~/.vim/bundle/vim-markdown/ftplugin/markdown.vim')
+if FileIsPresent('~/.vim/plugged/vim-markdown/ftplugin/markdown.vim')
     let g:vim_markdown_folding_disabled = 1
 endif
 
 " DeleteTrailingWhitespace
-if FileIsPresent('~/.vim/bundle/DeleteTrailingWhitespace.vim/plugin/DeleteTrailingWhitespace.vim')
+if FileIsPresent('~/.vim/plugged/DeleteTrailingWhitespace.vim/plugin/DeleteTrailingWhitespace.vim')
     " i want to eradicate all trailing spaces all the time
     let g:DeleteTrailingWhitespace = 1
     " automatically do it for me when i save a file

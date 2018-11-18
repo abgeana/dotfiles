@@ -37,12 +37,18 @@ function DoSearch(visual)
     endif
 endfunction
 
-" function and command which simply clones the
-" git repository of the vundle plugin manager
-function VundleGitCloneFunc()
-    !git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+" function and command which install vim-plug
+" https://github.com/junegunn/vim-plug/wiki/tips#automatic-installation
+function VimPlugInstallFunc()
+    if empty(glob('~/.vim/autoload/plug.vim'))
+        silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+            \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+        echomsg 'installed vim-plug'
+    else
+        echomsg 'vim-plug is already installed'
+    endif
 endfunction
-command VundleGitClone call VundleGitCloneFunc()
+command VimPlugInstall call VimPlugInstallFunc()
 
 " function which sets up vim and the buffer contents
 " to be used with the tmux capture-pane command
