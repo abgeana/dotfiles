@@ -34,20 +34,12 @@ endif
 
 " sneak
 if FileIsPresent('~/.vim/plugged/vim-sneak/plugin/sneak.vim')
-    let g:sneak#streak = 1
+    " use labels for jump spots
+    let g:sneak#label = 1
+    " press "s" to go to the next match
     let g:sneak#s_next = 1
+    " case sensitivity determined by ignorecase and smartcase
     let g:sneak#use_ic_scs = 1
-endif
-
-" easymotion
-if FileIsPresent('~/.vim/plugged/vim-easymotion/plugin/EasyMotion.vim')
-    " easiest way to get these is to look at colors displayed in
-    " :so $VIMRUNTIME/syntax/hitest.vim
-    hi link EasyMotionTarget        Title
-    hi link EasyMotionShade         Comment
-    hi link EasyMotionTarget2First  Question
-    hi link EasyMotionTarget2Second MatchParen
-    hi link EasyMotionMoveHL        Search
 endif
 
 " taglist

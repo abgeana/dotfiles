@@ -36,7 +36,6 @@ if FileIsPresent('~/.vim/autoload/plug.vim')
     Plug 'godlygeek/tabular'
     Plug 'plasticboy/vim-markdown'
     " easier motions
-    Plug 'easymotion/vim-easymotion'
     Plug 'justinmk/vim-sneak'
     " persistent editing state (views, cursos position, folds, etc.)
     " originally kopischke/vim-stay

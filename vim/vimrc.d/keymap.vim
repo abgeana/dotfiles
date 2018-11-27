@@ -4,9 +4,6 @@
 map <F5> :set formatoptions-=cro nocindent noautoindent nosmartindent inde=<CR>
 map <F6> :set formatoptions+=cro nocindent autoindent smartindent inde=    <CR>
 
-" enter command mode with ; instead of :
-noremap ; q:i
-
 " move cursor on wrapped lines
 " the ^[ is an escape character and may be typed by pressing ctrl+v and then alt+key
 " though this only seems to work in vim; in neovim just copy/paste it
