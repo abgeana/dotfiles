@@ -199,3 +199,15 @@ tmux-ssh() {
         eval "$t $@"
     fi
 }
+
+# use ranger to cd to another directory
+# adapted from https://github.com/ranger/ranger/blob/master/examples/bash_automatic_cd.sh
+function ranger-cd {
+    tempfile="$(mktemp -t tmp.XXXXXX)"
+    ranger --choosedir="$tempfile" "${@:-$(pwd)}"
+    test -f "$tempfile" &&
+    if [ "$(cat -- "$tempfile")" != "$(echo -n `pwd`)" ]; then
+        cd -- "$(cat "$tempfile")"
+    fi
+    /bin/rm -f -- "$tempfile"
+}

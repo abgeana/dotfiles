@@ -42,7 +42,7 @@ bindkey -M vicmd '^[q' quote-word
 bindkey -M viins '^[Q' unquote-word
 bindkey -M vicmd '^[Q' unquote-word
 
-# ctrl-o for running lfcd (defined in lfcd.zsh)
-# lf does not work well if bindkey calls a widget; use -s instead
-bindkey -M viins -s '^O' 'lfcd\n'
-bindkey -M vicmd -s '^O' 'lfcd\n'
+# ctrl-o for running ranger-cd (defined in functions.zsh)
+# does not work well if bindkey calls a widget; use -s instead
+bindkey -M viins -s '^O' 'ranger-cd\n'
+bindkey -M vicmd -s '^O' 'ranger-cd\n'
