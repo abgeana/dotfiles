@@ -4,7 +4,7 @@ import os
 import configparser
 import argparse
 import requests
-import subprocess
+import stat
 
 from os.path import expanduser
 from colored import fg, attr
@@ -171,6 +171,7 @@ class Updater:
 
         try:
             os.makedirs(os.path.dirname(full_path), mode=dir_chmod)
+            os.chmod(os.path.dirname(full_path), 0o700)
         except OSError:
             pass
 
@@ -180,11 +181,9 @@ class Updater:
         except PermissionError:
             return False
 
-        chmod_cmd = 'chmod {} {}'.format(file_chmod, full_path)
-        subprocess.call(chmod_cmd.split(' '))
+        os.chmod(full_path, int(file_chmod, 8))
         if os.geteuid() == 0:
-            chown_cmd = 'chown root:root {}'.format(full_path)
-            subprocess.call(chown_cmd.split(' '))
+            os.chown(full_path, 0, 0)
 
         return True
 
