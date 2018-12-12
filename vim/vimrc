@@ -6,21 +6,21 @@
 " cool vim things                   http://www.oualline.com/vim/10/top_10.html
 
 " if certain utility code is needed, then use the util.vim file
-source ~/.vimrc.d/util.vim
+source ~/.config/nvim/vimrc.d/util.vim
 " if certain configs need to be applied first, then apply them in the init.vim file
-source ~/.vimrc.d/init.vim
+source ~/.config/nvim/vimrc.d/init.vim
 
-for file in split( globpath('~/.vimrc.d/', '*.vim') )
+for file in split( globpath('~/.config/nvim/vimrc.d/', '*.vim') )
     if file !~ '.*util.*' && file !~ '.*init.*' && file !~ '.*final.*'
         exec 'source ' . file
     endif
 endfor
 
 " if certain configs need to be applied last, then apply them in the final.vim file
-source ~/.vimrc.d/final.vim
+source ~/.config/nvim/vimrc.d/final.vim
 
 " optional machine specific configs to be kept out of version control
 " sourcing this last means that default settings can be overwritten
-if FileIsPresent('~/.vimrc.add')
-    exec 'source ~/.vimrc.add'
+if FileIsPresent('~/.config/nvim/vimrc.add')
+    exec 'source ~/.config/nvim/vimrc.add'
 endif

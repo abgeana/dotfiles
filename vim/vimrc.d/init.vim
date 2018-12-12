@@ -13,8 +13,8 @@ set nocompatible
 let mapleader=","
 
 " vim plugins
-if FileIsPresent('~/.vim/autoload/plug.vim')
-    call plug#begin('~/.vim/plugged')
+if FileIsPresent('~/.config/nvim/autoload/plug.vim')
+    call plug#begin('~/.config/nvim/plugged')
 
     " nerdtree file viewer
     Plug 'alegen/nerdtree'
