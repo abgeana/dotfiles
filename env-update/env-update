@@ -28,7 +28,7 @@ def parse_config(f):
     # https://stackoverflow.com/questions/1611799
     cfg.optionxform = str
     with open(f, 'r') as fp:
-        cfg.readfp(fp)
+        cfg.read_file(fp)
     return cfg
 
 
