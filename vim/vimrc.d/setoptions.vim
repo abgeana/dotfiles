@@ -91,3 +91,11 @@ set lazyredraw
 " menuone - use the popup menu also when there is only one match
 " longest - only insert the longest common text of the matches
 set completeopt=menuone,longest
+
+" shada (SHAred DAta) configuration
+" default shada=!,'100,<50,s10,h
+" '1000     - 1000 files for which you have marks (a-z)
+" f1        - store global marks (A-Z and 0-9)
+" <500      - lines saved for each of the registers
+" h         - disable 'hlsearch' highlighting when starting
+set shada='500,f1,<500,h
