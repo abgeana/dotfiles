@@ -21,6 +21,6 @@ source ~/.config/nvim/vimrc.d/final.vim
 
 " optional machine specific configs to be kept out of version control
 " sourcing this last means that default settings can be overwritten
-if FileIsPresent('~/.config/nvim/vimrc.add')
+if empty(glob('~/.config/nvim/vimrc.add')) == 0
     exec 'source ~/.config/nvim/vimrc.add'
 endif

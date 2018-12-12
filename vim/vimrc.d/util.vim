@@ -1,12 +1,3 @@
-" function which checks if a certain script is present
-function FileIsPresent(path)
-    let l:path = a:path
-    if l:path[0] == '~'
-        let l:path = $HOME . l:path[1:]
-    endif
-    return filereadable(l:path)
-endfunction
-
 " function used to get the visual selection
 " https://stackoverflow.com/questions/1533565
 function GetVisualSelection()

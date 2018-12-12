@@ -1,5 +1,5 @@
 " mark
-if FileIsPresent('~/.vim/plugged/vim-mark/plugin/mark.vim')
+if empty(glob('~/.config/nvim/plugged/vim-mark/plugin/mark.vim')) == 0
     " use a proper palette
     let g:mwDefaultHighlightingPalette = 'maximum'
     " if the mark plugin is available use it together with
@@ -16,7 +16,7 @@ else
 endif
 
 " nerdtree
-if FileIsPresent('~/.vim/plugged/nerdtree/plugin/NERD_tree.vim')
+if empty(glob('~/.config/nvim/plugged/nerdtree/plugin/NERD_tree.vim')) == 0
     " do not display header
     let g:NERDTreeMinimalUI=1
     " show line numbers in the file viewer
@@ -33,7 +33,7 @@ if FileIsPresent('~/.vim/plugged/nerdtree/plugin/NERD_tree.vim')
 endif
 
 " sneak
-if FileIsPresent('~/.vim/plugged/vim-sneak/plugin/sneak.vim')
+if empty(glob('~/.config/nvim/plugged/vim-sneak/plugin/sneak.vim')) == 0
     " use labels for jump spots
     let g:sneak#label = 1
     " press "s" to go to the next match
@@ -43,19 +43,19 @@ if FileIsPresent('~/.vim/plugged/vim-sneak/plugin/sneak.vim')
 endif
 
 " taglist
-if FileIsPresent('~/.vim/plugged/taglist.vim/plugin/taglist.vim')
+if empty(glob('~/.config/nvim/plugged/taglist.vim/plugin/taglist.vim')) == 0
     let g:Tlist_Use_Right_Window = 1
     let g:Tlist_WinWidth = 60
     let g:Tlist_Sort_Type = "name"
 endif
 
 " vim-markdown
-if FileIsPresent('~/.vim/plugged/vim-markdown/ftplugin/markdown.vim')
+if empty(glob('~/.config/nvim/plugged/vim-markdown/ftplugin/markdown.vim')) == 0
     let g:vim_markdown_folding_disabled = 1
 endif
 
 " DeleteTrailingWhitespace
-if FileIsPresent('~/.vim/plugged/DeleteTrailingWhitespace.vim/plugin/DeleteTrailingWhitespace.vim')
+if empty(glob('~/.config/nvim/plugged/DeleteTrailingWhitespace.vim/plugin/DeleteTrailingWhitespace.vim')) == 0
     " i want to eradicate all trailing spaces all the time
     let g:DeleteTrailingWhitespace = 1
     " automatically do it for me when i save a file
