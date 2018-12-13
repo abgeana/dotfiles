@@ -10,7 +10,7 @@ from __future__ import (absolute_import, division, print_function)
 from ranger.gui.colorscheme import ColorScheme
 from ranger.gui.color import (
     cyan, magenta, red, white, default,
-    normal, bold, reverse,
+    normal, reverse,
     default_colors,
 )
 
@@ -48,38 +48,28 @@ class Solarized(ColorScheme):
                     any((context.media, context.container,
                          context.fifo, context.socket)):
                 fg = 64
-                attr |= bold
             if context.socket:
                 fg = 136
                 bg = 230
-                attr |= bold
             if context.fifo:
                 fg = 136
                 bg = 230
-                attr |= bold
             if context.device:
                 fg = 244
                 bg = 230
-                attr |= bold
             if context.link:
                 fg = 37 if context.good else 160
-                attr |= bold
                 if context.bad:
                     bg = 235
             if context.tag_marker and not context.selected:
-                attr |= bold
                 if fg in (red, magenta):
                     fg = white
                 else:
                     fg = red
             if not context.selected and (context.cut or context.copied):
                 fg = 234
-                attr |= bold
             if context.main_column:
-                if context.selected:
-                    attr |= bold
                 if context.marked:
-                    attr |= bold
                     bg = 237
             if context.badinfo:
                 if attr & reverse:
@@ -91,7 +81,6 @@ class Solarized(ColorScheme):
                 fg = 241
 
         elif context.in_titlebar:
-            attr |= bold
             if context.hostname:
                 fg = 16 if context.bad else 255
                 if context.bad:
@@ -112,12 +101,11 @@ class Solarized(ColorScheme):
                     fg = 160
                     bg = 235
             if context.marked:
-                attr |= bold | reverse
+                attr |= reverse
                 fg = 237
                 bg = 47
             if context.message:
                 if context.bad:
-                    attr |= bold
                     fg = 160
                     bg = 235
             if context.loaded:
