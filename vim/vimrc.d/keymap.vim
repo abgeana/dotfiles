@@ -1,19 +1,15 @@
 " map vs. remap vs. noremap - http://stackoverflow.com/questions/3776117
 
+" define the leader to space
+let mapleader=","
+
 " to disable autoindentation and autocommenting press F3, to enable it back press F4
 map <F5> :set formatoptions-=cro nocindent noautoindent nosmartindent inde=<CR>
 map <F6> :set formatoptions+=cro nocindent autoindent smartindent inde=    <CR>
 
 " move cursor on wrapped lines
-" the ^[ is an escape character and may be typed by pressing ctrl+v and then alt+key
-" though this only seems to work in vim; in neovim just copy/paste it
-if has('nvim') == 0
-    noremap <silent> k gk
-    noremap <silent> j gj
-else
-    noremap <silent> <A-k> gk
-    noremap <silent> <A-j> gj
-endif
+noremap <silent> <A-k> gk
+noremap <silent> <A-j> gj
 
 " move the complete window
 noremap <silent> <C-k> <C-y>

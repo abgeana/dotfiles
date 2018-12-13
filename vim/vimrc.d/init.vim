@@ -1,17 +1,3 @@
-" if this is neovim, set the runtimepath to include (some) regular vim directories
-if has('nvim')
-    let &rtp = &rtp . ',/var/lib/vim/addons'
-endif
-
-" some websites say that pathogen and other plugins require this
-filetype off
-
-" be VImproved and not just VI
-set nocompatible
-
-" define the leader to space
-let mapleader=","
-
 " vim plugins
 if empty(glob('~/.config/nvim/autoload/plug.vim')) == 0
     call plug#begin('~/.config/nvim/plugged')
@@ -28,10 +14,6 @@ if empty(glob('~/.config/nvim/autoload/plug.vim')) == 0
     " smali syntax highlighting
     Plug 'alegen/vim-smali'
 
-    " unite magic
-    Plug 'Shougo/unite.vim'
-    " automatic session management
-    Plug 'tpope/vim-obsession'
     " markdown helper
     Plug 'godlygeek/tabular'
     Plug 'plasticboy/vim-markdown'
@@ -61,5 +43,8 @@ if empty(glob('~/.config/nvim/autoload/plug.vim')) == 0
         Plug 'frankier/neovim-colors-solarized-truecolor-only'
     endif
 
+    " automatically executes
+    "   filetype plugin indent on
+    "   syntax enable
     call plug#end()
 endif

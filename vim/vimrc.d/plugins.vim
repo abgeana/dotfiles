@@ -25,11 +25,7 @@ if empty(glob('~/.config/nvim/plugged/nerdtree/plugin/NERD_tree.vim')) == 0
     let g:NERDTreeMapOpenSplit='s'
     let g:NERDTreeMapOpenVSplit='v'
 
-    if has('nvim') == 0
-        map x :NERDTreeToggle<CR>
-    else
-        map <A-x> :NERDTreeToggle<CR>
-    endif
+    map <A-x> :NERDTreeToggle<CR>
 endif
 
 " sneak
