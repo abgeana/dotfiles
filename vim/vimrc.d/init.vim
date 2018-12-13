@@ -30,6 +30,8 @@ if empty(glob('~/.config/nvim/autoload/plug.vim')) == 0
     Plug 'google/vim-codefmt'
     " GNU GLOBAL plugin
     Plug 'vim-scripts/gtags.vim'
+    " fzf support
+    Plug 'junegunn/fzf.vim'
 
     " support for the additional languages and file types
     Plug 'udalov/kotlin-vim'
