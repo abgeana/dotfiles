@@ -4,14 +4,17 @@
 
 set $mod Mod4
 
-# Font for window titles. Will also be used by the bar unless a different font
-# is used in the bar {} block below. ISO 10646 = Unicode
+# font for window titles
+# will also be used by the bar unless a different font is used in the bar {} block below
 font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
+
+# exit i3
+bindsym $mod+Shift+Escape exit
 
 # switch langauges
 bindsym $mod+F1 exec /bin/chkb
 
-# Use Mouse+$mod to drag floating windows to their wanted position
+# use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
 
 # start a terminal
@@ -22,9 +25,6 @@ bindsym $mod+Shift+x exec "i3lock -d"
 
 # kill focused window
 bindsym $mod+Shift+q kill
-
-# start dmenu (a program launcher)
-#bindsym $mod+d exec dmenu_run
 
 # enable rofi
 bindsym $mod+w exec --no-startup-id "rofi -show window"
