@@ -28,10 +28,14 @@ if empty(glob('~/.config/nvim/autoload/plug.vim')) == 0
     " code formatting plugin
     Plug 'google/vim-maktaba'
     Plug 'google/vim-codefmt'
-    " GNU GLOBAL plugin
-    Plug 'vim-scripts/gtags.vim'
     " fzf support
     Plug 'junegunn/fzf.vim'
+    " lsp client
+    " https://github.com/autozimu/LanguageClient-neovim#quick-start
+    Plug 'autozimu/LanguageClient-neovim', {
+        \ 'branch': 'next',
+        \ 'do': 'bash install.sh',
+        \ }
 
     " support for the additional languages and file types
     Plug 'udalov/kotlin-vim'

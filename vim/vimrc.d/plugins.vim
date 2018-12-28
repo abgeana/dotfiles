@@ -57,3 +57,22 @@ if empty(glob('~/.config/nvim/plugged/DeleteTrailingWhitespace.vim/plugin/Delete
     " automatically do it for me when i save a file
     let g:DeleteTrailingWhitespace_Action = 'delete'
 endif
+
+" LanguageClient-neovim
+if empty(glob('~/.config/nvim/plugged/LanguageClient-neovim/plugin/LanguageClient.vim')) == 0
+    " configuration based on
+    " https://github.com/MaskRay/ccls/wiki/LanguageClient-neovim#install-languageclient-neovim
+    let g:LanguageClient_serverCommands = {
+        \ 'c': ['ccls', '--log-file=/tmp/cc.log'],
+        \ 'cpp': ['ccls', '--log-file=/tmp/cc.log'],
+        \ 'cuda': ['ccls', '--log-file=/tmp/cc.log'],
+        \ 'objc': ['ccls', '--log-file=/tmp/cc.log'],
+        \ }
+
+    " use an absolute configuration path if you want system-wide settings
+    let g:LanguageClient_loadSettings = 1
+
+    " lsp snippet is not supported
+    " https://github.com/autozimu/LanguageClient-neovim/issues/379
+    let g:LanguageClient_hasSnippetSupport = 0
+endif
