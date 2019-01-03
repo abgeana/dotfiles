@@ -75,4 +75,10 @@ if empty(glob('~/.config/nvim/plugged/LanguageClient-neovim/plugin/LanguageClien
     " lsp snippet is not supported
     " https://github.com/autozimu/LanguageClient-neovim/issues/379
     let g:LanguageClient_hasSnippetSupport = 0
+
+    " disable the diagnostics output
+    " https://github.com/autozimu/LanguageClient-neovim/issues/302
+    let g:LanguageClient_diagnosticsEnable = 0
+    let g:LanguageClient_diagnosticsList = "Disabled"
+    let g:LanguageClient_diagnosticsSignsMax = 0
 endif
