@@ -46,4 +46,4 @@ nnoremap gf gF
 
 " remap <Leader><Esc> to <C-\><C-n> for neovim
 " see also ":help terminal" or ":help CTRL-\_CTRL-N"
-tnoremap <Leader><Esc> <C-\><C-n>
+tnoremap <Leader><Leader> <C-\><C-n>
