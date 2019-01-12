@@ -63,9 +63,9 @@ sz() {
     done
 }
 
-# this function performs a grep with all the right flags and pipes through less
-grl () {
-    grep -r -n "$@" | less
+# this function calls ripgrep with all the right flags and pipes through less
+rgl () {
+    rg -p "$@" | less
 }
 
 # reload the ~/.zshrc file
