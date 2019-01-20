@@ -46,10 +46,20 @@ class Updater:
             for section in sections:
                 self._list_section(section)
 
+    def _get_default_sections(self):
+        """_get_default_sections loads the list of default sections from the configuration file."""
+        ds = self._cfg.get('config', 'default-sections')
+        ds = ds.split(',')
+        ret = list()
+        for s in ds:
+            if len(s) > 0:
+                ret.append(s.strip())
+        return ret
+
     def do_update(self, sections):
         """do_update updates dot files based on the -u/--update argument."""
-        if len(sections) == 0:
-            return
+        if sections is None or len(sections) == 0:
+            sections = self._get_default_sections()
         for section in sections:
             self._update_section(section)
 
@@ -196,8 +206,7 @@ def main():
     if args.list is not None:
         updater.do_list(args.list)
 
-    if args.update is not None:
-        updater.do_update(args.update)
+    updater.do_update(args.update)
 
 
 if __name__ == '__main__':
