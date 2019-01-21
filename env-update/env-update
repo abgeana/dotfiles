@@ -136,7 +136,10 @@ class Updater:
     def _clear_directories(self, dirs):
         """_clear_directories removes the content of every directory in the list given as argument."""
         for d in dirs:
-            shutil.rmtree(expanduser(d))
+            try:
+                shutil.rmtree(expanduser(d))
+            except FileNotFoundError:
+                pass
 
     def _update_section(self, section):
         """_update_section updates all the files for the specified section in the configuration file."""
