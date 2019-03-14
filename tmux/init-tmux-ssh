@@ -39,9 +39,9 @@ class CommandRunner:
 
 def parse_args():
     """parse_args parses the supported command line arguments."""
-    parser = argparse.ArgumentParser(description='Initialize tmux sessions for easy ssh connections.')
+    parser = argparse.ArgumentParser(description='Initialize the tmux master session.')
     parser.add_argument(
-        '-s', '--sessions', type=str, default='tmux_sessions.json', help='json file describing tmux sessions')
+        '-s', '--sessions', type=str, default='.tmux.master.json', help='json file describing tmux sessions')
     args = parser.parse_args()
     return args
 
@@ -52,7 +52,7 @@ def load_json(sfile):
     if not sfile.endswith('.json'):
         sfile += '.json'
     user = CommandRunner().run('whoami').strip()
-    spath = '/home/{user}/.ssh/{sfile}'.format(user=user, sfile=sfile)
+    spath = '/home/{user}/{sfile}'.format(user=user, sfile=sfile)
 
     # parse the main file
     with open(spath, 'r') as shandle:
@@ -71,13 +71,13 @@ def load_json(sfile):
 def main():
     args = parse_args()
     sessions = load_json(args.sessions)
-    tr = CommandRunner('tmux', '-S', '/tmp/tmux-ssh')
+    tr = CommandRunner('tmux', '-L', 'master')
 
     for idx, (session_name, windows) in enumerate(sessions.items()):
         tr.args['session_name'] = session_name
 
         if idx == 0:
-            # rename existing
+            # rename existing session
             tr.run('rename-session', '{session_name}')
         else:
             # -d    the new session is attached to the current terminal
@@ -109,11 +109,10 @@ def main():
                 # new windows need to be created
                 tr.run('new-window', '-t', '{target}', '-n', '{window_name}')
 
-            # make the 'ssh' alias for running the ssh command with the target hostname
             # switch to the current window
             tr.run('select-window', '-t', '{target}')
-            # 'type' an alias command
-            tr.run('send-keys', '-t', '{target}', 'alias ssh="ssh {window_hostname}"', 'Enter')
+            # unset TMUX to be able to run slave sessions
+            tr.run('send-keys', '-t', '{target}', 'unset TMUX', 'Enter')
             # 'type' the clear command
             tr.run('send-keys', '-t', '{target}', 'clear', 'Enter')
 
