@@ -188,13 +188,13 @@ unquote-word() {
 # define new widget for calling the unquote-word function
 zle -N unquote-word
 
-# start a tmux instance for ssh and execute the init-tmux-ssh script
-tmux-ssh() {
-    local t="tmux -S /tmp/tmux-ssh"
+# start the tmux master instance and execute the init-tmux-master script
+tmux-master() {
+    local t="tmux -L master"
 
     if [[ $# == 0 ]]; then
-        (sleep 0.4; eval "$t send-keys init-tmux-ssh Enter")&
-        eval "$t -f ~/.tmux.conf.ssh"
+        (sleep 0.4; eval "$t send-keys init-tmux-master Enter")&
+        eval "$t -f ~/.tmux.master.conf"
     else
         eval "$t $@"
     fi

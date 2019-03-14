@@ -70,6 +70,9 @@ setopt transient_rprompt
 setopt correct
 # do not ask if i agree to rm all (i already have the special rm function)
 setopt rm_star_silent
+# run background jobs with the same priority
+# also avoids an issue in wsl - https://github.com/Microsoft/WSL/issues/1887
+unsetopt bg_nice
 
 # zstyle changes
 # explanations for the zstyle command in:
