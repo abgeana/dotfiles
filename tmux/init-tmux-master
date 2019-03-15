@@ -1,9 +1,15 @@
 #! env python3
 
 import argparse
-import json
+import yaml
 import os.path
 import subprocess
+from collections import namedtuple
+
+TmuxSession_field_names = ["index", "name", "windows"]
+TmuxWindow_field_names = ["index", "name", "commands"]
+TmuxSession = namedtuple("TmuxSession", TmuxSession_field_names)
+TmuxWindow = namedtuple("TmuxWindow", TmuxWindow_field_names)
 
 
 class CommandRunner:
@@ -34,87 +40,75 @@ class CommandRunner:
         executing the command. The command prefix specified in the constructor is prepended to the command before
         execution."""
         processed_cmd = self._process_cmd(*raw_cmd)
-        return self._run_cmd(*processed_cmd)
+        return self._run_cmd(*processed_cmd).strip()
 
 
-def parse_args():
-    """parse_args parses the supported command line arguments."""
-    parser = argparse.ArgumentParser(description='Initialize the tmux master session.')
-    parser.add_argument(
-        '-s', '--sessions', type=str, default='.tmux.master.json', help='json file describing tmux sessions')
-    args = parser.parse_args()
-    return args
+def load_config():
+    """load_config parses the configuration file describing tmux sessions and returns a list of TmuxSession objects."""
+    user = CommandRunner().run('whoami')
+    config_path = '/home/{user}/.tmux.master.yml'.format(user=user)
 
+    with open(config_path, 'r') as config_handle:
+        sessions_yaml = yaml.load(config_handle, Loader=yaml.FullLoader)
 
-def load_json(sfile):
-    """load_json parses the json file describing tmux sessions and returns a dictionary with the contents. Secondary
-    files referenced by the main file are also loaded. The function uses the python json module."""
-    if not sfile.endswith('.json'):
-        sfile += '.json'
-    user = CommandRunner().run('whoami').strip()
-    spath = '/home/{user}/{sfile}'.format(user=user, sfile=sfile)
+    # load secondary config files
+    for key in sessions_yaml.keys():
+        if type(sessions_yaml[key]) == str:
+            config_path = os.path.expanduser(sessions_yaml[key])
+            with open(config_path, 'r') as config_handle:
+                sessions_yaml[key] = yaml.load(config_handle, Loader=yaml.FullLoader)
 
-    # parse the main file
-    with open(spath, 'r') as shandle:
-        sessions = json.load(shandle)
-
-    # parse secondary included files
-    for s in sessions.keys():
-        if type(sessions[s]) == str:
-            spath = os.path.expanduser(sessions[s])
-            with open(spath, 'r') as shandle:
-                sessions[s] = json.load(shandle)
+    sessions = list()
+    for idx_session, (session_name, session_windows) in enumerate(sessions_yaml.items()):
+        windows = list()
+        for idx_window, window in enumerate(session_windows):
+            if type(window) == str:
+                window_name = window
+                window_commands = None
+            else:
+                window_name = window['name']
+                window_commands = window['commands']
+            windows.append(TmuxWindow(index=idx_window + 1, name=window_name, commands=window_commands))
+        sessions.append(TmuxSession(index=idx_session + 1, name=session_name, windows=windows))
 
     return sessions
 
 
-def main():
-    args = parse_args()
-    sessions = load_json(args.sessions)
-    tr = CommandRunner('tmux', '-L', 'master')
+def init_window(tr, window):
+    tr.args['window_name'] = window.name
+    tr.args['window_idx'] = window.index
+    tr.args['target'] = '{session_name}:{window_idx}'.format(**tr.args)
 
-    for idx, (session_name, windows) in enumerate(sessions.items()):
-        tr.args['session_name'] = session_name
+    if window.index > 1:
+        tr.run('new-window', '-n', '{window_name}')
 
-        if idx == 0:
-            # rename existing session
-            tr.run('rename-session', '{session_name}')
-        else:
-            # -d    the new session is attached to the current terminal
-            #       unless -d is given; without -d, you get the "unset $TMUX" message
-            # -s    sets the name of the new session
-            tr.run('new-session', '-d', '-s', '{session_name}')
+    tr.run('rename-window', '-t', '{target}', '{window_name}')
 
-        # change to the newly created session
+    # switch to the current window
+    tr.run('select-window', '-t', '{target}')
+    # unset TMUX to run slave tmux sessions
+    tr.run('send-keys', '-t', '{target}', 'unset TMUX', 'Enter')
+    # 'type' the clear command
+    tr.run('send-keys', '-t', '{target}', 'clear', 'Enter')
+
+
+def init_session(tr, session):
+    tr.args['session_name'] = session.name
+
+    if session.index == 1:
+        tr.run('rename-session', '{session_name}')
+    else:
+        tr.run('new-session', '-d', '-s', '{session_name}')
         tr.run('switch-client', '-t', '{session_name}')
 
-        for idx2, window in enumerate(windows):
-            # window_idx = idx2 + 1 because tmux starts numbering of windows from 1, not 0
-            # set by line "set-option -g base-index 1" in the tmux config file
-            tr.args['window_idx'] = idx2 + 1
-            tr.args['target'] = '{session_name}:{window_idx}'.format(**tr.args)
+    for window in session.windows:
+        init_window(tr, window)
 
-            # extract the tmux args depending on json types
-            if type(window) == str:
-                tr.args['window_name'] = window
-                tr.args['window_hostname'] = window
-            elif type(window) == dict:
-                tr.args['window_name'] = window['name']
-                tr.args['window_hostname'] = window['hostname']
 
-            if idx2 == 0:
-                # first window already exists so we rename it
-                tr.run('rename-window', '-t', '{target}', '{window_name}')
-            else:
-                # new windows need to be created
-                tr.run('new-window', '-t', '{target}', '-n', '{window_name}')
-
-            # switch to the current window
-            tr.run('select-window', '-t', '{target}')
-            # unset TMUX to be able to run slave sessions
-            tr.run('send-keys', '-t', '{target}', 'unset TMUX', 'Enter')
-            # 'type' the clear command
-            tr.run('send-keys', '-t', '{target}', 'clear', 'Enter')
+def main():
+    tr = CommandRunner('tmux', '-L', 'master')
+    for session in load_config():
+        init_session(tr, session)
 
 
 if __name__ == '__main__':
