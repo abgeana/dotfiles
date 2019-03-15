@@ -66,8 +66,8 @@ def load_config():
                 window_name = window
                 window_commands = None
             else:
-                window_name = window['name']
-                window_commands = window['commands']
+                window_name = list(window.keys())[0]
+                window_commands = list(window.values())[0]
             windows.append(TmuxWindow(index=idx_window + 1, name=window_name, commands=window_commands))
         sessions.append(TmuxSession(index=idx_session + 1, name=session_name, windows=windows))
 
@@ -84,17 +84,15 @@ def init_window(tr, window):
     else:
         tr.run('new-window', '-t', '{target}', '-n', '{window_name}')
 
-    # switch to the current window
     tr.run('select-window', '-t', '{target}')
-    # unset TMUX to run slave tmux sessions
     tr.run('send-keys', '-t', '{target}', 'unset TMUX', 'Enter')
-    # 'type' the clear command
-    tr.run('send-keys', '-t', '{target}', 'clear', 'Enter')
 
     if window.commands:
         for command in window.commands:
             tr.args['command'] = command
             tr.run('send-keys', '-t', '{target}', '{command}', 'Enter')
+
+    tr.run('send-keys', '-t', '{target}', 'clear', 'Enter')
 
 
 def init_session(tr, session):
@@ -104,7 +102,8 @@ def init_session(tr, session):
         tr.run('rename-session', '{session_name}')
     else:
         tr.run('new-session', '-d', '-s', '{session_name}')
-        tr.run('switch-client', '-t', '{session_name}')
+
+    tr.run('switch-client', '-t', '{session_name}')
 
     for window in session.windows:
         init_window(tr, window)
