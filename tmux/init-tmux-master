@@ -79,10 +79,10 @@ def init_window(tr, window):
     tr.args['window_idx'] = window.index
     tr.args['target'] = '{session_name}:{window_idx}'.format(**tr.args)
 
-    if window.index > 1:
-        tr.run('new-window', '-n', '{window_name}')
-
-    tr.run('rename-window', '-t', '{target}', '{window_name}')
+    if window.index == 1:
+        tr.run('rename-window', '-t', '{target}', '{window_name}')
+    else:
+        tr.run('new-window', '-t', '{target}', '-n', '{window_name}')
 
     # switch to the current window
     tr.run('select-window', '-t', '{target}')
@@ -90,6 +90,11 @@ def init_window(tr, window):
     tr.run('send-keys', '-t', '{target}', 'unset TMUX', 'Enter')
     # 'type' the clear command
     tr.run('send-keys', '-t', '{target}', 'clear', 'Enter')
+
+    if window.commands:
+        for command in window.commands:
+            tr.args['command'] = command
+            tr.run('send-keys', '-t', '{target}', '{command}', 'Enter')
 
 
 def init_session(tr, session):
