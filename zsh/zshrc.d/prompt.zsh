@@ -7,8 +7,8 @@ fi
 
 if [[ $(hostname) =~ .*\.alegen\.net ]]; then
     COLOR_HOST=51
-elif [[ $SHNAME =~ rogvm\-.* ]]; then
-    COLOR_HOST=214
+elif [[ $(hostname) =~ .*\.avpc\.zone ]]; then
+    COLOR_HOST=118
 else
     typeset -A HOST_COLORS
     HOST_COLORS=(
