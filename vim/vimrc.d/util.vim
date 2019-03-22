@@ -9,8 +9,7 @@ function GetVisualSelection()
     return join(lines, "\n")
 endfunction
 
-" function which improves searching for a the word under the in
-" normal mode cursor or a selected text snippet in visual mode
+" function for searching the word under the cursor in normal mode or a selected text snippet in visual mode
 " there needs to be a way to tell the function if we are in visual mode
 " https://vi.stackexchange.com/questions/8789
 " https://vi.stackexchange.com/questions/8335

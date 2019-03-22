@@ -2,50 +2,28 @@
 if empty(glob('~/.config/nvim/autoload/plug.vim')) == 0
     call plug#begin('~/.config/nvim/plugged')
 
-    " nerdtree file viewer
-    Plug 'alegen/nerdtree'
-    " my own version of vim-mark for fancy colors
-    Plug 'inkarkat/vim-ingo-library'
-    Plug 'alegen/vim-mark'
-    " delete trailing whitespaces; this is better than the "autocmd" line
-    " since it does not move the cursor when saving a file
-    " https://stackoverflow.com/questions/35390415
-    Plug 'alegen/DeleteTrailingWhitespace.vim'
-    " smali syntax highlighting
-    Plug 'alegen/vim-smali'
+    Plug 'google/vim-maktaba'           " dependency for vim-codefmt
+    Plug 'inkarkat/vim-ingo-library'    " dependency for vim-mark
+    Plug 'godlygeek/tabular'            " dependency for vim-markdown
 
-    " markdown helper
-    Plug 'godlygeek/tabular'
-    Plug 'plasticboy/vim-markdown'
-    " easier motions
-    Plug 'justinmk/vim-sneak'
-    " persistent editing state (views, cursos position, folds, etc.)
-    " originally kopischke/vim-stay
-    Plug 'zhimsel/vim-stay'
-    " handle line and column numbers within file names
-    " originally kopischke/vim-fetch
-    Plug 'wsdjeg/vim-fetch'
-    " code formatting plugin
-    Plug 'google/vim-maktaba'
+    Plug 'alegen/DeleteTrailingWhitespace.vim'
+    Plug 'alegen/vim-mark'      " fancy colors
+    Plug 'justinmk/vim-sneak'   " easier motions
+    Plug 'zhimsel/vim-stay'     " persistent editing state; originally kopischke/vim-stay
+    Plug 'wsdjeg/vim-fetch'     " line and column in file name; originally kopischke/vim-fetch
     Plug 'google/vim-codefmt'
-    " fzf support
-    Plug 'junegunn/fzf.vim'
-    " denite (successor of unite, vim alternative to emacs helm)
+
     Plug 'Shougo/denite.nvim'
-    " lsp client
-    " https://github.com/autozimu/LanguageClient-neovim#quick-start
-    Plug 'autozimu/LanguageClient-neovim', {
-        \ 'branch': 'next',
-        \ 'do': 'bash install.sh',
-        \ }
-    " list of ctags for the current buffer
+    Plug 'junegunn/fzf.vim'
+    Plug 'alegen/nerdtree'
     Plug 'majutsushi/tagbar'
 
-    " support for the additional languages and file types
-    Plug 'udalov/kotlin-vim'
-    Plug 'keith/swift.vim'
+    Plug 'plasticboy/vim-markdown'
+    Plug 'lervag/vimtex'
+    "Plug 'alegen/vim-smali'
+    "Plug 'udalov/kotlin-vim'
+    "Plug 'keith/swift.vim'
 
-    " section with plugins from repositories maintained by other people
     " solarized color scheme
     if has('unix')
         Plug 'altercation/vim-colors-solarized'
@@ -53,8 +31,12 @@ if empty(glob('~/.config/nvim/autoload/plug.vim')) == 0
         Plug 'frankier/neovim-colors-solarized-truecolor-only'
     endif
 
-    " automatically executes
-    "   filetype plugin indent on
-    "   syntax enable
+    " lsp client
+    " https://github.com/autozimu/LanguageClient-neovim#quick-start
+    Plug 'autozimu/LanguageClient-neovim', {
+        \ 'branch': 'next',
+        \ 'do': 'bash install.sh',
+        \ }
+
     call plug#end()
 endif
