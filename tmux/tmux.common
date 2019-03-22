@@ -10,17 +10,15 @@ set-option -g history-limit 10000
 # vim key bindings for the win!
 set-option -g mode-keys vi
 
-# escape timeout to 0 for weechat vimode
+# escape timeout to 0
 set-option -g escape-time 0
 
 # better resizing
 set-window-option -g aggressive-resize on
 
 # vi-like visual select + yank in copy mode
-# tmux version <= 2.3
-#bind -t vi-copy v begin-selection; bind -t vi-copy y copy-selection; bind -t vi-copy C-v rectangle-toggle
-# tmux version >= 2.4
-bind -T copy-mode-vi v send-keys -X begin-selection; bind -T copy-mode-vi y send-keys -X copy-selection-and-cancel
+bind -T copy-mode-vi v send-keys -X begin-selection
+bind -T copy-mode-vi y send-keys -X copy-selection-and-cancel
 
 # map vim movement keys as pane movement keys
 bind h select-pane -L
