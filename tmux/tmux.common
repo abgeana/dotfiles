@@ -25,18 +25,6 @@ bind r refresh
 bind -T copy-mode-vi v send-keys -X begin-selection
 bind -T copy-mode-vi y send-keys -X copy-selection-and-cancel
 
-# map vim movement keys as pane movement keys
-bind h select-pane -L
-bind j select-pane -D
-bind k select-pane -U
-bind l select-pane -R
-
-# resize panes using vim keys
-bind -r C-h resize-pane -L 5
-bind -r C-j resize-pane -D 5
-bind -r C-k resize-pane -U 5
-bind -r C-l resize-pane -R 5
-
 # scrolling up and down (similar to my vim setup)
 bind-key -T copy-mode-vi C-j send-keys -X scroll-down
 bind-key -T copy-mode-vi C-k send-keys -X scroll-up
