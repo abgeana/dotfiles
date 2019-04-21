@@ -16,6 +16,11 @@ set-option -g escape-time 0
 # better resizing
 set-window-option -g aggressive-resize on
 
+# reload config with C-R
+bind R run "tmux source-file ~/.tmux.common; tmux display-message 'Reloaded ~/.tmux.conf'"
+# refresh screen with C-r
+bind r refresh
+
 # vi-like visual select + yank in copy mode
 bind -T copy-mode-vi v send-keys -X begin-selection
 bind -T copy-mode-vi y send-keys -X copy-selection-and-cancel
