@@ -13,6 +13,7 @@ if empty(glob('~/.config/nvim/autoload/plug.vim')) == 0
     Plug 'zhimsel/vim-stay'     " persistent editing state; originally kopischke/vim-stay
     Plug 'wsdjeg/vim-fetch'     " line and column in file name; originally kopischke/vim-fetch
     Plug 'google/vim-codefmt'
+    Plug 'christoomey/vim-tmux-navigator'
 
     Plug 'Shougo/denite.nvim'
     Plug 'junegunn/fzf.vim'
