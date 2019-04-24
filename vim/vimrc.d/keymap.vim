@@ -14,6 +14,10 @@ noremap <silent> <A-j> gj
 " move the complete window
 noremap <silent> <A-S-k> <C-y>
 noremap <silent> <A-S-j> <C-e>
+  
+" alias ctrl-d/u to alt-d/u
+noremap <silent> <A-d> <C-d>
+noremap <silent> <A-u> <C-u>
 
 " improve the vim completion menu with some custom remappings
 " http://vim.wikia.com/wiki/Make_Vim_completion_popup_menu_work_just_like_in_an_IDE
