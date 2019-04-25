@@ -8,16 +8,12 @@ map <F5> :set formatoptions-=cro nocindent noautoindent nosmartindent inde=<CR>
 map <F6> :set formatoptions+=cro nocindent autoindent smartindent inde=    <CR>
 
 " move cursor on wrapped lines
-noremap <silent> <A-k> gk
-noremap <silent> <A-j> gj
+noremap <silent> K gk
+noremap <silent> J gj
 
 " move the complete window
-noremap <silent> <A-S-k> <C-y>
-noremap <silent> <A-S-j> <C-e>
-  
-" alias ctrl-d/u to alt-d/u
-noremap <silent> <A-d> <C-d>
-noremap <silent> <A-u> <C-u>
+noremap <silent> <C-k> <C-y>
+noremap <silent> <C-j> <C-e>
 
 " improve the vim completion menu with some custom remappings
 " http://vim.wikia.com/wiki/Make_Vim_completion_popup_menu_work_just_like_in_an_IDE

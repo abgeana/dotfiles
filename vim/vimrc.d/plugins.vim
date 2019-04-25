@@ -81,3 +81,14 @@ if empty(glob('~/.config/nvim/plugged/vim-lsp/plugin/lsp.vim')) == 0 && executab
         \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp', 'cc'],
         \ })
 endif
+
+" vim-tmux-navigator
+if empty(glob('~/.config/nvim/plugged/vim-tmux-navigator/plugin/tmux_navigator.vim')) == 0
+    let g:tmux_navigator_no_mappings = 1
+
+    nnoremap <silent> <A-h> :TmuxNavigateLeft<cr>
+    nnoremap <silent> <A-j> :TmuxNavigateDown<cr>
+    nnoremap <silent> <A-k> :TmuxNavigateUp<cr>
+    nnoremap <silent> <A-l> :TmuxNavigateRight<cr>
+    nnoremap <silent> <A-\> :TmuxNavigatePrevious<cr>
+endif
