@@ -5,6 +5,7 @@ if empty(glob('~/.config/nvim/autoload/plug.vim')) == 0
     Plug 'google/vim-maktaba'           " dependency for vim-codefmt
     Plug 'inkarkat/vim-ingo-library'    " dependency for vim-mark
     Plug 'godlygeek/tabular'            " dependency for vim-markdown
+    Plug 'prabirshrestha/async.vim'     " dependency for vim-lsp
 
     Plug 'alegen/DeleteTrailingWhitespace.vim'
     Plug 'alegen/vim-mark'      " fancy colors
@@ -12,14 +13,18 @@ if empty(glob('~/.config/nvim/autoload/plug.vim')) == 0
     Plug 'zhimsel/vim-stay'     " persistent editing state; originally kopischke/vim-stay
     Plug 'wsdjeg/vim-fetch'     " line and column in file name; originally kopischke/vim-fetch
     Plug 'google/vim-codefmt'
+    Plug 'christoomey/vim-tmux-navigator'
 
     Plug 'Shougo/denite.nvim'
     Plug 'junegunn/fzf.vim'
     Plug 'alegen/nerdtree'
     Plug 'majutsushi/tagbar'
 
+    Plug 'prabirshrestha/vim-lsp'
+    Plug 'vim-scripts/gtags.vim'
+
     Plug 'plasticboy/vim-markdown'
-    Plug 'lervag/vimtex'
+    "Plug 'lervag/vimtex'
     "Plug 'alegen/vim-smali'
     "Plug 'udalov/kotlin-vim'
     "Plug 'keith/swift.vim'
@@ -30,13 +35,6 @@ if empty(glob('~/.config/nvim/autoload/plug.vim')) == 0
     elseif has('win32')
         Plug 'frankier/neovim-colors-solarized-truecolor-only'
     endif
-
-    " lsp client
-    " https://github.com/autozimu/LanguageClient-neovim#quick-start
-    Plug 'autozimu/LanguageClient-neovim', {
-        \ 'branch': 'next',
-        \ 'do': 'bash install.sh',
-        \ }
 
     call plug#end()
 endif

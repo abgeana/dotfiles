@@ -58,27 +58,37 @@ if empty(glob('~/.config/nvim/plugged/DeleteTrailingWhitespace.vim/plugin/Delete
     let g:DeleteTrailingWhitespace_Action = 'delete'
 endif
 
-" LanguageClient-neovim
-if empty(glob('~/.config/nvim/plugged/LanguageClient-neovim/plugin/LanguageClient.vim')) == 0
-    " configuration based on
-    " https://github.com/MaskRay/ccls/wiki/LanguageClient-neovim#install-languageclient-neovim
-    let g:LanguageClient_serverCommands = {
-        \ 'c': ['ccls', '--log-file=/tmp/cc.log'],
-        \ 'cpp': ['ccls', '--log-file=/tmp/cc.log'],
-        \ 'cuda': ['ccls', '--log-file=/tmp/cc.log'],
-        \ 'objc': ['ccls', '--log-file=/tmp/cc.log'],
-        \ }
+" vim-lsp
+if empty(glob('~/.config/nvim/plugged/vim-lsp/plugin/lsp.vim')) == 0 && executable('ccls')
+    " disable diagnostics support
+    let g:lsp_diagnostics_enabled = 0
+    " disable signs
+    let g:lsp_signs_enabled = 0
+    " disable echo under cursor when in normal mode
+    let g:lsp_diagnostics_echo_cursor = 0
 
-    " use an absolute configuration path if you want system-wide settings
-    let g:LanguageClient_loadSettings = 1
+    " https://github.com/MaskRay/ccls/wiki/Project-Setup
+    "let l:project_file = "compile_commands.json"
+    let g:lsp_project_file = ".ccls"
 
-    " lsp snippet is not supported
-    " https://github.com/autozimu/LanguageClient-neovim/issues/379
-    let g:LanguageClient_hasSnippetSupport = 0
+    " https://github.com/MaskRay/ccls/wiki/vim-lsp
+    " https://github.com/prabirshrestha/vim-lsp/wiki/Servers-ccls
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'ccls',
+        \ 'cmd': {server_info->['ccls']},
+        \ 'root_uri': {server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), g:lsp_project_file))},
+        \ 'initialization_options': {'cache': {'directory': '/tmp/ccls/cache' }},
+        \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp', 'cc'],
+        \ })
+endif
 
-    " disable the diagnostics output
-    " https://github.com/autozimu/LanguageClient-neovim/issues/302
-    let g:LanguageClient_diagnosticsEnable = 0
-    let g:LanguageClient_diagnosticsList = "Disabled"
-    let g:LanguageClient_diagnosticsSignsMax = 0
+" vim-tmux-navigator
+if empty(glob('~/.config/nvim/plugged/vim-tmux-navigator/plugin/tmux_navigator.vim')) == 0
+    let g:tmux_navigator_no_mappings = 1
+
+    nnoremap <silent> <A-h> :TmuxNavigateLeft<cr>
+    nnoremap <silent> <A-j> :TmuxNavigateDown<cr>
+    nnoremap <silent> <A-k> :TmuxNavigateUp<cr>
+    nnoremap <silent> <A-l> :TmuxNavigateRight<cr>
+    nnoremap <silent> <A-\> :TmuxNavigatePrevious<cr>
 endif

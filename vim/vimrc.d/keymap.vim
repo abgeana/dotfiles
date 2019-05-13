@@ -8,8 +8,8 @@ map <F5> :set formatoptions-=cro nocindent noautoindent nosmartindent inde=<CR>
 map <F6> :set formatoptions+=cro nocindent autoindent smartindent inde=    <CR>
 
 " move cursor on wrapped lines
-noremap <silent> <A-k> gk
-noremap <silent> <A-j> gj
+noremap <silent> K gk
+noremap <silent> J gj
 
 " move the complete window
 noremap <silent> <C-k> <C-y>
