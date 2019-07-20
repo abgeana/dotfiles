@@ -19,3 +19,6 @@ fi
 # for $EDITOR, check for availability of neovim, vimx, or otherwise fallback to vim
 # the $VIM_BIN variable is set in aliases.zsh (which just so happens to be executed before vars.zsh)
 export EDITOR=$VIM_BIN
+
+# add sbin folders to the path
+export PATH=/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin
