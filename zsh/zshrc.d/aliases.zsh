@@ -15,13 +15,13 @@ alias unset-proxy='unset http_proxy https_proxy no_proxy HTTP_PROXY HTTPS_PROXY 
 alias unset-hist='unset HISTFILE HISTSIZE'
 
 alias tmux='tmux -2'
-alias dhcp='sudo dhclient -r && sudo dhclient'
 alias gdb='gdb -q'
-alias arm-gdb='arm-none-eabi-gdb -q'
 alias cd..='cd ..'
 alias cat='cat -v'
 alias grep='grep --color=always'
 alias less='less -R'
+alias ncdu='ncdu -0 -e --color dark'
+alias ty='tmux loadb -'
 alias rm='echo "This is not the command you are looking for."; false'
 
 # global aliases defined with '-g' (i.e. can be placed anywhere in other commands)
