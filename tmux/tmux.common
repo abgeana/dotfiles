@@ -91,7 +91,7 @@ set-option -g word-separators ' '
 bind C-p run "xsel -ob | tmux load-buffer -; tmux paste-buffer; tmux delete-buffer"
 #bind C-p run "xclip -out -selection clipboard | tmux load-buffer -; tmux paste-buffer; tmux delete-buffer"
 #bind C-p run "python3 /bin/from_clipboard.py | tmux load-buffer -; tmux paste-buffer; tmux delete-buffer"
-#bind C-p run "win32yank -o | tmux load-buffer -; tmux paste-buffer; tmux delete-buffer"
+#bind C-p run "win32yank -o --lf | tmux load-buffer -; tmux paste-buffer; tmux delete-buffer"
 
 # move tmux copy buffer into X11 clipboard
 # the xclip version requires the redirection to /dev/null
