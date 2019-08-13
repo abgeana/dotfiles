@@ -1,7 +1,9 @@
 #! env python3
 
 import argparse
+import base64
 import configparser
+import json
 import os
 import requests
 import shutil
@@ -16,6 +18,8 @@ def parse_args():
     parser = argparse.ArgumentParser(description='Update environment configuration files.')
     parser.add_argument(
         '-c', '--config', type=str, default='/etc/env-update.cfg', help='configuration file for this update utility')
+    parser.add_argument(
+        '-t', '--token', type=str, default='/etc/env-update-token.txt', help='file containing the gitlab private token')
     parser.add_argument('-l', '--list', nargs='*', help='show all configuration sections supported for update')
     parser.add_argument('-u', '--update', nargs='*', help='configuration files to be updated')
     args = parser.parse_args()
@@ -36,8 +40,9 @@ def parse_config(f):
 class Updater:
     """Updater implements the functionality to perform updates of dot files."""
 
-    def __init__(self, cfg):
+    def __init__(self, cfg, private_token):
         self._cfg = cfg
+        self._private_token = private_token
 
     def do_list(self, sections):
         """do_list prints contents of the configuration file based on the -l/--list argument."""
@@ -164,29 +169,41 @@ class Updater:
     def _update_file(self, section, option):
         """_update_file updates the specified file from the specified section."""
         value = self._cfg.get(section, option)
-
-        url = '{}/{}/{}'.format(self._cfg.get('config', 'base_url'), section, option)
-        text, is_ok = self._download_file(url)
+        content, is_ok = self._download_file(section, option)
 
         if is_ok:
-            is_ok = self._write_file(value, text)
+            is_ok = self._write_file(value, content)
 
         self._print_update_status(is_ok, value)
 
-    def _download_file(self, url):
-        """_download_file attempts to download a file from the specified url."""
+    def _download_file(self, section, option):
+        """_download_file attempts to download a file via the gitlab api, using the private token stored in
+        /etc/env-update-token.txt."""
+        repo_id = 13755372 # taken from the webpage
+        file_path = '{}/{}'.format(section, option)
+
+        # basic url encoding
+        for c in ['/', '.']:
+            file_path = file_path.replace(c, '%' + hex(ord(c)).strip('0x'))
+
+        url = 'https://gitlab.com/api/v4/projects/{repo_id}/repository/files/{file_path}'.format(
+            repo_id=repo_id,
+            file_path=file_path
+        )
+
         try:
-            response = requests.get(url)
+            response = requests.get(url, params={'ref': 'master', 'private_token': self._private_token})
             if response.status_code == 200:
-                return response.text, True
+                response_json = json.loads(response.text)
+                return base64.b64decode(response_json['content']).decode('utf-8'), True
         except IOError:
             pass
 
         return None, False
 
-    def _write_file(self, value, text):
-        """_write_file creates or updates a file with the specified text. It also sets the file mode bits, and the owner
-        to root if the process is running as root."""
+    def _write_file(self, value, content):
+        """_write_file creates or updates a file with the specified content. It also sets the file mode bits, and the
+        owner to root if the process is running as root."""
         path, dir_chmod, file_chmod = self._parse_config_value(value)
         full_path = expanduser(path)
 
@@ -198,7 +215,7 @@ class Updater:
 
         try:
             with open(full_path, 'w') as fp:
-                fp.write(text)
+                fp.write(content)
         except PermissionError:
             return False
 
@@ -212,7 +229,9 @@ class Updater:
 def main():
     args = parse_args()
     cfg = parse_config(args.config)
-    updater = Updater(cfg)
+    with open(args.token, 'r') as f:
+        private_token = f.read().strip()
+    updater = Updater(cfg, private_token)
 
     if args.list is not None:
         updater.do_list(args.list)
