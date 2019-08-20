@@ -18,7 +18,7 @@ if empty(glob('~/.config/nvim/autoload/plug.vim')) == 0
     Plug 'Shougo/denite.nvim'
     Plug 'junegunn/fzf.vim'
     Plug 'majutsushi/tagbar'
-    Plug 'alegen/nerdtree'
+    Plug 'scrooloose/nerdtree'
 
     "Plug 'prabirshrestha/vim-lsp'
     "Plug 'natebosch/vim-lsc'
