@@ -29,19 +29,9 @@ alias -g silent='> /dev/null 2>&1'
 alias -g noerr='2> /dev/null'
 alias -g stdboth='2>&1'
 
-# if we have neovim installed, alias vim to nvim
-NVIM_BIN=$(which nvim 2> /dev/null)
+# if we have vimx on fedora, alias vim to vimx
+VIMX_BIN=$(which vimx 2> /dev/null)
 if [[ $? == 0 ]]; then
-    alias vim='nvim'
-    VIM_BIN=$NVIM_BIN
-fi
-
-# if VIM_BIN has not been set above
-if [[ -z $VIM_BIN ]]; then
-    # if we have vimx on fedora, alias vim to vimx
-    VIMX_BIN=$(which vimx 2> /dev/null)
-    if [[ $? == 0 ]]; then
-        alias vim='vimx'
-        VIM_BIN=$VIMX_BIN
-    fi
+    alias vim='vimx'
+    VIM_BIN=$VIMX_BIN
 fi
