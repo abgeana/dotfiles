@@ -22,6 +22,7 @@ alias grep='grep --color=always'
 alias less='less -R'
 alias ncdu='ncdu -0 -e --color dark'
 alias ty='tmux loadb -'
+alias rcp="rsync -ah --inplace --info=progress2"
 alias rm='echo "This is not the command you are looking for."; false'
 
 # global aliases defined with '-g' (i.e. can be placed anywhere in other commands)
