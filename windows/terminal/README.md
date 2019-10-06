@@ -1,0 +1,7 @@
+# Windows Terminal
+
+The `profiles.json` file is stored in a path similar to
+
+```
+C:\Users\[username]\AppData\Local\Packages\Microsoft.WindowsTerminal_[hash]\LocalState\profiles.json
+```
