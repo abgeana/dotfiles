@@ -29,15 +29,15 @@ else
 fi
 
 set-prompt() {
-    # unicode arrows ◀ ▶ ▲ ▼
+    # unicode arrows ◀ ▶ ▲ ▼ ▸
     # some good places to find exotic unicode symbols:
     # http://shapecatcher.com/
     # http://panmental.de/symbols/info.htm
     # http://xahlee.info/comp/unicode_arrows.html
     if [[ $# == 0 ]]; then
-        export PROMPT=" %F{ $COLOR_USER }% ○ %F{ $COLOR_HOST }%m%F{ $COLOR_USER } ▶%f "
+        export PROMPT=" %F{ $COLOR_USER }% ○ %F{ $COLOR_HOST }%m%F{ $COLOR_USER } ▸%f "
     else
-        export PROMPT=" %F{ $COLOR_USER }% ○ %F{196}[$@] %F{ $COLOR_HOST }%m%F{ $COLOR_USER } ▶%f "
+        export PROMPT=" %F{ $COLOR_USER }% ○ %F{196}[$@] %F{ $COLOR_HOST }%m%F{ $COLOR_USER } ▸%f "
     fi
 }
 
