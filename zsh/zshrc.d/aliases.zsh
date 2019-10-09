@@ -29,10 +29,3 @@ alias rm='echo "This is not the command you are looking for."; false'
 alias -g silent='> /dev/null 2>&1'
 alias -g noerr='2> /dev/null'
 alias -g stdboth='2>&1'
-
-# if we have vimx on fedora, alias vim to vimx
-VIMX_BIN=$(which vimx 2> /dev/null)
-if [[ $? == 0 ]]; then
-    alias vim='vimx'
-    VIM_BIN=$VIMX_BIN
-fi
