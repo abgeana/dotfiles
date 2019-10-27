@@ -93,7 +93,7 @@ if empty(glob('~/.config/nvim/plugged/vim-tmux-navigator/plugin/tmux_navigator.v
     nnoremap <silent> <A-\> :TmuxNavigatePrevious<cr>
 endif
 
-" vim-tmux-navigator
+" codefmt
 if empty(glob('~/.config/nvim/plugged/vim-codefmt/autoload/codefmt.vim')) == 0
     nnoremap <silent> <A-f> :FormatCode<cr>
 endif

@@ -57,7 +57,7 @@ set undolevels=1000
 set noerrorbells
 
 " make a useful status line
-set statusline=[\ buffer\ %n\ ]\ %F\ [%Y,%{&ff}]\ %m%r%h%=[\ %l/%L\ ,\ %v\ ][\ %p%%\ ]
+set statusline=[\ buffer\ %n\ ]\ %F\ [%Y,%{&ff}]\ %m%r%h%=[\ %l/%L\ ,\ %v,\ %o\ ][\ %p%%\ ]
 
 " always show the status line
 set laststatus=2
@@ -99,3 +99,6 @@ set completeopt=menuone,longest
 " <500      - lines saved for each of the registers
 " h         - disable 'hlsearch' highlighting when starting
 set shada='500,f1,<500,h
+
+" show unprintable characters hexadecimal as <xx> instead of using ^C and ~C
+set display=uhex
