@@ -51,7 +51,7 @@ if empty(glob('~/.config/nvim/plugged/vim-markdown/ftplugin/markdown.vim')) == 0
 endif
 
 " DeleteTrailingWhitespace
-if empty(glob('~/.config/nvim/plugged/DeleteTrailingWhitespace.vim/plugin/DeleteTrailingWhitespace.vim')) == 0
+if empty(glob('~/.config/nvim/plugged/vim-DeleteTrailingWhitespace/plugin/DeleteTrailingWhitespace.vim')) == 0 && &binary == "nobinary"
     " i want to eradicate all trailing spaces all the time
     let g:DeleteTrailingWhitespace = 1
     " automatically do it for me when i save a file

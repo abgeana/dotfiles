@@ -13,7 +13,7 @@ if empty(glob('~/.config/nvim/autoload/plug.vim')) == 0
     Plug 'google/vim-codefmt'
     Plug 'christoomey/vim-tmux-navigator'
     Plug 'alegen/vim-mark'
-    Plug 'alegen/DeleteTrailingWhitespace.vim'
+    Plug 'inkarkat/vim-DeleteTrailingWhitespace'
 
     Plug 'Shougo/denite.nvim'
     Plug 'junegunn/fzf.vim'
