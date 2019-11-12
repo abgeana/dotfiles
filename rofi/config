@@ -7,7 +7,7 @@ rofi.modi:                           window,run
 ! "Number of columns" Set from: Default
 ! rofi.columns:                        1
 ! "Font to use" Set from: File
-rofi.font:                           terminus 10
+! rofi.font:                           mono 12
 ! "Border width" Set from: File
 rofi.bw:                             0
 ! "Location on screen" Set from: Default
