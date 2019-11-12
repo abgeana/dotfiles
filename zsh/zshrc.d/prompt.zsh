@@ -24,7 +24,7 @@ else
     done
 
     if [[ -z $COLOR_HOST ]]; then
-        COLOR_HOST=$(python -c "import hashlib; m = hashlib.md5(); m.update('$SHNAME'); print ord(m.digest()[0])")
+        COLOR_HOST=$(python3 -c "import hashlib; m = hashlib.md5(); m.update('$SHNAME'.encode('utf-8')); print(m.digest()[0])")
     fi
 fi
 
