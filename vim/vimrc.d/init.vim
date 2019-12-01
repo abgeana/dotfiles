@@ -14,6 +14,7 @@ if empty(glob('~/.config/nvim/autoload/plug.vim')) == 0
     Plug 'christoomey/vim-tmux-navigator'
     Plug 'alegen/vim-mark'
     Plug 'inkarkat/vim-DeleteTrailingWhitespace'
+    Plug 'inkarkat/vim-SyntaxRange'
 
     Plug 'Shougo/denite.nvim'
     Plug 'junegunn/fzf.vim'
@@ -42,3 +43,8 @@ if empty(glob('~/.config/nvim/autoload/plug.vim')) == 0
 
     call plug#end()
 endif
+
+" enable syntax highlighting
+filetype plugin on
+filetype indent off
+syntax enable

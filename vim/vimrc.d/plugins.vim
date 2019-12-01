@@ -97,3 +97,8 @@ endif
 if empty(glob('~/.config/nvim/plugged/vim-codefmt/autoload/codefmt.vim')) == 0
     nnoremap <silent> <A-f> :FormatCode<cr>
 endif
+
+" vim-SyntaxRange
+if empty(glob('~/.config/nvim/plugged/vim-SyntaxRange/plugin/SyntaxRange.vim')) == 0
+    autocmd Syntax * call SyntaxRange#Include('@begin=lua@', '@end=lua@', 'lua', 'NonText')
+endif
