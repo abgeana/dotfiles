@@ -28,6 +28,10 @@ else
     fi
 fi
 
+# disable right-hand prompt
+unset RPS1
+unset RPROMPT
+
 set-prompt() {
     # unicode arrows ◀ ▶ ▲ ▼ ▸
     # some good places to find exotic unicode symbols:
