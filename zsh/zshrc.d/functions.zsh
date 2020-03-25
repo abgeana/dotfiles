@@ -211,3 +211,9 @@ function ranger-cd {
     fi
     /bin/rm -f -- "$tempfile"
 }
+
+function sonechka() {
+    sudo -v
+    i3lock
+    sudo systemctl suspend
+}
