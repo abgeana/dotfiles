@@ -29,6 +29,7 @@ if empty(glob('~/.config/nvim/autoload/plug.vim')) == 0
     Plug 'nfnty/vim-nftables'
     Plug 'dart-lang/dart-vim-plugin'
     Plug 'HerringtonDarkholme/yats.vim'
+    Plug 'LnL7/vim-nix'
     "Plug 'lervag/vimtex'
     "Plug 'udalov/kotlin-vim'
     "Plug 'keith/swift.vim'

@@ -37,5 +37,21 @@ if [[ ! -v EDITOR ]]; then
     export EDITOR=vi # just use vi
 fi
 
-# add sbin folders to the path
-export PATH=/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin
+# custom PATH
+PATH=""
+# check if we are on nixos
+if [[ -f /etc/NIXOS ]]; then
+    PATH=$PATH:/run/wrappers/bin
+    PATH=$PATH:$HOME/.nix-profile/bin
+    PATH=$PATH:/etc/profiles/per-user/`/run/current-system/sw/bin/whoami`/bin
+    PATH=$PATH:/nix/var/nix/profiles/default/bin
+    PATH=$PATH:/run/current-system/sw/bin
+fi
+# add standard (s/)bin folders to the path
+PATH=$PATH:/usr/local/bin
+PATH=$PATH:/usr/bin
+PATH=$PATH:/bin
+PATH=$PATH:/usr/local/sbin
+PATH=$PATH:/usr/sbin
+PATH=$PATH:/sbin
+export PATH
