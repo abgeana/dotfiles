@@ -5,9 +5,7 @@ else
     COLOR_USER=196
 fi
 
-if [[ $(hostname) =~ .*\.alegen\.net ]]; then
-    COLOR_HOST=51
-elif [[ $(hostname) =~ .*\.avpc\.zone ]]; then
+if [[ $(hostname) =~ .*\.avpc\..* ]]; then
     COLOR_HOST=118
 else
     typeset -A HOST_COLORS
