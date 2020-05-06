@@ -1,10 +1,26 @@
-// https://github.com/microsoft/terminal/blob/master/doc/user-docs/UsingJsonSettings.md
-// https://github.com/microsoft/terminal/blob/master/doc/cascadia/SettingsSchema.md
+// To view the default settings, hold "alt" while clicking on the "Settings" button.
+// For documentation on these settings, see: https://aka.ms/terminal-documentation
+// Additional documentation items:
+//      https://github.com/microsoft/terminal/blob/master/doc/user-docs/UsingJsonSettings.md
+//      https://github.com/microsoft/terminal/blob/master/doc/cascadia/SettingsSchema.md
 {
     "$schema": "https://aka.ms/terminal-profiles-schema",
 
-    "defaultProfile": "{58ad8b0c-3ef8-5f4d-bc6f-13e4c00f2530}",
+    "defaultProfile": "{61c54bbd-c2c6-5271-96e7-009a87ff44bf}",
 
+    // You can add more global application settings here.
+    // To learn more about global settings, visit https://aka.ms/terminal-global-settings
+
+    // If enabled, selections are automatically copied to your clipboard.
+    "copyOnSelect": false,
+
+    // If enabled, formatted data is also copied to your clipboard
+    "copyFormatting": false,
+
+    // A profile specifies a command to execute paired with information about how it should look and feel.
+    // Each one of them will appear in the 'New Tab' dropdown,
+    //   and can be invoked from the commandline with `wt.exe -p xxx`
+    // To learn more about profiles, visit https://aka.ms/terminal-profile-settings
     "profiles":
     [
         {
@@ -51,6 +67,8 @@
         }
     ],
 
+    // Add custom color schemes to this array.
+    // To learn more about color schemes, visit https://aka.ms/terminal-color-schemes
     "schemes": [
         {
             // https://github.com/altercation/solarized#the-values
@@ -77,5 +95,8 @@
         }
     ],
 
+    // Add custom keybindings to this array.
+    // To unbind a key combination from your defaults.json, set the command to "unbound".
+    // To learn more about keybindings, visit https://aka.ms/terminal-keybindings
     "keybindings": []
 }
