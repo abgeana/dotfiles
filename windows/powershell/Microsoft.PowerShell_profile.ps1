@@ -1,3 +1,8 @@
+# Microsoft.PowerShell_profile.ps1
+# To get the path where this file must be placed, run the following command in powershell
+#   PS C:\Users\alegen> echo $profile
+#   C:\Users\<username>\Documents\WindowsPowerShell\Microsoft.PowerShell_profile.ps1
+
 # default encoding to utf-8
 [System.Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 [System.Console]::InputEncoding = [System.Text.Encoding]::UTF8
