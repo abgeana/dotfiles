@@ -23,3 +23,20 @@ function prompt {
     Write-Host (" PS >") -NoNewLine
     return " "
 }
+
+# disable coloring of tokens
+# https://stackoverflow.com/a/59065276
+# https://docs.microsoft.com/en-us/powershell/module/PSReadline/Set-PSReadlineOption?view=powershell-7 (see Example 4)
+Set-PSReadLineOption -Colors @{
+    None        = $Host.UI.RawUI.ForegroundColor;
+    Comment     = $Host.UI.RawUI.ForegroundColor;
+    Keyword     = $Host.UI.RawUI.ForegroundColor;
+    String      = $Host.UI.RawUI.ForegroundColor;
+    Operator    = $Host.UI.RawUI.ForegroundColor;
+    Variable    = $Host.UI.RawUI.ForegroundColor;
+    Command     = $Host.UI.RawUI.ForegroundColor;
+    Parameter   = $Host.UI.RawUI.ForegroundColor;
+    Type        = $Host.UI.RawUI.ForegroundColor;
+    Number      = $Host.UI.RawUI.ForegroundColor;
+    Member      = $Host.UI.RawUI.ForegroundColor;
+}
