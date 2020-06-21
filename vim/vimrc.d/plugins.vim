@@ -96,6 +96,9 @@ endif
 " codefmt
 if empty(glob('~/.config/nvim/plugged/vim-codefmt/autoload/codefmt.vim')) == 0
     nnoremap <silent> <A-f> :FormatCode<cr>
+    " change default formatter for javascript buffers from clang-format to js-beautify
+    " https://github.com/google/vim-codefmt/blob/78f646545c4e1254fc413242e5c204a2dc79665d/vroom/main.vroom#L137
+    autocmd FileType javascript let b:codefmt_formatter="js-beautify"
 endif
 
 " vim-SyntaxRange
