@@ -31,7 +31,7 @@
             "colorScheme": "Solarized Dark",
             "fontFace" : "Iosevka Term Heavy",
             "fontSize" : 11,
-            "cursorShape": "underscore",
+            "cursorShape": "filledBox",
             "closeOnExit": true,
             "padding": "0, 0, 0, 0"
         },
@@ -43,7 +43,7 @@
             "colorScheme": "Solarized Dark",
             "fontFace" : "Iosevka Term Heavy",
             "fontSize" : 11,
-            "cursorShape": "underscore",
+            "cursorShape": "filledBox",
             "closeOnExit": true,
             "padding": "0, 0, 0, 0"
         },
@@ -55,7 +55,7 @@
             "colorScheme": "Solarized Dark",
             "fontFace" : "Iosevka Term Heavy",
             "fontSize" : 11,
-            "cursorShape": "underscore",
+            "cursorShape": "filledBox",
             "closeOnExit": true,
             "padding": "0, 0, 0, 0"
         },
