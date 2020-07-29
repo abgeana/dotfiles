@@ -31,6 +31,7 @@ if empty(glob('~/.config/nvim/autoload/plug.vim')) == 0
     Plug 'HerringtonDarkholme/yats.vim'
     Plug 'LnL7/vim-nix'
     Plug 'PProvost/vim-ps1'
+    Plug 'matze/vim-meson'
     "Plug 'lervag/vimtex'
     "Plug 'udalov/kotlin-vim'
     "Plug 'keith/swift.vim'
