@@ -4,6 +4,7 @@ import argparse
 import yaml
 import os.path
 import subprocess
+from time import sleep
 from collections import namedtuple
 
 TmuxSession_field_names = ["index", "name", "windows"]
@@ -85,13 +86,17 @@ def init_window(tr, window):
         tr.run('new-window', '-t', '{target}', '-n', '{window_name}')
 
     tr.run('select-window', '-t', '{target}')
+
+    sleep(0.2)
     tr.run('send-keys', '-t', '{target}', 'unset TMUX', 'Enter')
 
     if window.commands:
         for command in window.commands:
             tr.args['command'] = command
+            sleep(0.2)
             tr.run('send-keys', '-t', '{target}', '{command}', 'Enter')
 
+    sleep(0.2)
     tr.run('send-keys', '-t', '{target}', 'clear', 'Enter')
 
 
