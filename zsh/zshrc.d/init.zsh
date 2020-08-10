@@ -73,6 +73,8 @@ setopt rm_star_silent
 # run background jobs with the same priority
 # also avoids an issue in wsl - https://github.com/Microsoft/WSL/issues/1887
 unsetopt bg_nice
+# disable the beep sound
+unsetopt beep
 
 # zstyle changes
 # explanations for the zstyle command in:
