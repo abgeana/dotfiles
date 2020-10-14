@@ -3,6 +3,7 @@
 import argparse
 import base64
 import configparser
+import getpass
 import json
 import os
 import requests
@@ -18,8 +19,6 @@ def parse_args():
     parser = argparse.ArgumentParser(description='Update environment configuration files.')
     parser.add_argument(
         '-c', '--config', type=str, default='/etc/env-update.cfg', help='configuration file for this update utility')
-    parser.add_argument(
-        '-t', '--token', type=str, default='/etc/env-update-token.txt', help='file containing the gitlab private token')
     parser.add_argument('-l', '--list', nargs='*', help='show all configuration sections supported for update')
     parser.add_argument('-u', '--update', nargs='*', help='configuration files to be updated')
     args = parser.parse_args()
@@ -229,8 +228,7 @@ class Updater:
 def main():
     args = parse_args()
     cfg = parse_config(args.config)
-    with open(args.token, 'r') as f:
-        private_token = f.read().strip()
+    private_token = getpass.getpass('Gitlab Token: ')
     updater = Updater(cfg, private_token)
 
     if args.list is not None:
