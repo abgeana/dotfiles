@@ -17,7 +17,7 @@
 "set <F11>=[23~
 "set <F12>=[24~
 
-" st or mintty
+" st, mintty, windows terminal
 set <F1>=OP
 set <F2>=OQ
 set <F3>=OR

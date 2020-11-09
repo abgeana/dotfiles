@@ -13,19 +13,26 @@ set foldcolumn=1
 " http://vim.wikia.com/wiki/Erasing_previously_entered_characters_in_insert_mode
 set backspace=indent,eol,start
 
-" tabs and spaces
-" dynamic configuration
-let g:indent_width=4
-function IndentWidthFunc(w)
-    let g:indent_width=a:w
-    let &tabstop=g:indent_width       " control the number of space chars inserted when TAB is pressed
-    let &shiftwidth=g:indent_width    " the number of space characters inserted for indentation
-    let &softtabstop=g:indent_width   " stop at multiple of 4 when pressing TAB key
+" dynamic indentation configuration
+function IndentWidthFunc(local, width)
+    if (a:local == 0)
+        let &tabstop=a:width        " control the number of space chars inserted when TAB is pressed
+        let &shiftwidth=a:width     " the number of space characters inserted for indentation
+        let &softtabstop=a:width    " stop at multiple of 4 when pressing TAB key
+    else
+        let &l:tabstop=a:width      " control the number of space chars inserted when TAB is pressed
+        let &l:shiftwidth=a:width   " the number of space characters inserted for indentation
+        let &l:softtabstop=a:width  " stop at multiple of 4 when pressing TAB key
+    endif
 endfunction
-command -nargs=1 IndentWidth call IndentWidthFunc(<f-args>)
+command -nargs=1 IndentWidth call IndentWidthFunc(0, <f-args>)
+command -nargs=1 IndentWidthLocal call IndentWidthFunc(1, <f-args>)
+
+" set indentation to 4 spaces
 IndentWidth 4
-set expandtab       " insert space chars whenever TAB is pressed
-"retab              " when opening a file, convert tab chars to spaces
+
+" insert space chars whenever TAB is pressed
+set expandtab
 
 " autoindentation
 set autoindent
@@ -47,11 +54,8 @@ set relativenumber
 " shows what you are typing as a command
 set showcmd
 
-" 256 colors
-set t_Co=256
-
 " remember more undos
-set undolevels=1000
+set undolevels=2000
 
 " no bells
 set noerrorbells
@@ -64,9 +68,6 @@ set laststatus=2
 
 " we have a fast terminal
 set ttyfast
-
-" viewoptions suggested by the restore_view.vim plugin
-set viewoptions=cursor,folds,slash,unix
 
 " avoid problems with esc key and meta key bindings
 " <esc>+key will be the same as <alt>+key if the delay between pressing <esc>
@@ -84,13 +85,13 @@ set wildmenu
 " complete only up to point of ambiguity
 set wildmode=longest:full
 
-" do not redraw too much
-set lazyredraw
-
 " configure the completion menu
 " menuone - use the popup menu also when there is only one match
 " longest - only insert the longest common text of the matches
 set completeopt=menuone,longest
+
+" do not redraw too much
+set lazyredraw
 
 " shada (SHAred DAta) configuration
 " default shada=!,'100,<50,s10,h

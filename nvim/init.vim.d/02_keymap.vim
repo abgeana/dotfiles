@@ -1,6 +1,7 @@
 " map vs. remap vs. noremap - http://stackoverflow.com/questions/3776117
 
 " define the leader to space
+" the final value of mapleader must be set before any map commands use it
 let mapleader=","
 
 " to disable autoindentation and autocommenting press F3, to enable it back press F4

@@ -1,4 +1,6 @@
-" mark
+" vim: foldmethod=marker
+
+" alegen/vim-mark {{{
 if empty(glob('~/.config/nvim/plugged/vim-mark/plugin/mark.vim')) == 0
     " use a proper palette
     let g:mwDefaultHighlightingPalette = 'maximum'
@@ -14,8 +16,9 @@ else
     map <F1> :setl hlsearch<CR>:let @/ = expand("<cword>")<CR>
     map <F2> :setl hlsearch!<CR>
 endif
+" }}}
 
-" nerdtree
+" scrooloose/nerdtree {{{
 if empty(glob('~/.config/nvim/plugged/nerdtree/plugin/NERD_tree.vim')) == 0
     " do not display header
     let g:NERDTreeMinimalUI=1
@@ -27,8 +30,9 @@ if empty(glob('~/.config/nvim/plugged/nerdtree/plugin/NERD_tree.vim')) == 0
 
     map <A-x> :NERDTreeToggle<CR>
 endif
+" }}}
 
-" sneak
+" justinmk/vim-sneak {{{
 if empty(glob('~/.config/nvim/plugged/vim-sneak/plugin/sneak.vim')) == 0
     " use labels for jump spots
     let g:sneak#label = 1
@@ -37,52 +41,26 @@ if empty(glob('~/.config/nvim/plugged/vim-sneak/plugin/sneak.vim')) == 0
     " case sensitivity determined by ignorecase and smartcase
     let g:sneak#use_ic_scs = 1
 endif
+" }}}
 
-" taglist
-if empty(glob('~/.config/nvim/plugged/taglist.vim/plugin/taglist.vim')) == 0
-    let g:Tlist_Use_Right_Window = 1
-    let g:Tlist_WinWidth = 60
-    let g:Tlist_Sort_Type = "name"
-endif
-
-" vim-markdown
+" plasticboy/vim-markdown {{{
 if empty(glob('~/.config/nvim/plugged/vim-markdown/ftplugin/markdown.vim')) == 0
     let g:vim_markdown_folding_disabled = 1
+    " https://github.com/plasticboy/vim-markdown#concealing
+    autocmd FileType markdown setlocal conceallevel=2
 endif
+" }}}
 
-" DeleteTrailingWhitespace
+" inkarkat/vim-DeleteTrailingWhitespace {{{
 if empty(glob('~/.config/nvim/plugged/vim-DeleteTrailingWhitespace/plugin/DeleteTrailingWhitespace.vim')) == 0 && &binary == "nobinary"
     " i want to eradicate all trailing spaces all the time
     let g:DeleteTrailingWhitespace = 1
     " automatically do it for me when i save a file
     let g:DeleteTrailingWhitespace_Action = 'delete'
 endif
+" }}}
 
-" vim-lsp
-if empty(glob('~/.config/nvim/plugged/vim-lsp/plugin/lsp.vim')) == 0 && executable('ccls')
-    " disable diagnostics support
-    let g:lsp_diagnostics_enabled = 0
-    " disable signs
-    let g:lsp_signs_enabled = 0
-    " disable echo under cursor when in normal mode
-    let g:lsp_diagnostics_echo_cursor = 0
-
-    " https://github.com/MaskRay/ccls/wiki/Project-Setup
-    "let l:project_file = "compile_commands.json"
-    let g:lsp_project_file = ".ccls"
-
-    " https://github.com/MaskRay/ccls/wiki/vim-lsp
-    " https://github.com/prabirshrestha/vim-lsp/wiki/Servers-ccls
-    au User lsp_setup call lsp#register_server({
-        \ 'name': 'ccls',
-        \ 'cmd': {server_info->['ccls']},
-        \ 'root_uri': {server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), g:lsp_project_file))},
-        \ 'initialization_options': {'cache': {'directory': '/tmp/ccls/cache' }},
-        \ 'whitelist': ['c', 'cpp', 'objc', 'objcpp', 'cc'],
-        \ })
-endif
-
-" vim-tmux-navigator
+" christoomey/vim-tmux-navigator {{{
 if empty(glob('~/.config/nvim/plugged/vim-tmux-navigator/plugin/tmux_navigator.vim')) == 0
     let g:tmux_navigator_no_mappings = 1
 
@@ -92,16 +70,19 @@ if empty(glob('~/.config/nvim/plugged/vim-tmux-navigator/plugin/tmux_navigator.v
     nnoremap <silent> <A-l> :TmuxNavigateRight<cr>
     nnoremap <silent> <A-\> :TmuxNavigatePrevious<cr>
 endif
+" }}}
 
-" codefmt
+" google/vim-codefmt {{{
 if empty(glob('~/.config/nvim/plugged/vim-codefmt/autoload/codefmt.vim')) == 0
     nnoremap <silent> <A-f> :FormatCode<cr>
     " change default formatter for javascript buffers from clang-format to js-beautify
     " https://github.com/google/vim-codefmt/blob/78f646545c4e1254fc413242e5c204a2dc79665d/vroom/main.vroom#L137
     autocmd FileType javascript let b:codefmt_formatter="js-beautify"
 endif
+" }}}
 
-" vim-SyntaxRange
+" inkarkat/vim-SyntaxRange {{{
 if empty(glob('~/.config/nvim/plugged/vim-SyntaxRange/plugin/SyntaxRange.vim')) == 0
     autocmd Syntax * call SyntaxRange#Include('@begin=lua@', '@end=lua@', 'lua', 'NonText')
 endif
+" }}}
