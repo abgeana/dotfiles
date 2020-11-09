@@ -21,8 +21,8 @@ if empty(glob('~/.config/nvim/autoload/plug.vim')) == 0
     Plug 'alegen/vim-mark'                          " background coloring of arbitrary strings
     Plug 'inkarkat/vim-DeleteTrailingWhitespace'
     Plug 'inkarkat/vim-SyntaxRange'                 " use different syntax highlighting for arbitrary ranges
-    Plug 'scrooloose/nerdtree'
     Plug 'majutsushi/tagbar'
+    Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
 
     " language syntax plugins
     Plug 'plasticboy/vim-markdown'

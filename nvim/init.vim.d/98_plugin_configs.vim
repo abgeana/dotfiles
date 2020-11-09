@@ -18,17 +18,48 @@ else
 endif
 " }}}
 
-" scrooloose/nerdtree {{{
-if empty(glob('~/.config/nvim/plugged/nerdtree/plugin/NERD_tree.vim')) == 0
-    " do not display header
-    let g:NERDTreeMinimalUI=1
-    " show line numbers in the file viewer
-    let g:NERDTreeShowLineNumbers=1
-    " make splits behave same as with ctrl-w
-    let g:NERDTreeMapOpenSplit='s'
-    let g:NERDTreeMapOpenVSplit='v'
+" Shougo/defx.nvim {{{
+if empty(glob('~/.config/nvim/plugged/defx.nvim/plugin/defx.vim')) == 0
+    map <A-x> :Defx -split=vertical -direction=topleft -listed -resume -toggle -winwidth=40<CR>
 
-    map <A-x> :NERDTreeToggle<CR>
+    autocmd FileType defx call s:defx_my_settings()
+    function! s:defx_my_settings() abort " {{{
+        " Define mappings
+        nnoremap <silent><buffer><expr> <CR>
+        \ defx#do_action('drop')
+
+        nnoremap <silent><buffer><expr> h
+        \ defx#do_action('cd', ['..'])
+        nnoremap <silent><buffer><expr> j
+        \ line('.') == line('$') ? 'gg' : 'j'
+        nnoremap <silent><buffer><expr> k
+        \ line('.') == 1 ? 'G' : 'k'
+        nnoremap <silent><buffer><expr> l
+        \ defx#do_action('open')
+
+        nnoremap <silent><buffer><expr> s
+        \ defx#do_action('open', 'split')
+
+        nnoremap <silent><buffer><expr> o
+        \ defx#do_action('open_tree', 'toggle')
+        nnoremap <silent><buffer><expr> r
+        \ defx#do_action('rename')
+        nnoremap <silent><buffer><expr> !
+        \ defx#do_action('execute_command')
+        nnoremap <silent><buffer><expr> yy
+        \ defx#do_action('yank_path')
+        nnoremap <silent><buffer><expr> .
+        \ defx#do_action('toggle_ignored_files')
+        nnoremap <silent><buffer><expr> ~
+        \ defx#do_action('cd')
+        nnoremap <silent><buffer><expr> q
+        \ defx#do_action('quit')
+        nnoremap <silent><buffer><expr> <C-l>
+        \ defx#do_action('redraw')
+        nnoremap <silent><buffer><expr> cd
+        \ defx#do_action('change_vim_cwd')
+    endfunction
+    " }}}
 endif
 " }}}
 

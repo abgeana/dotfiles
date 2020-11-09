@@ -103,3 +103,7 @@ set shada='500,f1,<500,h
 
 " show unprintable characters hexadecimal as <xx> instead of using ^C and ~C
 set display=uhex
+
+" configure how splitting works, to the right and below
+set splitbelow
+set splitright
