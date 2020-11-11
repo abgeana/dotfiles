@@ -42,8 +42,6 @@ if empty(glob('~/.config/nvim/plugged/defx.nvim/plugin/defx.vim')) == 0
 
         nnoremap <silent><buffer><expr> o
         \ defx#do_action('open_tree', 'toggle')
-        nnoremap <silent><buffer><expr> r
-        \ defx#do_action('rename')
         nnoremap <silent><buffer><expr> !
         \ defx#do_action('execute_command')
         nnoremap <silent><buffer><expr> yy
@@ -52,8 +50,6 @@ if empty(glob('~/.config/nvim/plugged/defx.nvim/plugin/defx.vim')) == 0
         \ defx#do_action('toggle_ignored_files')
         nnoremap <silent><buffer><expr> ~
         \ defx#do_action('cd')
-        nnoremap <silent><buffer><expr> q
-        \ defx#do_action('quit')
         nnoremap <silent><buffer><expr> <C-l>
         \ defx#do_action('redraw')
         nnoremap <silent><buffer><expr> cd
