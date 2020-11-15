@@ -42,6 +42,8 @@ if empty(glob('~/.config/nvim/plugged/defx.nvim/plugin/defx.vim')) == 0
 
         nnoremap <silent><buffer><expr> o
         \ defx#do_action('open_tree', 'toggle')
+        nnoremap <silent><buffer><expr> <CR>
+        \ defx#do_action('open_tree', 'toggle')
         nnoremap <silent><buffer><expr> !
         \ defx#do_action('execute_command')
         nnoremap <silent><buffer><expr> yy
