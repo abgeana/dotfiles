@@ -37,8 +37,8 @@ if empty(glob('~/.config/nvim/plugged/defx.nvim/plugin/defx.vim')) == 0
         nnoremap <silent><buffer><expr> l
         \ defx#do_action('open')
 
-        nnoremap <silent><buffer><expr> s
-        \ defx#do_action('open', 'split')
+        nnoremap <silent><buffer><expr> v
+        \ defx#do_action('open', 'vsplit')
 
         nnoremap <silent><buffer><expr> o
         \ defx#do_action('open_tree', 'toggle')
