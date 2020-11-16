@@ -81,3 +81,18 @@ function YankLocation()
     " place it in the clipboard
     let @+ = fpath
 endfunction
+
+" function to close the window in the tab and remember the buffer ID
+let g:last_killed_buffer = -1
+function BufferInTabKill()
+    let g:last_killed_buffer = bufnr('%')
+    execute 'wincmd c'
+endfunction
+
+" function to close the window in the tab and remember the buffer ID
+function BufferInTabResurrect()
+    if g:last_killed_buffer == -1
+        return
+    endif
+    execute 'b' . g:last_killed_buffer
+endfunction

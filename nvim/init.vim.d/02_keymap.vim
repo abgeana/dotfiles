@@ -30,6 +30,14 @@ nnoremap yl :call YankLocation()<CR>
 " remap gf to open a file under the cursor and with line number
 nnoremap gf gF
 
+" tab / window management
+" use ts as "buffer to new Tab Split" plus closing the original window
+nnoremap <silent> ts <C-w>T
+" use tk as "buffer in Tab Kill" to close the window the tab
+nnoremap <silent> tk :call BufferInTabKill()<CR>
+" use tr as "buffer in Tab Resurrect" to re-open the last killed buffer
+nnoremap <silent> tr :call BufferInTabResurrect()<CR>
+
 " remap <Leader><Esc> to <C-\><C-n> for neovim
 " see also ":help terminal" or ":help CTRL-\_CTRL-N"
 tnoremap <Leader><Leader> <C-\><C-n>
