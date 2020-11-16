@@ -45,7 +45,7 @@ if empty(glob('~/.config/nvim/plugged/defx.nvim/plugin/defx.vim')) == 0
         nnoremap <silent><buffer><expr> <CR>
         \ defx#is_directory() ?
         \ defx#do_action('open_tree', 'toggle') :
-        \ defx#do_action('drop')
+        \ defx#do_action('multi', ['open', 'quit'])
 
         nnoremap <silent><buffer><expr> o
         \ defx#do_action('open_tree', 'toggle')
