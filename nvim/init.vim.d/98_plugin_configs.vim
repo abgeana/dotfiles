@@ -20,7 +20,7 @@ endif
 
 " Shougo/defx.nvim {{{
 if empty(glob('~/.config/nvim/plugged/defx.nvim/plugin/defx.vim')) == 0
-    map <A-x> :Defx -split=vertical -direction=topleft -listed -resume -toggle -winwidth=40<CR>
+    map <A-x> :Defx -split=no -direction=botright -listed -resume -toggle<CR>
 
     autocmd FileType defx call s:defx_my_settings()
     function! s:defx_my_settings() abort " {{{
@@ -37,12 +37,17 @@ if empty(glob('~/.config/nvim/plugged/defx.nvim/plugin/defx.vim')) == 0
         nnoremap <silent><buffer><expr> l
         \ defx#do_action('open')
 
+        nnoremap <silent><buffer><expr> s
+        \ defx#do_action('multi', [['open', 'split'], 'quit'])
         nnoremap <silent><buffer><expr> v
-        \ defx#do_action('open', 'vsplit')
+        \ defx#do_action('multi', [['open', 'vsplit'], 'quit'])
+
+        nnoremap <silent><buffer><expr> <CR>
+        \ defx#is_directory() ?
+        \ defx#do_action('open_tree', 'toggle') :
+        \ defx#do_action('drop')
 
         nnoremap <silent><buffer><expr> o
-        \ defx#do_action('open_tree', 'toggle')
-        nnoremap <silent><buffer><expr> <CR>
         \ defx#do_action('open_tree', 'toggle')
         nnoremap <silent><buffer><expr> !
         \ defx#do_action('execute_command')
