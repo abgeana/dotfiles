@@ -101,6 +101,14 @@ set lazyredraw
 " h         - disable 'hlsearch' highlighting when starting
 set shada='500,f1,<500,h
 
+" viewoptions settings recommended by vim-stay
+" :help vim-stay-viewoptions
+"   cursor  cursor position in file and in window
+"   folds   manually created folds, opened/closed folds and local fold options
+"   slash   backslashes in file names replaced with forward slashes
+"   unix    with Unix end-of-line format (single <NL>), even when on Windows or DOS
+set viewoptions=cursor,folds,slash,unix
+
 " show unprintable characters hexadecimal as <xx> instead of using ^C and ~C
 set display=uhex
 
