@@ -88,15 +88,17 @@ set-option -g renumber-windows on
 set-option -g word-separators ' '
 
 # put X11 clipboard contents into tmux paste buffer
-bind C-p run "xsel -ob | tmux load-buffer -; tmux paste-buffer; tmux delete-buffer"
-#bind C-p run "xclip -out -selection clipboard | tmux load-buffer -; tmux paste-buffer; tmux delete-buffer"
-#bind C-p run "python3 /bin/from_clipboard.py | tmux load-buffer -; tmux paste-buffer; tmux delete-buffer"
-#bind C-p run "/mnt/c/drop/bin/win32yank -o --lf | tmux load-buffer -; tmux paste-buffer; tmux delete-buffer"
+#bind C-p run -b "xsel -ob | tmux load-buffer -; tmux paste-buffer; tmux delete-buffer"
+#bind C-p run -b "xclip -out -selection clipboard | tmux load-buffer -; tmux paste-buffer; tmux delete-buffer"
+#bind C-p run -b "python3 /bin/from_clipboard.py | tmux load-buffer -; tmux paste-buffer; tmux delete-buffer"
+#bind C-p run -b "/mnt/c/drop/bin/win32yank -o --lf | tmux load-buffer -; tmux paste-buffer; tmux delete-buffer"
+bind C-p run -b "wl-paste -n | tmux load-buffer -; tmux paste-buffer; tmux delete-buffer"
 
 # move tmux copy buffer into X11 clipboard
 # the xclip version requires the redirection to /dev/null
 # see https://stackoverflow.com/questions/20157617 for explanation
-bind C-y run "tmux save-buffer - | xsel -ib; tmux display-message 'Moved save buffer to X clipboard'"
-#bind C-y run "tmux save-buffer - | xclip -in -selection clipboard > /dev/null; tmux display-message 'Moved save buffer to X clipboard'"
-#bind C-y run "tmux save-buffer - | python3 /bin/to_clipboard.py; tmux display-message 'Moved save buffer to X clipboard'"
-#bind C-y run "tmux save-buffer - | /mnt/c/drop/bin/win32yank -i; tmux display-message 'Moved save buffer to Windows clipboard'"
+#bind C-y run "tmux save-buffer - | xsel -ib; tmux display-message 'Moved save buffer to X clipboard'"
+#bind C-y run -b "tmux save-buffer - | xclip -in -selection clipboard > /dev/null; tmux display-message 'Moved save buffer to X clipboard'"
+#bind C-y run -b "tmux save-buffer - | python3 /bin/to_clipboard.py; tmux display-message 'Moved save buffer to X clipboard'"
+#bind C-y run -b "tmux save-buffer - | /mnt/c/drop/bin/win32yank -i; tmux display-message 'Moved save buffer to Windows clipboard'"
+bind C-y run -b "tmux save-buffer - | wl-copy; tmux display-message 'Moved save buffer to Wayland clipboard'"
