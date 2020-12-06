@@ -13,6 +13,7 @@
 
 # Term Section
 TERM Eterm
+TERM alacritty
 TERM ansi
 TERM color-xterm
 TERM con132x25
@@ -126,7 +127,7 @@ TERM xterm-termite
 # Background 256 color coding:
 #   48;5;COLOR_NUMBER
 
-## Special files
+# Special files
 NORMAL                  00;38;5;244             # no color code at all
 FILE                    00                      # regular file: use no color at all
 RESET                   00                      # reset to "normal" color
@@ -147,7 +148,7 @@ OTHER_WRITABLE          48;5;235;38;5;33        # dir that is other-writable (o+
 STICKY                  48;5;33;38;5;230        # dir with the sticky bit set (+t) and not other-writable
 EXEC                    00;38;5;64              # file with execute permission
 
-## Archives or compressed
+# Archives or compressed
 .tar                    00;38;5;61
 .tgz                    00;38;5;61
 .arj                    00;38;5;61
@@ -209,6 +210,9 @@ EXEC                    00;38;5;64              # file with execute permission
 .eps                    00;38;5;136
 .CR2                    00;38;5;136
 .ico                    00;38;5;136
+.nef                    00;38;5;136
+.NEF                    00;38;5;136
+.webp                   00;38;5;136
 
 # Files of special interest
 .tex                    00;38;5;245
@@ -241,6 +245,7 @@ EXEC                    00;38;5;64              # file with execute permission
 .sqlite                 00;38;5;245
 .go                     00;38;5;245
 .sql                    00;38;5;245
+.csv                    00;38;5;245
 
 # Unimportant files as logs and backups
 .log                    00;38;5;240
