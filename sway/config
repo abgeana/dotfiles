@@ -1,0 +1,215 @@
+# vim: filetype=conf
+# vim: foldmethod=marker
+# read `man 5 sway` for a complete reference
+
+set $left h
+set $down j
+set $up k
+set $right l
+
+# use the logo key as modifier
+# to use Alt, set to Mod1 instead
+set $mod Mod4
+
+# preferred terminal emulator
+set $term alacritty
+
+# preferred application launcher
+# pass the final command to swaymsg to open the window in the workspace that the command was run on
+set $menu rofi -show run | xargs swaymsg exec --
+
+# drag windows by holding down $mod and left mouse button
+# resize windows with right mouse button + $mod
+# despite the name, also works for non-floating windows
+# Change normal to inverse to use left mouse button for resizing and right
+# mouse button for dragging.
+floating_modifier $mod normal
+
+# this will lock the screen after 300 seconds of inactivity,
+# then turn off your displays after another 300 seconds
+# and turn your screens back on when resumed
+# it will also lock your screen before your computer goes to sleep
+exec swayidle -w \
+    timeout 300 'swaylock -f -c 000000' \
+    timeout 600 'swaymsg "output * dpms off"' \
+        resume 'swaymsg "output * dpms on"' \
+    before-sleep 'swaylock -f -c 000000'
+
+# configuration of the borders and gaps between the windows
+default_border pixel 2
+default_floating_border pixel 2
+gaps inner 10
+smart_gaps off # default behavior
+
+# output configuration {{{
+# example:
+#   output HDMI-A-1 resolution 1920x1080 position 1920,0
+# you can get the names of your outputs by running: swaymsg -t get_outputs
+output * {
+    bg #000000 solid_color
+}
+#}}}
+
+# solarized colors
+# https://github.com/tobiaszwaszak/i3wm/blob/master/config
+client.focused              #002b36 #586e75 #fdf6e3 #268bd2
+client.focused_inactive     #002b36 #073642 #839496 #073642
+client.unfocused            #002b36 #073642 #839496 #073642
+client.urgent               #002b36 #dc322f #fdf6e3 #002b36
+
+# status bar {{{
+# read `man 5 sway-bar` for more information about this section
+bar {
+    position top
+
+    # when the status_command prints a new line to stdout, swaybar updates
+    status_command while date +'%Y-%m-%d %l:%M:%S %p'; do sleep 1; done
+
+    # solarized colors
+    # https://github.com/tobiaszwaszak/i3wm/blob/master/config
+    colors {
+        background          #002b36
+        statusline          #839496
+        separator           #586e75
+        focused_workspace   #b58900 #b58900 #002b36
+        active_workspace    #586e75 #586e75 #002b36
+        inactive_workspace  #073642 #002b36 #839496
+        urgent_workspace    #dc322f #dc322f #fdf6e3
+    }
+}
+# }}}
+
+# key bindings {{{
+
+# basics {{{
+# exit sway (logs you out of your Wayland session)
+bindsym $mod+Shift+Escape exec \
+    swaynag \
+        -t warning \
+        -m 'Do you really want to exit sway? This will end your Wayland session.' \
+        -b 'Yes, exit sway' \
+        'swaymsg exit'
+
+# start a terminal
+bindsym $mod+Return exec $term
+
+# lock the screen
+bindsym $mod+Shift+x exec 'swaylock -f -c 000000'
+
+# kill focused window
+bindsym $mod+Shift+q kill
+
+# start your launcher
+bindsym $mod+d exec $menu
+
+# reload the configuration file
+bindsym $mod+Shift+c reload
+
+# rename workspace
+bindsym $mod+n exec echo "" | dmenu -p "New name for this workspace" | xargs -r swaymsg rename workspace to
+#}}}
+
+# focusing {{{
+# change focus
+bindsym $mod+$left  focus left
+bindsym $mod+$down  focus down
+bindsym $mod+$up    focus up
+bindsym $mod+$right focus right
+
+# focus parent
+bindsym $mod+p focus parent
+# }}}
+
+# moving around {{{
+# move focused window
+bindsym $mod+Shift+$left    move left
+bindsym $mod+Shift+$down    move down
+bindsym $mod+Shift+$up      move up
+bindsym $mod+Shift+$right   move right
+
+# move workspace to different monitors (outputs)
+bindsym $mod+Shift+u move workspace to output left
+bindsym $mod+Shift+i move workspace to output down
+bindsym $mod+Shift+o move workspace to output up
+bindsym $mod+Shift+p move workspace to output right
+# }}}
+
+# workspaces {{{
+# switch to workspace
+bindsym $mod+1 workspace number 1
+bindsym $mod+2 workspace number 2
+bindsym $mod+3 workspace number 3
+bindsym $mod+4 workspace number 4
+bindsym $mod+5 workspace number 5
+bindsym $mod+6 workspace number 6
+bindsym $mod+7 workspace number 7
+bindsym $mod+8 workspace number 8
+bindsym $mod+9 workspace number 9
+bindsym $mod+0 workspace number 10
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace number 1
+bindsym $mod+Shift+2 move container to workspace number 2
+bindsym $mod+Shift+3 move container to workspace number 3
+bindsym $mod+Shift+4 move container to workspace number 4
+bindsym $mod+Shift+5 move container to workspace number 5
+bindsym $mod+Shift+6 move container to workspace number 6
+bindsym $mod+Shift+7 move container to workspace number 7
+bindsym $mod+Shift+8 move container to workspace number 8
+bindsym $mod+Shift+9 move container to workspace number 9
+bindsym $mod+Shift+0 move container to workspace number 10
+# }}}
+
+# layout stuff {{{
+# split in horizontal orientation
+bindsym $mod+i splith
+# split in vertical orientation
+bindsym $mod+o splitv
+
+# make the current focus fullscreen
+bindsym $mod+f fullscreen
+
+# change container layout (stacked, tabbed, toggle split)
+bindsym $mod+y layout stacking
+bindsym $mod+t layout tabbed
+bindsym $mod+s layout toggle split
+
+# toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+
+# change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
+# }}}
+
+# scratchpad {{{
+# sway has a "scratchpad", which is a bag of holding for windows
+# you can send windows there and get them back later
+
+# move the currently focused window to the scratchpad
+bindsym $mod+Shift+minus move scratchpad
+
+# show the next scratchpad window or hide the focused scratchpad window
+# if there are multiple scratchpad windows, this command cycles through them
+bindsym $mod+minus scratchpad show
+# }}}
+
+# resizing containers {{{
+bindsym $mod+r mode "resize"
+
+mode "resize" {
+    # left will shrink the containers width
+    # right will grow the containers width
+    # up will shrink the containers height
+    # down will grow the containers height
+    bindsym $left   resize shrink   width   10px
+    bindsym $down   resize grow     height  10px
+    bindsym $up     resize shrink   height  10px
+    bindsym $right  resize grow     width   10px
+
+    # Return to default mode
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+# }}}
+
+# }}}
