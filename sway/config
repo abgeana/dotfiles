@@ -107,6 +107,9 @@ bindsym $mod+Shift+c reload
 
 # rename workspace
 bindsym $mod+n exec echo "" | dmenu -p "New name for this workspace" | xargs -r swaymsg rename workspace to
+
+# take a screenshot
+bindsym $mod+Shift+s exec grim -g "$(slurp)"
 #}}}
 
 # focusing {{{
