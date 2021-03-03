@@ -176,9 +176,8 @@ class Updater:
         self._print_update_status(is_ok, value)
 
     def _download_file(self, section, option):
-        """_download_file attempts to download a file via the gitlab api, using the private token stored in
-        /etc/env-update-token.txt."""
-        repo_id = 13755372 # taken from the webpage
+        """_download_file attempts to download a file via the gitlab api."""
+        repo_id = 13755372 # ctrl-f "Project ID" from the repo page
         file_path = '{}/{}'.format(section, option)
 
         # basic url encoding

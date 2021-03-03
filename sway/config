@@ -44,6 +44,8 @@ smart_gaps off # default behavior
 # output configuration {{{
 # example:
 #   output HDMI-A-1 resolution 1920x1080 position 1920,0
+#   output HDMI-A-2 mode [--custom] 2560x1440@50Hz
+#   output HDMI-A-2 resolution [--custom] 2560x1440
 # you can get the names of your outputs by running: swaymsg -t get_outputs
 output * {
     bg #000000 solid_color
