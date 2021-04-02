@@ -35,7 +35,9 @@ if empty(glob('~/.config/nvim/plugged/defx.nvim/plugin/defx.vim')) == 0
     function! s:defx_my_settings() abort " {{{
         " Define mappings
         nnoremap <silent><buffer><expr> <CR>
-        \ defx#do_action('drop')
+        \ defx#is_directory() ?
+        \ defx#do_action('open_tree', 'toggle') :
+        \ defx#do_action('multi', ['drop', 'quit'])
 
         nnoremap <silent><buffer><expr> h
         \ defx#do_action('cd', ['..'])
@@ -47,14 +49,9 @@ if empty(glob('~/.config/nvim/plugged/defx.nvim/plugin/defx.vim')) == 0
         \ defx#do_action('open')
 
         nnoremap <silent><buffer><expr> s
-        \ defx#do_action('multi', [['open', 'split'], 'quit'])
+        \ defx#do_action('multi', [['drop', 'split'], 'quit'])
         nnoremap <silent><buffer><expr> v
-        \ defx#do_action('multi', [['open', 'vsplit'], 'quit'])
-
-        nnoremap <silent><buffer><expr> <CR>
-        \ defx#is_directory() ?
-        \ defx#do_action('open_tree', 'toggle') :
-        \ defx#do_action('multi', ['open', 'quit'])
+        \ defx#do_action('multi', [['drop', 'vsplit'], 'quit'])
 
         nnoremap <silent><buffer><expr> o
         \ defx#do_action('open_tree', 'toggle')
