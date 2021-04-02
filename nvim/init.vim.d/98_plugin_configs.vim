@@ -20,7 +20,16 @@ endif
 
 " Shougo/defx.nvim {{{
 if empty(glob('~/.config/nvim/plugged/defx.nvim/plugin/defx.vim')) == 0
-    map <A-x> :Defx -split=no -direction=botright -listed -resume -toggle<CR>
+    map <A-x> :Defx<CR>
+
+    call defx#custom#option('_', {
+    \   'split':        'vertical',
+    \   'winwidth':     50,
+    \   'direction':    'topleft',
+    \   'listed':       1,
+    \   'resume':       1,
+    \   'toggle':       1
+    \ })
 
     autocmd FileType defx call s:defx_my_settings()
     function! s:defx_my_settings() abort " {{{
