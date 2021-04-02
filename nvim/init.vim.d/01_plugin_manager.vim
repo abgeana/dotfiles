@@ -28,6 +28,7 @@ if empty(glob('~/.config/nvim/autoload/plug.vim')) == 0
     Plug 'plasticboy/vim-markdown'
     Plug 'PProvost/vim-ps1'                 " powershell
     Plug 'dart-lang/dart-vim-plugin'
+    Plug 'mustache/vim-mustache-handlebars' " html mustache/handlebars
     " Plug 'matze/vim-meson'
     " Plug 'HerringtonDarkholme/yats.vim'   " typescript
     " Plug 'udalov/kotlin-vim'
