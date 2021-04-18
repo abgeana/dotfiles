@@ -1,0 +1,23 @@
+/* https://medium.com/@Aenon/firefox-hide-native-tabs-and-titlebar-f0b00bdbb88b
+ */
+
+/* hides the native tabs */
+#TabsToolbar {
+    visibility: collapse;
+}
+
+/* hides the title bar */
+#titlebar {
+    visibility: collapse;
+}
+
+/* hides the sidebar */
+#sidebar-header {
+    visibility: collapse !important;
+}
+
+/* leaves space for the window buttons */
+#nav-bar {
+    margin-top: 10px;
+    margin-bottom: -4px;
+}
