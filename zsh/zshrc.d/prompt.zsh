@@ -1,8 +1,8 @@
 SHNAME=$(hostname -s)
 if [[ $(id -u) == 0 ]]; then
-    COLOR_USER=87
+    COLOR_USER=120
 else
-    COLOR_USER=196
+    COLOR_USER=226
 fi
 
 if [[ $(hostname) =~ .*\.avpc\..* ]]; then
@@ -37,9 +37,9 @@ set-prompt() {
     # http://panmental.de/symbols/info.htm
     # http://xahlee.info/comp/unicode_arrows.html
     if [[ $# == 0 ]]; then
-        export PROMPT=" %F{ $COLOR_USER }% ○ %F{ $COLOR_HOST }%m%F{ $COLOR_USER } ▸%f "
+        export PROMPT=" %F{ $COLOR_USER }% %F{ $COLOR_HOST }%m%F{ $COLOR_USER } ▶%f "
     else
-        export PROMPT=" %F{ $COLOR_USER }% ○ %F{196}[$@] %F{ $COLOR_HOST }%m%F{ $COLOR_USER } ▸%f "
+        export PROMPT=" %F{ $COLOR_USER }% %F{196}[$@] %F{ $COLOR_HOST }%m%F{ $COLOR_USER } ▶%f "
     fi
 }
 
