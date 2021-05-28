@@ -1,8 +1,8 @@
 SHNAME=$(hostname -s)
 if [[ $(id -u) == 0 ]]; then
-    COLOR_USER=120
+    COLOR_USER=46
 else
-    COLOR_USER=226
+    COLOR_USER=202
 fi
 
 if [[ $(hostname) =~ .*\.avpc\..* ]]; then
