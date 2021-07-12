@@ -54,7 +54,8 @@ c = get_config()
 c.TerminalIPythonApp.display_banner = False             # do not display the banner
 c.InteractiveShellApp.exec_lines = [
     'import os, os.path',
-    'import sys'
+    'import sys',
+    'import monkeyhex'
 ]
 c.AliasManager.user_aliases = [                         # aliases
     ('lss', 'ls --color=tty -Alh')
