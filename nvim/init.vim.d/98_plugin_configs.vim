@@ -127,3 +127,10 @@ if empty(glob('~/.config/nvim/plugged/vim-SyntaxRange/plugin/SyntaxRange.vim')) 
     autocmd Syntax * call SyntaxRange#Include('@begin=lua@', '@end=lua@', 'lua', 'NonText')
 endif
 " }}}
+
+" neovim/nvim-lspconfig {{{
+if empty(glob('~/.config/nvim/plugged/nvim-lspconfig/plugin/lspconfig.vim')) == 0
+    lua require 'setup_lsp_servers'
+    lua setup_lsp_servers()
+endif
+" }}}

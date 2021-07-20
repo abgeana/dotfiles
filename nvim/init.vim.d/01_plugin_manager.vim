@@ -22,6 +22,7 @@ if empty(glob('~/.config/nvim/autoload/plug.vim')) == 0
     Plug 'inkarkat/vim-DeleteTrailingWhitespace'
     Plug 'inkarkat/vim-SyntaxRange'                 " use different syntax highlighting for arbitrary ranges
     Plug 'majutsushi/tagbar'
+    Plug 'neovim/nvim-lspconfig'                    " quickstart configurations for the nvim lsp client
     Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
 
     " language syntax plugins
