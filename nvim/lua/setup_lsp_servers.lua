@@ -22,7 +22,7 @@ local on_attach = function(client, bufnr)
   --buf_set_keymap('n', '<space>D',     '<Cmd>' .. 'lua vim.lsp.buf.type_definition()'                              .. '<CR>', opts)
   --buf_set_keymap('n', '<space>rn',    '<Cmd>' .. 'lua vim.lsp.buf.rename()'                                       .. '<CR>', opts)
   --buf_set_keymap('n', '<space>ca',    '<Cmd>' .. 'lua vim.lsp.buf.code_action()'                                  .. '<CR>', opts)
-  --buf_set_keymap('n', 'gr',           '<Cmd>' .. 'lua vim.lsp.buf.references()'                                   .. '<CR>', opts)
+    buf_set_keymap('n', 'gr',           '<Cmd>' .. 'lua vim.lsp.buf.references()'                                   .. '<CR>', opts)
   --buf_set_keymap('n', '<space>e',     '<Cmd>' .. 'lua vim.lsp.diagnostic.show_line_diagnostics()'                 .. '<CR>', opts)
   --buf_set_keymap('n', '[d',           '<Cmd>' .. 'lua vim.lsp.diagnostic.goto_prev()'                             .. '<CR>', opts)
   --buf_set_keymap('n', ']d',           '<Cmd>' .. 'lua vim.lsp.diagnostic.goto_next()'                             .. '<CR>', opts)
@@ -34,7 +34,8 @@ setup_lsp_servers = function()
 
     -- list of servers to enable by default
     local servers = {
-        "ccls" -- c/c++
+        "ccls",
+        "rust_analyzer"
     }
 
     for _, lsp in ipairs(servers) do
