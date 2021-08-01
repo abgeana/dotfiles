@@ -65,7 +65,7 @@ sz() {
 
 # this function calls ripgrep with all the right flags and pipes through less
 rgl () {
-    rg -p "$@" | less
+    rg --pretty --hidden --no-ignore "$@" | less
 }
 
 # reload the ~/.zshrc file
