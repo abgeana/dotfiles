@@ -134,3 +134,13 @@ if empty(glob('~/.config/nvim/plugged/nvim-lspconfig/plugin/lspconfig.vim')) == 
     lua setup_lsp_servers()
 endif
 " }}}
+
+" neovim/vim-coverage {{{
+if empty(glob('~/.config/nvim/plugged/vim-coverage/plugin/coverage.vim')) == 0
+    " to get the maktaba plugin, use 
+    "   let coverage_plugin=maktaba#plugin#Get('coverage')
+    " after which you can configure the gcov plugin via
+    "   let coverage_plugin.globals._gcov_temp_search_paths = ['...']
+    "   let coverage_plugin.globals._gcov_temp_file_patterns = ['...']
+endif
+" }}}

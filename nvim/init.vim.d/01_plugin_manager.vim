@@ -17,6 +17,7 @@ if empty(glob('~/.config/nvim/autoload/plug.vim')) == 0
     Plug 'zhimsel/vim-stay'                         " persistent editing state; originally kopischke/vim-stay
     Plug 'wsdjeg/vim-fetch'                         " line and column in file name; originally kopischke/vim-fetch
     Plug 'google/vim-codefmt'
+    Plug 'google/vim-coverage'
     Plug 'christoomey/vim-tmux-navigator'
     Plug 'alegen/vim-mark'                          " background coloring of arbitrary strings
     Plug 'inkarkat/vim-DeleteTrailingWhitespace'
