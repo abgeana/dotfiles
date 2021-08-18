@@ -9,16 +9,20 @@ import os
 import requests
 import shutil
 import stat
+import colorama
 
 from os.path import expanduser
-from colored import fg, attr
+from colorama import Fore, Style
 
 
 def parse_args():
     """parse_args parses the supported command line arguments."""
     parser = argparse.ArgumentParser(description='Update environment configuration files.')
-    parser.add_argument(
-        '-c', '--config', type=str, default='/etc/env-update.cfg', help='configuration file for this update utility')
+    parser.add_argument('-c',
+                        '--config',
+                        type=str,
+                        default='/etc/env-update.cfg',
+                        help='configuration file for this update utility')
     parser.add_argument('-l', '--list', nargs='*', help='show all configuration sections supported for update')
     parser.add_argument('-u', '--update', nargs='*', help='configuration files to be updated')
     args = parser.parse_args()
@@ -38,7 +42,6 @@ def parse_config(f):
 
 class Updater:
     """Updater implements the functionality to perform updates of dot files."""
-
     def __init__(self, cfg, private_token):
         self._cfg = cfg
         self._private_token = private_token
@@ -86,8 +89,8 @@ class Updater:
         return path, dir_chmod, file_chmod
 
     def _color_text(self, color, text):
-        """_color_text uses the colored library to set the terminal color for the specified text."""
-        return '{}{}{}'.format(fg(color), text, attr('reset'))
+        """_color_text uses the colorama library to set the terminal color for the specified text."""
+        return '{}{}{}'.format(color, text, colorama.Style.RESET_ALL)
 
     def _list_all_sections(self):
         """_list_all_sections prints all the sections from the configuration file."""
@@ -95,12 +98,12 @@ class Updater:
             if section == 'config':
                 continue
 
-            colored_section = self._color_text('blue', section)
+            colored_section = self._color_text(Fore.BLUE, section)
             print('{:<30}'.format(colored_section), end='')
 
             if self._cfg.has_option(section, 'desc'):
                 desc = self._cfg.get(section, 'desc')
-                colored_desc = self._color_text('cyan', desc)
+                colored_desc = self._color_text(Fore.CYAN, desc)
                 print(colored_desc, end='')
 
             print()
@@ -112,27 +115,27 @@ class Updater:
             return
 
         if section not in self._cfg.sections():
-            print(self._color_text('red', 'section {} does not exist'.format(section)))
+            print(self._color_text(Fore.RED, 'section {} does not exist'.format(section)))
             return
 
-        print(self._color_text('blue', section))
+        print(self._color_text(Fore.BLUE, section))
         for option in self._cfg.options(section):
             if option == 'desc':
                 continue
 
             value = self._cfg.get(section, option)
             path, _, _, = self._parse_config_value(value)
-            colored_path = self._color_text('green', path)
-            colored_option = self._color_text('cyan', option)
+            colored_path = self._color_text(Fore.GREEN, path)
+            colored_option = self._color_text(Fore.CYAN, option)
 
             print('    {:<40}{}'.format(colored_option, colored_path))
 
     def _print_update_status(self, is_ok, value):
         """_print_update_status displays the status of a file download operation."""
         path, _, _ = self._parse_config_value(value)
-        colored_path = self._color_text('cyan', path)
+        colored_path = self._color_text(Fore.CYAN, path)
 
-        status, status_color = ('[✔]', 'green') if is_ok else ('[✘]', 'red')
+        status, status_color = ('[✔]', Fore.GREEN) if is_ok else ('[✘]', Fore.RED)
         colored_status = self._color_text(status_color, status)
 
         print('  {}  {}'.format(colored_status, colored_path))
@@ -151,10 +154,10 @@ class Updater:
             return
 
         if section not in self._cfg.sections():
-            print(self._color_text('red', 'section {} does not exist'.format(section)))
+            print(self._color_text(Fore.RED, 'section {} does not exist'.format(section)))
             return
         else:
-            print(self._color_text('blue', 'updating {}'.format(section)))
+            print(self._color_text(Fore.BLUE, 'updating {}'.format(section)))
 
         for option in self._cfg.options(section):
             if option == 'desc':
@@ -177,17 +180,15 @@ class Updater:
 
     def _download_file(self, section, option):
         """_download_file attempts to download a file via the gitlab api."""
-        repo_id = 13755372 # ctrl-f "Project ID" from the repo page
+        repo_id = 13755372  # ctrl-f "Project ID" from the repo page
         file_path = '{}/{}'.format(section, option)
 
         # basic url encoding
         for c in ['/', '.']:
             file_path = file_path.replace(c, '%' + hex(ord(c)).strip('0x'))
 
-        url = 'https://gitlab.com/api/v4/projects/{repo_id}/repository/files/{file_path}'.format(
-            repo_id=repo_id,
-            file_path=file_path
-        )
+        url = 'https://gitlab.com/api/v4/projects/{repo_id}/repository/files/{file_path}'.format(repo_id=repo_id,
+                                                                                                 file_path=file_path)
 
         try:
             response = requests.get(url, params={'ref': 'master', 'private_token': self._private_token})
@@ -225,6 +226,8 @@ class Updater:
 
 
 def main():
+    colorama.init()
+
     args = parse_args()
     cfg = parse_config(args.config)
     private_token = getpass.getpass('Gitlab Token: ')
