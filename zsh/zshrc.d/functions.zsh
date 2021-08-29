@@ -97,59 +97,6 @@ man() {
         man "$@"
 }
 
-# create new tmux session and switch to it
-ts() {
-    local target_session=''
-    local target_exists=0
-
-    if [[ $# != 1 ]]; then
-        target_session='base'
-    else
-        target_session=$1
-    fi
-
-    # make a list of all sessions
-    sessions=( $(tmux list-sessions | awk '{ split($1, s, ":"); print s[1] }') )
-
-    # check if the target session name exists
-    # https://stackoverflow.com/questions/5203665
-    if [[ ${sessions[(i)$target_session]} -le ${#sessions} ]]; then
-        target_exists=1
-    else
-        target_exists=0
-    fi
-
-    # if target session does not exist, then create it in detached mode
-    if [[ $target_exists == 0 ]]; then
-        tmux new-session -d -s $target_session
-    fi
-
-    # switch to the session
-    if [[ $TMUX ]]; then
-        # if we are inside a tmux session, then just switch
-        tmux switch-client -t $target_session
-    else
-        # if we are not inside a tmux session, attach to it
-        tmux attach -t $target_session
-    fi
-}
-
-# function which either creates a new tmux session called "base" or attaches
-# to it if it already exists; this function uses ts() defined above
-tb() {
-    ts 'base'
-}
-
-# start a vim session with the contents of the current tmux pane
-# acronym for "pane edit"
-pane-edit() {
-    tmux capture-pane -p -S - | \
-    vim -c 'call TmuxCapturePaneSetup()' -
-}
-
-# define new widget for calling the pe function
-zle -N pane-edit
-
 # this function lets me use ctrl-z to push processes to the background
 # and to also pull them to foreground
 # inspired from https://github.com/robbyrussell/oh-my-zsh/blob/master/plugins/fancy-ctrl-z/fancy-ctrl-z.plugin.zsh
@@ -187,18 +134,6 @@ unquote-word() {
 
 # define new widget for calling the unquote-word function
 zle -N unquote-word
-
-# start the tmux master instance and execute the init-tmux-master script
-tmux-master() {
-    local t="tmux -L master"
-
-    if [[ $# == 0 ]]; then
-        (sleep 0.4; eval "$t send-keys init-tmux-master Enter")&
-        eval "$t -f ~/.tmux.master.conf"
-    else
-        eval "$t $@"
-    fi
-}
 
 # use ranger to cd to another directory
 # adapted from https://github.com/ranger/ranger/blob/master/examples/bash_automatic_cd.sh

@@ -1,0 +1,20 @@
+session_name: singles
+start_directory: /home/abg
+windows:
+  - window_name: local
+    panes:
+      - shell_command:
+        - unset TMUX
+        - tb
+  - window_name: front
+    panes:
+      - shell_command:
+        - ssh-agent zsh
+        - alias ssh='ssh front.ubiq.domic.io'
+        - ssh-add /home/abg/.ssh/ssh-config/keys/io/domic/ubiq/front/abg
+  - window_name: liya
+    panes:
+      - shell_command:
+        - ssh-agent zsh
+        - alias ssh='ssh liya.ts.domic.io'
+        - ssh-add /home/abg/.ssh/ssh-config/keys/io/domic/cuib/liya/abg

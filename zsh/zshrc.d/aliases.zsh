@@ -14,13 +14,11 @@ alias fdi='find . -type d -iname'
 alias unset-proxy='unset http_proxy https_proxy no_proxy HTTP_PROXY HTTPS_PROXY NO_PROXY'
 alias unset-hist='unset HISTFILE HISTSIZE'
 
-alias tmux='tmux -2'
 alias gdb='gdb -q'
 alias cd..='cd ..'
 alias grep='grep --color=always'
 alias less='less -R'
 alias ncdu='ncdu -0 -e --color dark'
-alias ty='tmux loadb -'
 alias rcp="rsync -ah --inplace --info=progress2"
 alias rm='echo "This is not the command you are looking for."; false'
 alias pz='ps x -o "%p %r %u %c"'

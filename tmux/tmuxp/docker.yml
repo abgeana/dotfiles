@@ -1,0 +1,12 @@
+session_name: docker
+start_directory: /home/abg
+windows:
+  - window_name: opensk
+  # this is a hack when only one window is needed in the session
+  # to prevent the "No previous window" error message when switching
+  # between tmux sessions
+  # https://github.com/tmux-python/tmuxp/issues/364#issuecomment-706946717
+  - window_name: exit
+    panes:
+      - shell_command:
+        - exit
