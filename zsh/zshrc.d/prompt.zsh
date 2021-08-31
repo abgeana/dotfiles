@@ -5,14 +5,16 @@ else
     COLOR_USER=202
 fi
 
-if [[ $(hostname) =~ .*\.avpc\..* ]]; then
-    COLOR_HOST=118
+if [[ $(hostname) =~ .*\.ubiq.domic.io ]]; then
+    COLOR_HOST=82
+elif [[ $(hostname) =~ .*\.cuib.domic.io ]]; then
+    COLOR_HOST=39
+elif [[ $(hostname) =~ .*\.docker.domic.io ]]; then
+    COLOR_HOST=201
 else
     typeset -A HOST_COLORS
     HOST_COLORS=(
-        bendis          156
-        rogue           202
-        molly           88
+        molly 196
     )
 
     for key in "${(@k)HOST_COLORS}"; do
