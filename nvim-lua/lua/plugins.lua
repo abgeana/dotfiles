@@ -1,11 +1,8 @@
-local cmd = vim.cmd
-local fn = vim.fn
-
 -- automatically install vim-plug if it is missing
-local plug_install_path = fn.stdpath('config') .. '/autoload/plug.vim'
+local plug_install_path = vim.fn.stdpath('config') .. '/autoload/plug.vim'
 local plug_install_url = 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-if fn.empty(fn.glob(plug_install_path)) then
-    fn.system({'curl', '-fLo', plug_install_path, '--create-dirs', plug_install_url})
+if vim.fn.empty(vim.fn.glob(plug_install_path)) then
+    vim.fn.system({'curl', '-fLo', plug_install_path, '--create-dirs', plug_install_url})
 end
 
 local Plug = vim.fn['plug#']
@@ -19,7 +16,7 @@ Plug 'prabirshrestha/async.vim'     -- dependency for vim-lsp
 
 Plug('Shougo/denite.nvim', {
     ['do'] = function()
-        cmd('UpdateRemotePlugins')
+        vim.cmd('UpdateRemotePlugins')
     end
 })
 
@@ -41,7 +38,7 @@ Plug 'majutsushi/tagbar'
 Plug 'neovim/nvim-lspconfig'                    -- quickstart configurations for the nvim lsp client
 Plug('Shougo/defx.nvim', {
     ['do'] = function()
-        cmd('UpdateRemotePlugins')
+        vim.cmd('UpdateRemotePlugins')
     end
 })
 
