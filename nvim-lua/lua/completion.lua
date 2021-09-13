@@ -28,7 +28,7 @@ _G.pop_up_menu_select = function()
 	-- see also 'help popupmenu-keys'
 	return t('<C-y>')
     else
-        return t('<C-r>')
+        return t('<Cr>')
     end
 end
 k('i', '<Cr>', 'v:lua.pop_up_menu_select()', { noremap = true, expr = true })
