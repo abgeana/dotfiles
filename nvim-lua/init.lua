@@ -1,1 +1,5 @@
 require("plugins")
+require("keymap")
+require("completion")
+require("colorscheme")
+require("plugin_configs")

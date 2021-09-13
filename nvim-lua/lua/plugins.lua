@@ -56,3 +56,7 @@ Plug 'PProvost/vim-ps1'                 -- powershell
 -- Plug 'nfnty/vim-nftables'
 
 vim.call('plug#end')
+
+-- vim-plug automatically calls 'filetype indent on'
+-- https://github.com/junegunn/vim-plug#usage
+vim.cmd('filetype indent off') -- disable loading indent files for specific file types
