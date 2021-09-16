@@ -7,7 +7,7 @@ alias ty='tmux loadb -'
 alias tb='ts base'
 alias tm='tmux -L master'
 alias tp='tmuxp'
-alias tminit='cd ~; tmuxp load -L master -f ~/.tmux.master.conf docker singles'
+alias tminit='cd ~; tmuxp load -L master -f ~/.tmux.master.conf'
 
 # }}}
 
