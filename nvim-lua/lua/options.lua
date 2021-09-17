@@ -113,3 +113,9 @@ vim.o.display = 'uhex'
 -- configure how splitting works, to the right and below
 vim.o.splitbelow = true
 vim.o.splitright = true
+
+-- configure the jumplist to behave as a stack
+-- whenever performing a jump from the middle of the jumplist,
+-- all entries after the current one are discarded
+-- see also 'help jumplist-stack'
+vim.o.jumpoptions = 'stack'
