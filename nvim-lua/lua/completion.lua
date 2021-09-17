@@ -21,7 +21,7 @@ vim.o.wildmode = 'longest:full'
 vim.o.completeopt = 'menuone,longest'
 
 -- change the behavior of the enter key when the completion popup menu is visible to select the entry
-_G.pop_up_menu_select = function() 
+_G.pop_up_menu_select = function()
     if vim.fn.pumvisible() == 1 then
         -- the pop up menu is visible
 	-- so we accept the selected option and stop completion

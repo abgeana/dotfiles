@@ -8,8 +8,8 @@ function M.get_visual_selection()
     local _, lnum2, col2, _ = unpack(vim.fn.getpos("'>"))
 
     local lines = vim.fn.getline(lnum1, lnum2)
-    
-    -- we now have the selected lines, but the start and end lines 
+
+    -- we now have the selected lines, but the start and end lines
     -- contain all characters including those outside the selection
     -- the first and last lines must be trimmed
     -- the trimming of the last line is based on the 'selection' option
@@ -29,7 +29,7 @@ function M.get_visual_selection()
 end
 
 function M.do_search(visual)
-    -- function used to search 
+    -- function used to search
     --     the word under the cursor in normal mode or
     --     a selected text snippet in visual mode
     -- there needs to be a way to tell the function if we are in normal or visual mode

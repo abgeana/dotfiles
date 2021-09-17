@@ -22,8 +22,8 @@ k('', '<S-k>', 'gk', { noremap = true, silent = true })
 k('', '<S-j>', 'gj', { noremap = true, silent = true })
 
 -- move the complete window
-k('n', '<C-k>', '<C-y>', { noremap = true, silent = true })
-k('n', '<C-j>', '<C-e>', { noremap = true, silent = true })
+k('', '<C-k>', '<C-y>', { noremap = true, silent = true })
+k('', '<C-j>', '<C-e>', { noremap = true, silent = true })
 
 -- remap <Leader><Esc> to <C-\><C-n> for neovim
 -- see also ":help terminal" or ":help CTRL-\_CTRL-N"

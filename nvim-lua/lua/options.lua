@@ -26,11 +26,11 @@ _G.indent_width_func = function(buffer, width_str)
 		vim.bo.softtabstop = width   -- stop at multiple of 4 when pressing TAB key
     end
 end
-vim.api.nvim_exec('command -nargs=1 IndentWidth call v:lua.indent_width_func(0, <f-args>)', false)
-vim.api.nvim_exec('command -nargs=1 IndentWidthLocal call v:lua.indent_width_func(1, <f-args>)', false)
+vim.cmd('command -nargs=1 IndentWidth call v:lua.indent_width_func(0, <f-args>)')
+vim.cmd('command -nargs=1 IndentWidthLocal call v:lua.indent_width_func(1, <f-args>)')
 
 -- set indentation to 4 spaces
-vim.api.nvim_command('IndentWidth 4')
+vim.cmd('IndentWidth 4')
 
 -- insert space chars whenever TAB is pressed
 vim.o.expandtab = true
