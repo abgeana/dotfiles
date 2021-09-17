@@ -114,6 +114,13 @@ if vim.fn.empty(vim.fn.glob('~/.config/nvim/plugged/vim-SyntaxRange/plugin/Synta
 end
 -- }}}
 
+-- neovim/nvim-lspconfig {{{
+if vim.fn.empty(vim.fn.glob('~/.config/nvim/plugged/nvim-lspconfig/plugin/lspconfig.vim')) == 0 then
+    require('lsp')
+    --lua lsp_setup()
+end
+-- }}}
+
 -- neovim/vim-coverage {{{
 if vim.fn.empty(vim.fn.glob('~/.config/nvim/plugged/vim-coverage/plugin/coverage.vim')) == 0 then
     -- to get the maktaba plugin, use

@@ -30,7 +30,7 @@ local on_attach = function(client, bufnr)
   --buf_set_keymap("n", '<space>f',     '<Cmd>' .. 'lua vim.lsp.buf.formatting()'                                   .. '<CR>', opts)
 end
 
-setup_lsp_servers = function()
+function lsp_setup()
 
     -- list of servers to enable by default
     local servers = {
@@ -53,7 +53,7 @@ setup_lsp_servers = function()
         vim.lsp.diagnostic.on_publish_diagnostics, {
             underline = false,
             virtual_text = false,
-            signs = false,
+            signs = false
         }
     )
 
