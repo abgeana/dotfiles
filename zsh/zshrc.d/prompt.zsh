@@ -14,7 +14,8 @@ elif [[ $(hostname) =~ .*\.docker.domic.io ]]; then
 else
     typeset -A HOST_COLORS
     HOST_COLORS=(
-        molly 196
+        molly           196
+        wl-ageana-01    123
     )
 
     for key in "${(@k)HOST_COLORS}"; do
