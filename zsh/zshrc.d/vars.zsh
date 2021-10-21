@@ -39,19 +39,17 @@ fi
 
 # custom PATH
 PATH=""
-# check if we are on nixos
-if [[ -f /etc/NIXOS ]]; then
-    PATH=$PATH:/run/wrappers/bin
-    PATH=$PATH:$HOME/.nix-profile/bin
-    PATH=$PATH:/etc/profiles/per-user/`/run/current-system/sw/bin/whoami`/bin
-    PATH=$PATH:/nix/var/nix/profiles/default/bin
-    PATH=$PATH:/run/current-system/sw/bin
-fi
+pathadd() {
+    if [ -d "$1" ] && [[ ":$PATH:" != *":$1:"* ]]; then
+        PATH="${PATH:+"$PATH:"}$1"
+    fi
+}
+
 # add standard (s/)bin folders to the path
-PATH=$PATH:/usr/local/bin
-PATH=$PATH:/usr/bin
-PATH=$PATH:/bin
-PATH=$PATH:/usr/local/sbin
-PATH=$PATH:/usr/sbin
-PATH=$PATH:/sbin
+pathadd "/usr/local/bin"
+pathadd "/usr/bin"
+pathadd "/bin"
+pathadd "/usr/local/sbin"
+pathadd "/usr/sbin"
+pathadd "/sbin"
 export PATH
