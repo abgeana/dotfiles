@@ -32,7 +32,7 @@ bind-key -T copy-mode-vi C-k send-keys -X scroll-up
 
 # show sessions and windows in a tree with space
 unbind -T prefix s
-bind -T prefix space choose-tree -Nsw
+bind -T prefix space choose-tree -sw
 
 # splits with vim keys and to the same working directory
 unbind -T prefix '"'
