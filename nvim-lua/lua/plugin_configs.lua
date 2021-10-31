@@ -117,7 +117,7 @@ end
 -- neovim/nvim-lspconfig {{{
 if vim.fn.empty(vim.fn.glob('~/.config/nvim/plugged/nvim-lspconfig/plugin/lspconfig.vim')) == 0 then
     require('lsp')
-    --lua lsp_setup()
+    lsp_setup()
 end
 -- }}}
 

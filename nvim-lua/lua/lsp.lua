@@ -31,22 +31,6 @@ local on_attach = function(client, bufnr)
 end
 
 function lsp_setup()
-
-    -- list of servers to enable by default
-    local servers = {
-        "ccls",
-        "rust_analyzer"
-    }
-
-    for _, lsp in ipairs(servers) do
-        nvim_lsp[lsp].setup {
-            on_attach = on_attach,
-            flags = {
-                debounce_text_changes = 150,
-            }
-        }
-    end
-
     -- disable inline buffer error messages (linting)
     -- https://github.com/neovim/nvim-lspconfig/issues/662
     vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
@@ -57,4 +41,27 @@ function lsp_setup()
         }
     )
 
+    nvim_lsp.ccls.setup {
+        on_attach = on_attach,
+        flags = {
+            debounce_text_changes = 150,
+        }
+    }
+
+    nvim_lsp.rust_analyzer.setup {
+        on_attach = on_attach,
+        flags = {
+            debounce_text_changes = 150,
+        },
+        settings = {
+            -- https://rust-analyzer.github.io/manual.html
+            ["rust-analyzer"] = {
+                checkOnSave = {
+                    -- change the target dir for analysis on file save such that it
+                    -- does not lock the cargo project and everything cargo related
+                    extraArgs={"--target-dir", "/tmp/rust-analyzer-check"}
+                }
+            }
+        }
+    }
 end
