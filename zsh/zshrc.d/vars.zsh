@@ -46,6 +46,7 @@ pathadd() {
 }
 
 # add standard (s/)bin folders to the path
+pathadd "/home/`/usr/bin/id -u -n`/.local/bin"
 pathadd "/usr/local/bin"
 pathadd "/usr/bin"
 pathadd "/bin"
