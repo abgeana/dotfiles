@@ -1,11 +1,12 @@
-session_name: singles
+session_name: gateway
 start_directory: /home/abg
 windows:
-  - window_name: local
+  - window_name: lovelace
     panes:
       - shell_command:
-        - unset TMUX
-        - tb
+        - ssh-agent zsh
+        - alias ssh='ssh lovelace.ubiq.domic.io'
+        - ssh-add /home/abg/.ssh/ssh-config/keys/io/domic/ubiq/lovelace/abg
   - window_name: front
     panes:
       - shell_command:
