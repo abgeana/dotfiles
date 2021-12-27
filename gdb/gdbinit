@@ -1,4 +1,5 @@
 source ~/.gdbinit-gef.py
 
+#gef config gef.debug True
 gef config context.clear_screen True
 gef config context.layout "regs stack code args source memory"
