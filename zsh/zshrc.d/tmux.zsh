@@ -38,6 +38,9 @@ ts() {
         tmux new-session -d -s $target_session
     fi
 
+    # wait for tmux to start a new session
+    sleep 0.2
+
     # switch to the session
     if [[ $TMUX ]]; then
         # if we are inside a tmux session, then just switch
