@@ -3,7 +3,6 @@ configuration {
     terminal: "alacritty";
     disable-history: true;
     matching: "fuzzy";
-    theme: "/home/abg/.config/rofi/theme/solarized_alternate.rasi";
     kb-accept-entry: "Return,KP_Enter";
     kb-cancel: "Escape";
     kb-mode-next: "Control+c";
@@ -23,3 +22,4 @@ configuration {
         sorting-method:    "name";
     }
 }
+@theme "/home/abg/.config/rofi/theme/solarized_alternate.rasi"
