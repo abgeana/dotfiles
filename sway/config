@@ -35,6 +35,9 @@ exec swayidle -w \
         resume 'swaymsg "output * dpms on"' \
     before-sleep 'swaylock -f -c 000000'
 
+# start the polkit client in the background
+exec lxpolkit
+
 # configuration of the borders and gaps between the windows
 default_border pixel 2
 default_floating_border pixel 2
