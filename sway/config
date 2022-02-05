@@ -38,18 +38,42 @@ exec swayidle -w \
 # start the polkit client in the background
 exec lxpolkit
 
+# start the mako notification daemon
+exec mako --background-color '#002b36' --text-color '#839496' --default-timeout 5000 --width 400 --markup 1 --border-radius 5
+
 # configuration of the borders and gaps between the windows
 default_border pixel 2
 default_floating_border pixel 2
 gaps inner 10
 smart_gaps off # default behavior
 
+# input configuration {{{
+# you can get the "Identifier"s of your inputs by running: swaymsg -t get_inputs
+input * {
+    # generic config for all inputs to have multiple languages
+    xkb_layout us,ro,ru
+}
+
+input 1739:52710:DLL096D:01_06CB:CDE6_Touchpad {
+    # touchpad for molly
+    # enable disable-while-typing
+    dwt enabled
+    # enable natural (inverted) scrolling
+    natural_scroll enabled
+    # enable tap for specified input device
+    tap enabled
+    # specify which button mapping to use for tapping
+    # lrm treats 1 finger as left click, 2 fingers as right click, and 3 fingers as middle click
+    tap_button_map lrm
+}
+# }}}
+
 # output configuration {{{
 # example:
 #   output HDMI-A-1 resolution 1920x1080 position 1920,0
 #   output HDMI-A-2 mode [--custom] 2560x1440@50Hz
 #   output HDMI-A-2 resolution [--custom] 2560x1440
-# you can get the names of your outputs by running: swaymsg -t get_outputs
+# you can get the "Identifier"s of your outputs by running: swaymsg -t get_outputs
 output * {
     bg #000000 solid_color
 }
@@ -69,6 +93,8 @@ bar {
 
     # when the status_command prints a new line to stdout, swaybar updates
     status_command while date +'%Y-%m-%d %l:%M:%S %p'; do sleep 1; done
+
+    swaybar_command waybar
 
     # solarized colors
     # https://github.com/tobiaszwaszak/i3wm/blob/master/config
@@ -115,6 +141,9 @@ bindsym $mod+n exec echo "" | dmenu -p "New name for this workspace" | xargs -r 
 
 # take a screenshot
 bindsym $mod+Shift+s exec grim -g "$(slurp)"
+
+# change the keyboard layout
+bindsym Alt+space exec 'swaymsg "input * xkb_switch_layout next"'
 #}}}
 
 # focusing {{{
