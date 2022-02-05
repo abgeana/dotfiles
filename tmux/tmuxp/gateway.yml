@@ -1,18 +1,28 @@
 session_name: gateway
 start_directory: /home/abg
 windows:
+
   - window_name: lovelace
     panes:
       - shell_command:
         - ssh-agent zsh
         - alias ssh='ssh lovelace.ubiq.domic.io'
         - ssh-add /home/abg/.ssh/ssh-config/keys/io/domic/ubiq/lovelace/abg
+
+  - window_name: karla
+    panes:
+      - shell_command:
+        - ssh-agent zsh
+        - alias ssh='ssh karla.ubiq.domic.io'
+        - ssh-add /home/abg/.ssh/ssh-config/keys/io/domic/ubiq/karla/abg
+
   - window_name: front
     panes:
       - shell_command:
         - ssh-agent zsh
         - alias ssh='ssh front.ubiq.domic.io'
         - ssh-add /home/abg/.ssh/ssh-config/keys/io/domic/ubiq/front/abg
+
   - window_name: liya
     panes:
       - shell_command:
