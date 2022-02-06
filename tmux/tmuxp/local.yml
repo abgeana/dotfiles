@@ -5,5 +5,5 @@ windows:
   - window_name: local
     panes:
       - shell_command:
-        - unset $TMUX
+        - unset TMUX
         - tb
