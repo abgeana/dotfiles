@@ -1,0 +1,9 @@
+session_name: local
+start_directory: /home/abg
+windows:
+
+  - window_name: local
+    panes:
+      - shell_command:
+        - unset $TMUX
+        - tb
