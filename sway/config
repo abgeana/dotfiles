@@ -25,15 +25,19 @@ set $menu rofi -show run | xargs swaymsg exec --
 # mouse button for dragging.
 floating_modifier $mod normal
 
+# swayidle performs tasks after various timeouts of innactivity
+#    300 seconds ( 5 minutes): lock the screen
+#    600 seconds (10 minutes): turn off the display
+#   1800 seconds (30 minutes): go to sleep
+#
 # this will lock the screen after 300 seconds of inactivity,
 # then turn off your displays after another 300 seconds
 # and turn your screens back on when resumed
 # it will also lock your screen before your computer goes to sleep
-exec swayidle -w \
-    timeout 300 'swaylock -f -c 000000' \
-    timeout 600 'swaymsg "output * dpms off"' \
-        resume 'swaymsg "output * dpms on"' \
-    before-sleep 'swaylock -f -c 000000'
+exec swayidle -w                                                                    \
+    timeout  300 'swaylock -f -c 000000'                                            \
+    timeout  600 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"'  \
+    timeout 1800 'systemctl suspend'
 
 # start the polkit client in the background
 exec lxpolkit
@@ -140,7 +144,7 @@ bindsym $mod+Shift+c reload
 bindsym $mod+n exec echo "" | dmenu -p "New name for this workspace" | xargs -r swaymsg rename workspace to
 
 # take a screenshot
-bindsym $mod+Shift+s exec grim -g "$(slurp)"
+bindsym $mod+Shift+s exec grim -g "$(slurp -d)" - | wl-copy
 
 # change the keyboard layout
 bindsym Alt+space exec 'swaymsg "input * xkb_switch_layout next"'
