@@ -130,3 +130,12 @@ if vim.fn.empty(vim.fn.glob('~/.config/nvim/plugged/vim-coverage/plugin/coverage
     --   let coverage_plugin.globals._gcov_temp_file_patterns = ['...']
 end
 -- }}}
+
+-- nvim-telescope/telescope.nvim {{{
+if vim.fn.empty(vim.fn.glob('~/.config/nvim/plugged/telescope.nvim/plugin/telescope.vim')) == 0 then
+    k('n', '<Leader>ff',   [[<Cmd>Telescope find_files<Cr>]], {})
+    k('n', '<Leader>fg',   [[<Cmd>Telescope live_grep<Cr>]], {})
+    k('n', '<Leader>fb',   [[<Cmd>Telescope buffers<Cr>]], {})
+    k('n', '<Leader>fh',   [[<Cmd>Telescope help_tags<Cr>]], {})
+end
+-- }}}

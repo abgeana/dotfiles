@@ -13,16 +13,13 @@ Plug 'google/vim-maktaba'           -- dependency for vim-codefmt
 Plug 'inkarkat/vim-ingo-library'    -- dependency for vim-mark
 Plug 'godlygeek/tabular'            -- dependency for vim-markdown
 Plug 'prabirshrestha/async.vim'     -- dependency for vim-lsp
+Plug 'nvim-lua/plenary.nvim'        -- dependency for telescope.nvim
 
 Plug('Shougo/denite.nvim', {
     ['do'] = function()
         vim.cmd('UpdateRemotePlugins')
     end
 })
-
--- fzf integration
-Plug '/usr/share/nvim/site/plugin/fzf.vim'      -- instead of cloning the fzf repo for a file
-Plug 'junegunn/fzf.vim'
 
 Plug 'altercation/vim-colors-solarized'
 Plug 'justinmk/vim-sneak'
@@ -41,6 +38,12 @@ Plug('Shougo/defx.nvim', {
         vim.cmd('UpdateRemotePlugins')
     end
 })
+Plug('nvim-treesitter/nvim-treesitter', {
+    ['do'] = function()
+        vim.cmd('TSUpdate')
+    end
+})
+Plug 'nvim-telescope/telescope.nvim'
 
 -- language syntax plugins
 Plug 'plasticboy/vim-markdown'
