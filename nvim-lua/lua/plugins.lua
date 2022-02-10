@@ -33,11 +33,6 @@ Plug 'inkarkat/vim-DeleteTrailingWhitespace'
 Plug 'inkarkat/vim-SyntaxRange'                 -- use different syntax highlighting for arbitrary ranges
 Plug 'majutsushi/tagbar'
 Plug 'neovim/nvim-lspconfig'                    -- quickstart configurations for the nvim lsp client
-Plug('Shougo/defx.nvim', {
-    ['do'] = function()
-        vim.cmd('UpdateRemotePlugins')
-    end
-})
 Plug('nvim-treesitter/nvim-treesitter', {
     ['do'] = function()
         vim.cmd('TSUpdate')
