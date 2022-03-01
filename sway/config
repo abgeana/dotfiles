@@ -16,7 +16,8 @@ set $term alacritty
 
 # preferred application launcher
 # pass the final command to swaymsg to open the window in the workspace that the command was run on
-set $menu rofi -show run | xargs swaymsg exec --
+#set $menu rofi -show run | xargs swaymsg exec --
+set $menu wofi --show run
 
 # drag windows by holding down $mod and left mouse button
 # resize windows with right mouse button + $mod
@@ -44,6 +45,10 @@ exec lxpolkit
 
 # start the mako notification daemon
 exec mako --background-color '#002b36' --text-color '#839496' --default-timeout 5000 --width 400 --markup 1 --border-radius 5
+
+# set these variables to tell applications what kind of environment they are in
+# https://www.reddit.com/r/swaywm/comments/ptwd6p/comment/he0h6ce/?utm_source=share&utm_medium=web2x&context=3
+exec systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP
 
 # configuration of the borders and gaps between the windows
 default_border pixel 2
@@ -129,7 +134,10 @@ bindsym $mod+Shift+Escape exec \
 bindsym $mod+Return exec $term
 
 # lock the screen
-bindsym $mod+Shift+x exec 'swaylock -f -c 000000'
+bindsym $mod+Shift+x exec 'swaylock -K -f -c 000000'
+
+# lock the screen and suspend
+bindsym $mod+Shift+b exec 'swaylock -K -f -c 000000 && systemctl suspend'
 
 # kill focused window
 bindsym $mod+Shift+q kill
