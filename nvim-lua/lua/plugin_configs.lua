@@ -94,6 +94,7 @@ end
 if vim.fn.empty(vim.fn.glob('~/.config/nvim/plugged/telescope.nvim/plugin/telescope.vim')) == 0 then
     k('n', '<Leader>ff',   [[<Cmd>Telescope find_files<Cr>]], {})
     k('n', '<Leader>fg',   [[<Cmd>Telescope live_grep<Cr>]], {})
+    k('n', '<Leader>fw',   [[<Cmd>Telescope grep_string<Cr>]], {})
     k('n', '<Leader>fb',   [[<Cmd>Telescope buffers<Cr>]], {})
     k('n', '<Leader>fh',   [[<Cmd>Telescope help_tags<Cr>]], {})
 end
