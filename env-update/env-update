@@ -42,9 +42,8 @@ def parse_config(f):
 
 class Updater:
     """Updater implements the functionality to perform updates of dot files."""
-    def __init__(self, cfg, private_token):
+    def __init__(self, cfg):
         self._cfg = cfg
-        self._private_token = private_token
 
     def do_list(self, sections):
         """do_list prints contents of the configuration file based on the -l/--list argument."""
@@ -179,24 +178,15 @@ class Updater:
         self._print_update_status(is_ok, value)
 
     def _download_file(self, section, option):
-        """_download_file attempts to download a file via the gitlab api."""
-        repo_id = 13755372  # ctrl-f "Project ID" from the repo page
-        file_path = '{}/{}'.format(section, option)
-
-        # basic url encoding
-        for c in ['/', '.']:
-            file_path = file_path.replace(c, '%' + hex(ord(c)).strip('0x'))
-
-        url = 'https://gitlab.com/api/v4/projects/{repo_id}/repository/files/{file_path}'.format(repo_id=repo_id,
-                                                                                                 file_path=file_path)
-
+        """_download_file gets the contents of a file from github. It pretty much scrapes the raw view."""
+        url = 'https://raw.githubusercontent.com/abgeana/dotfiles/master/{directory:s}/{file:s}'
         try:
-            response = requests.get(url, params={'ref': 'master', 'private_token': self._private_token})
-            if response.status_code == 200:
-                response_json = json.loads(response.text)
-                return base64.b64decode(response_json['content']).decode('utf-8'), True
+            response = requests.get(url.format(directory=section, file=option))
         except IOError:
             pass
+
+        if response.status_code == 200:
+            return response.text, True
 
         return None, False
 
@@ -230,8 +220,7 @@ def main():
 
     args = parse_args()
     cfg = parse_config(args.config)
-    private_token = getpass.getpass('Gitlab Token: ')
-    updater = Updater(cfg, private_token)
+    updater = Updater(cfg)
 
     if args.list is not None:
         updater.do_list(args.list)
