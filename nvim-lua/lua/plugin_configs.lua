@@ -11,7 +11,7 @@ if vim.fn.empty(vim.fn.glob('~/.config/nvim/plugged/vim-mark/plugin/mark.vim')) 
     -- the regular search highlighting
     k('',  '<F1>', '<Leader>m', {})
     k('n', '<F2>', '<Cmd>lua require \'util\'.do_search(false)<Cr>' .. '<Cmd>setl hlsearch<Cr>', {})
-    k('v', '<F2>', '<Cmd>lua require \'util\'.do_search(true)<Cr>' .. '<Esc>' .. '<Cmd>setl hlsearch<Cr>', {})
+    k('v', '<F2>', '<Esc>' .. '<Cmd>lua require \'util\'.do_search(true)<Cr>' .. '<Esc>' .. '<Cmd>setl hlsearch<Cr>', {})
     k('',  '<F3>', '<Cmd>setl hlsearch!<Cr>', {})
     k('',  '<F4>', '<Cmd>MarkClear<Cr>' .. '<Cmd>setl nohlsearch<Cr>', {})
 end
