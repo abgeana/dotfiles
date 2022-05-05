@@ -28,7 +28,7 @@ Plug 'wsdjeg/vim-fetch'                         -- line and column in file name;
 Plug 'google/vim-codefmt'
 Plug 'google/vim-coverage'
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'alegen/vim-mark'                          -- background coloring of arbitrary strings
+Plug 'abgeana/vim-mark'                         -- background coloring of arbitrary strings
 Plug 'inkarkat/vim-DeleteTrailingWhitespace'
 Plug 'inkarkat/vim-SyntaxRange'                 -- use different syntax highlighting for arbitrary ranges
 Plug 'majutsushi/tagbar'
@@ -54,7 +54,6 @@ Plug 'PProvost/vim-ps1'                 -- powershell
 -- Plug 'HerringtonDarkholme/yats.vim'     -- typescript
 -- Plug 'udalov/kotlin-vim'
 -- Plug 'keith/swift.vim'
--- Plug 'alegen/vim-smali'
 -- Plug 'LnL7/vim-nix'
 -- Plug 'nfnty/vim-nftables'
 
