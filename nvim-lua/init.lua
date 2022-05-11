@@ -1,7 +1,6 @@
 require("plugins")
 require("options")
 require("keymap")
-require("completion")
 require("tab_switching")
 require("colorscheme")
 require("plugin_configs")
