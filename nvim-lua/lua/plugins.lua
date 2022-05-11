@@ -45,6 +45,17 @@ Plug('nvim-telescope/telescope-fzf-native.nvim', {
     end
 })
 
+-- completion via lsp
+-- inspired from https://github.com/hrsh7th/nvim-cmp/blob/a226b6a4ff72e5e809ed17734318233fb25c87f3/doc/cmp.txt#L47
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/cmp-path'
+Plug 'hrsh7th/cmp-cmdline'
+Plug 'hrsh7th/nvim-cmp'
+Plug 'hrsh7th/cmp-vsnip'
+Plug 'hrsh7th/vim-vsnip'
+Plug 'onsails/lspkind.nvim'
+
 -- language syntax plugins
 Plug 'plasticboy/vim-markdown'
 Plug 'PProvost/vim-ps1'                 -- powershell
