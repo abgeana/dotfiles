@@ -44,6 +44,7 @@ Plug('nvim-telescope/telescope-fzf-native.nvim', {
         vim.cmd('make')
     end
 })
+Plug 'troydm/zoomwintab.vim'
 
 -- completion via lsp
 -- inspired from https://github.com/hrsh7th/nvim-cmp/blob/a226b6a4ff72e5e809ed17734318233fb25c87f3/doc/cmp.txt#L47
