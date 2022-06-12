@@ -1,0 +1,23 @@
+Host *
+    IdentityFile ~/.ssh/keys/user/fido/neck-usb-c
+    IdentityFile ~/.ssh/keys/user/fido/neck-usb-a
+    IdentityFile ~/.ssh/keys/user/gpg/cardno_13_143_152.pub
+    IdentityFile ~/.ssh/keys/user/gpg/cardno_15_287_965.pub
+    IdentityFile ~/.ssh/keys/user/gpg/cardno_15_498_251.pub
+    IdentityFile ~/.ssh/keys/user/gpg/cardno_16_811_473.pub
+    IdentityFile ~/.ssh/keys/user/fido/keys-usb-c
+    IdentityFile ~/.ssh/keys/user/fido/keys-usb-a
+    IdentitiesOnly yes
+    PreferredAuthentications publickey
+    PubkeyAuthentication yes
+    PasswordAuthentication no
+    ChallengeResponseAuthentication no
+    FingerprintHash sha256
+
+Host *.domic.io
+    User abg
+    StrictHostKeyChecking yes
+
+Host *.ubiq.domic.io
+    ForwardAgent yes
+    RemoteForward /run/user/1000/gnupg/S.gpg-agent /run/user/1000/gnupg/S.gpg-agent
