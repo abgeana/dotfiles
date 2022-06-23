@@ -165,8 +165,24 @@ function ranger-cd {
     /bin/rm -f -- "$tempfile"
 }
 
-function sonechka() {
-    sudo -v
-    i3lock
-    sudo systemctl suspend
+ssh-agent-fix() {
+    if [[ ! -v TMUX ]]; then
+        # we are outside tmux
+        # in this case, we check if there is a forwarded agent (i.e. the SSH_AUTH_SOCK variable is set)
+        if [[ ! -v SSH_AUTH_SOCK ]]; then
+            # the variable is not set
+            # export the SSH_AUTH_SOCK variable used by the ssh agent to point it to the gpg agent
+            # this is needed to use the hardware gpg keys generated on yubikeys
+            export SSH_AUTH_SOCK=`gpgconf --list-dirs agent-ssh-socket`
+        fi
+    else
+        # we are inside tmux
+        eval `tmux show-environment -s SSH_AUTH_SOCK`
+    fi
+}
+ssh-agent-fix
+
+gpg-agent-fix() {
+    gpg-connect-agent reloadagent /bye > /dev/null
+    gpg-connect-agent updatestartuptty /bye > /dev/null
 }

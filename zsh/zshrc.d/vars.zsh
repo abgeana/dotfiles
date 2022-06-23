@@ -32,11 +32,8 @@ fi
 # needed for gpg-agent (see man gpg-agent)
 export GPG_TTY=$(tty)
 
-# export the SSH_AUTH_SOCK variable used by the ssh agent to point it to the gpg agent
-# this is needed to use the hardware gpg keys generated on yubikeys
-export SSH_AUTH_SOCK=`gpgconf --list-dirs agent-ssh-socket`
-
 # custom PATH
+export PATH
 PATH=""
 pathadd() {
     if [ -d "$1" ] && [[ ":$PATH:" != *":$1:"* ]]; then
@@ -52,4 +49,3 @@ pathadd "/bin"
 pathadd "/usr/local/sbin"
 pathadd "/usr/sbin"
 pathadd "/sbin"
-export PATH
