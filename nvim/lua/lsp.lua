@@ -187,11 +187,15 @@ function lsp_setup()
             -- https://rust-analyzer.github.io/manual.html
             ["rust-analyzer"] = {
                 checkOnSave = {
-                    -- change the target dir for analysis on file save such that it
-                    -- does not lock the cargo project and everything cargo related
-                    extraArgs={"--target-dir", "/tmp/rust-analyzer-check"}
+                    -- https://doc.rust-lang.org/cargo/commands/cargo-check.html#output-options
+                    -- change directory for all generated artifacts and intermediate files
+                    -- this is an alternative to the CARGO_TARGET_DIR environment variable
+                    --extraArgs={"--target-dir", "/tmp/rust-analyzer-check"}
                 }
             }
+        },
+        cmd_env = {
+            CARGO_TARGET_DIR = "/tmp/rust-analyzer-check"
         }
     }
 end
