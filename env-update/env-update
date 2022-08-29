@@ -23,8 +23,15 @@ def parse_args():
                         type=str,
                         default='/etc/env-update.cfg',
                         help='configuration file for this update utility')
-    parser.add_argument('-l', '--list', nargs='*', help='show all configuration sections supported for update')
-    parser.add_argument('-u', '--update', nargs='*', help='configuration files to be updated')
+
+    subparsers = parser.add_subparsers(dest="command")
+
+    parser_update = subparsers.add_parser("update")
+    parser_update.add_argument('items', nargs=argparse.REMAINDER, help='configuration items to be updated')
+
+    parser_list = subparsers.add_parser("list")
+    parser_list.add_argument('items', nargs=argparse.REMAINDER, help='configuration items to be displayed')
+
     args = parser.parse_args()
     return args
 
@@ -221,12 +228,14 @@ def main():
 
     args = parse_args()
     cfg = parse_config(args.config)
-    updater = Updater(cfg)
 
-    if args.list is not None:
-        updater.do_list(args.list)
-
-    updater.do_update(args.update)
+    if args.command == "update":
+        updater = Updater(cfg)
+        updater.do_update(args.items)
+    elif args.command == "list":
+        if args.items is not None:
+            updater = Updater(cfg)
+            updater.do_list(args.items)
 
 
 if __name__ == '__main__':
