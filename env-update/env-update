@@ -42,6 +42,7 @@ def parse_config(f):
 
 class Updater:
     """Updater implements the functionality to perform updates of dot files."""
+
     def __init__(self, cfg):
         self._cfg = cfg
 
@@ -89,7 +90,7 @@ class Updater:
 
     def _color_text(self, color, text):
         """_color_text uses the colorama library to set the terminal color for the specified text."""
-        return '{}{}{}'.format(color, text, colorama.Style.RESET_ALL)
+        return f'{color}{text}{colorama.Style.RESET_ALL}'
 
     def _list_all_sections(self):
         """_list_all_sections prints all the sections from the configuration file."""
@@ -98,7 +99,7 @@ class Updater:
                 continue
 
             colored_section = self._color_text(Fore.BLUE, section)
-            print('{:<30}'.format(colored_section), end='')
+            print(f'{colored_section:<30}', end='')
 
             if self._cfg.has_option(section, 'desc'):
                 desc = self._cfg.get(section, 'desc')
@@ -114,7 +115,7 @@ class Updater:
             return
 
         if section not in self._cfg.sections():
-            print(self._color_text(Fore.RED, 'section {} does not exist'.format(section)))
+            print(self._color_text(Fore.RED, f'section {section} does not exist'))
             return
 
         print(self._color_text(Fore.BLUE, section))
@@ -127,7 +128,7 @@ class Updater:
             colored_path = self._color_text(Fore.GREEN, path)
             colored_option = self._color_text(Fore.CYAN, option)
 
-            print('    {:<40}{}'.format(colored_option, colored_path))
+            print(f'    {colored_option:<40}{colored_path}')
 
     def _print_update_status(self, is_ok, value):
         """_print_update_status displays the status of a file download operation."""
@@ -137,7 +138,7 @@ class Updater:
         status, status_color = ('[✔]', Fore.GREEN) if is_ok else ('[✘]', Fore.RED)
         colored_status = self._color_text(status_color, status)
 
-        print('  {}  {}'.format(colored_status, colored_path))
+        print(f'  {colored_status}  {colored_path}')
 
     def _clear_directories(self, dirs):
         """_clear_directories removes the content of every directory in the list given as argument."""
@@ -153,10 +154,10 @@ class Updater:
             return
 
         if section not in self._cfg.sections():
-            print(self._color_text(Fore.RED, 'section {} does not exist'.format(section)))
+            print(self._color_text(Fore.RED, f'section {section} does not exist'))
             return
         else:
-            print(self._color_text(Fore.BLUE, 'updating {}'.format(section)))
+            print(self._color_text(Fore.BLUE, f'updating {section}'))
 
         for option in self._cfg.options(section):
             if option == 'desc':
