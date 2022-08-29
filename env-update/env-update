@@ -6,12 +6,12 @@ import configparser
 import getpass
 import json
 import os
-import requests
 import shutil
 import stat
-import colorama
-
 from os.path import expanduser
+
+import colorama
+import requests
 from colorama import Fore, Style
 
 
