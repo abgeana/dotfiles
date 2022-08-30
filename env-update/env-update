@@ -56,7 +56,8 @@ class ConfigDefaults:
 @dataclass
 class ConfigGroup:
     description: str
-    files: dict[str, dict | str]
+    files: dict[str, dict | str] = None
+    dependencies: list[str] = None
     clear: str = None
 
 
@@ -90,8 +91,32 @@ class Updater:
         """do_update updates dot files based on the groups specified in the update subcommand."""
         if groups is None or len(groups) == 0:
             groups = self._cfg.defaults
+        groups = self._expand_dependencies(groups)
         for group_name in groups:
             self._update_group(group_name)
+
+    def _expand_dependencies(self, groups):
+        finished = False
+        while not finished:
+            pre_len = len(groups)
+
+            for group_name in groups:
+                if group_name not in self._cfg.groups.keys():
+                    continue
+                group = self._cfg.groups[group_name]
+                if group.dependencies is None:
+                    continue
+                for d in group.dependencies:
+                    if d not in self._cfg.groups.keys():
+                        pct(Fore.RED, f'dependency \"{d}\" does not exist')
+                        continue
+                    if d not in groups:
+                        groups.append(d)
+
+            post_len = len(groups)
+            finished = pre_len == post_len
+
+        return groups
 
     def _update_group(self, group_name):
         """_update_group updates all the files for the specified group in the configuration file."""
@@ -101,6 +126,9 @@ class Updater:
         else:
             group = self._cfg.groups[group_name]
             pct(Fore.BLUE, f'updating {group_name}: {group.description}')
+
+        if group.files is None:
+            return
 
         if group.clear:
             try:
