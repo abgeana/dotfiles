@@ -31,11 +31,7 @@ def pct(color, text, end="\n"):
 def parse_args():
     """parse_args parses the supported command line arguments."""
     parser = argparse.ArgumentParser(description='Update environment configuration files.')
-    parser.add_argument('-c',
-                        '--config',
-                        type=str,
-                        default='./env-update.yml',
-                        help='configuration file for this update utility')
+    parser.add_argument('-c', '--config', type=str, default=None, help='configuration file for this update utility')
 
     subparsers = parser.add_subparsers(dest="command")
 
@@ -77,6 +73,7 @@ class Config(YAMLWizard):
 
         if response.status_code != 200:
             raise RuntimeError("could not load configuration file")
+        print(response.text)
 
         return Config.from_yaml(response.text)
 
@@ -197,20 +194,18 @@ def main():
     colorama.init()
 
     args = parse_args()
-    try:
-        cfg = Config.load()
-        local_config = False
-    except RuntimeError:
-        pct(Fore.RED, "Could not load yaml config file from github!")
-        local_config = True
 
-    if local_config:
-        pct(Fore.YELLOW, f"Trying to load the local config from \"{args.config}\".")
+    if args.config is not None:
         try:
             with io.open(args.config, "r", encoding="utf-8") as f:
                 cfg = Config.from_yaml(f.read())
         except FileNotFoundError:
             pct(Fore.RED, "Could not load local yaml config file!")
+    else:
+        try:
+            cfg = Config.load()
+        except RuntimeError:
+            pct(Fore.RED, "Could not load yaml config file from github!")
             exit(1)
 
     #import prettyprinter as pp
