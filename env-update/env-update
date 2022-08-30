@@ -118,7 +118,7 @@ class Updater:
                 path_disk = val["path"]
                 file_perms = va["perms"]
 
-            content, is_ok = self._download_file(f"{group_name}/{path_repo}")
+            content, is_ok = self._download_file(f"{path_repo}")
             if is_ok:
                 is_ok = self._write_file(path_disk, content, self._cfg.defaults.dir_perms, file_perms)
 
