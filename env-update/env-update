@@ -2,17 +2,30 @@
 
 import argparse
 import base64
-import configparser
 import getpass
+import io
 import json
 import os
 import shutil
 import stat
+from dataclasses import dataclass
 from os.path import expanduser
+from typing import Dict, Optional
 
 import colorama
 import requests
 from colorama import Fore, Style
+from dataclass_wizard import YAMLWizard
+
+
+def ct(color, text):
+    """ct uses the colorama library to set the terminal color for the specified text."""
+    return f'{color}{text}{colorama.Style.RESET_ALL}'
+
+
+def pct(color, text, end="\n"):
+    """pct prints the provided text with the specified color."""
+    print(ct(color, text), end=end)
 
 
 def parse_args():
@@ -21,30 +34,50 @@ def parse_args():
     parser.add_argument('-c',
                         '--config',
                         type=str,
-                        default='/etc/env-update.cfg',
+                        default='./env-update.yml',
                         help='configuration file for this update utility')
 
     subparsers = parser.add_subparsers(dest="command")
 
     parser_update = subparsers.add_parser("update")
-    parser_update.add_argument('items', nargs=argparse.REMAINDER, help='configuration items to be updated')
-
-    parser_list = subparsers.add_parser("list")
-    parser_list.add_argument('items', nargs=argparse.REMAINDER, help='configuration items to be displayed')
+    parser_update.add_argument('groups', nargs=argparse.REMAINDER, help='configuration groups to be updated')
 
     args = parser.parse_args()
     return args
 
 
-def parse_config(f):
-    """parse_config loads the configuration file for the script."""
-    cfg = configparser.ConfigParser()
-    # next line is needed in order to make option names case-sensitive
-    # https://stackoverflow.com/questions/1611799
-    cfg.optionxform = str
-    with open(f, 'r') as fp:
-        cfg.read_file(fp)
-    return cfg
+@dataclass
+class ConfigDefaults:
+    file_perms: int
+    dir_perms: int
+    sections: list[str]
+
+
+@dataclass
+class ConfigGroup:
+    description: str
+    files: dict[str, dict | str]
+    clear: str = None
+
+
+@dataclass
+class Config(YAMLWizard):
+    defaults: ConfigDefaults
+    groups: dict[str, ConfigGroup]
+
+    @staticmethod
+    def load():
+        """load gets the contents of the yaml config file hosted on github."""
+        try:
+            response = requests.get(
+                "https://raw.githubusercontent.com/abgeana/dotfiles/master/env-update/env-update.yml")
+        except IOError:
+            raise RuntimeError("could not load configuration file")
+
+        if response.status_code != 200:
+            raise RuntimeError("could not load configuration file")
+
+        return Config.from_yaml(response.text)
 
 
 class Updater:
@@ -53,143 +86,48 @@ class Updater:
     def __init__(self, cfg):
         self._cfg = cfg
 
-    def do_list(self, sections):
-        """do_list prints contents of the configuration file based on the -l/--list argument."""
-        if len(sections) == 0:
-            self._list_all_sections()
-        else:
-            for section in sections:
-                self._list_section(section)
+    def do_update(self, groups):
+        """do_update updates dot files based on the groups specified in the update subcommand."""
+        if groups is None or len(groups) == 0:
+            groups = self._cfg.defaults
+        for group_name in groups:
+            self._update_group(group_name)
 
-    def _get_csv(self, section, option):
-        """_get_csv loads an option with comma separated values from the specified section."""
-        ret = list()
-        for i in self._cfg.get(section, option).split(','):
-            if len(i) > 0:
-                ret.append(i.strip())
-        return ret
-
-    def do_update(self, sections):
-        """do_update updates dot files based on the -u/--update argument."""
-        if sections is None or len(sections) == 0:
-            sections = self._get_csv('config', 'default-sections')
-        for section in sections:
-            self._update_section(section)
-
-    def _parse_config_value(self, value):
-        """_parse_config_value splits a configuration value into tokens."""
-        tokens = value.split(';')
-
-        path = tokens[0]
-
-        if len(tokens) == 1:
-            file_chmod = self._cfg.get('config', 'file_chmod')
-            dir_chmod = int(self._cfg.get('config', 'dir_chmod'), 8)
-        else:
-            file_chmod = tokens[1]
-
-        if len(tokens) == 3:
-            dir_chmod = tokens[2]
-        else:
-            dir_chmod = int(self._cfg.get('config', 'dir_chmod'), 8)
-
-        return path, dir_chmod, file_chmod
-
-    def _color_text(self, color, text):
-        """_color_text uses the colorama library to set the terminal color for the specified text."""
-        return f'{color}{text}{colorama.Style.RESET_ALL}'
-
-    def _list_all_sections(self):
-        """_list_all_sections prints all the sections from the configuration file."""
-        for section in self._cfg.sections():
-            if section == 'config':
-                continue
-
-            colored_section = self._color_text(Fore.BLUE, section)
-            print(f'{colored_section:<30}', end='')
-
-            if self._cfg.has_option(section, 'desc'):
-                desc = self._cfg.get(section, 'desc')
-                colored_desc = self._color_text(Fore.CYAN, desc)
-                print(colored_desc, end='')
-
-            print()
-
-    def _list_section(self, section):
-        """_list_section prints the content of one section from the configuration file, except for the config
-        section."""
-        if section == 'config':
+    def _update_group(self, group_name):
+        """_update_group updates all the files for the specified group in the configuration file."""
+        if group_name not in self._cfg.groups.keys():
+            pct(Fore.RED, f'group {group_name} does not exist')
             return
+        else:
+            group = self._cfg.groups[group_name]
+            pct(Fore.BLUE, f'updating {group_name}: {group.description}')
 
-        if section not in self._cfg.sections():
-            print(self._color_text(Fore.RED, f'section {section} does not exist'))
-            return
-
-        print(self._color_text(Fore.BLUE, section))
-        for option in self._cfg.options(section):
-            if option == 'desc':
-                continue
-
-            value = self._cfg.get(section, option)
-            path, _, _, = self._parse_config_value(value)
-            colored_path = self._color_text(Fore.GREEN, path)
-            colored_option = self._color_text(Fore.CYAN, option)
-
-            print(f'    {colored_option:<40}{colored_path}')
-
-    def _print_update_status(self, is_ok, value):
-        """_print_update_status displays the status of a file download operation."""
-        path, _, _ = self._parse_config_value(value)
-        colored_path = self._color_text(Fore.CYAN, path)
-
-        status, status_color = ('[✔]', Fore.GREEN) if is_ok else ('[✘]', Fore.RED)
-        colored_status = self._color_text(status_color, status)
-
-        print(f'  {colored_status}  {colored_path}')
-
-    def _clear_directories(self, dirs):
-        """_clear_directories removes the content of every directory in the list given as argument."""
-        for d in dirs:
+        if group.clear:
             try:
-                shutil.rmtree(expanduser(d))
+                shutil.rmtree(expanduser(group.clear))
             except FileNotFoundError:
                 pass
 
-    def _update_section(self, section):
-        """_update_section updates all the files for the specified section in the configuration file."""
-        if section == 'config':
-            return
+        for path_repo, val in group.files.items():
+            if type(val) == str:
+                # the value is the path on disk
+                path_disk = val
+                file_perms = self._cfg.defaults.file_perms
+            elif type(val) == dict:
+                # the value is a dict with keys "path" and "perms"
+                path_disk = val["path"]
+                file_perms = va["perms"]
 
-        if section not in self._cfg.sections():
-            print(self._color_text(Fore.RED, f'section {section} does not exist'))
-            return
-        else:
-            print(self._color_text(Fore.BLUE, f'updating {section}'))
+            content, is_ok = self._download_file(f"{group_name}/{path_repo}")
+            if is_ok:
+                is_ok = self._write_file(path_disk, content, self._cfg.defaults.dir_perms, file_perms)
 
-        for option in self._cfg.options(section):
-            if option == 'desc':
-                continue
-            elif option == 'clear':
-                dirs = self._get_csv(section, 'clear')
-                self._clear_directories(dirs)
-            else:
-                self._update_file(section, option)
+            self._print_update_status(is_ok, path_disk)
 
-    def _update_file(self, section, option):
-        """_update_file updates the specified file from the specified section."""
-        value = self._cfg.get(section, option)
-        content, is_ok = self._download_file(section, option)
-
-        if is_ok:
-            is_ok = self._write_file(value, content)
-
-        self._print_update_status(is_ok, value)
-
-    def _download_file(self, section, option):
+    def _download_file(self, path_repo):
         """_download_file gets the contents of a file from github. It pretty much scrapes the raw view."""
-        url = 'https://raw.githubusercontent.com/abgeana/dotfiles/master/{directory:s}/{file:s}'
         try:
-            response = requests.get(url.format(directory=section, file=option))
+            response = requests.get(f'https://raw.githubusercontent.com/abgeana/dotfiles/master/{path_repo}')
         except IOError:
             pass
 
@@ -198,15 +136,13 @@ class Updater:
 
         return None, False
 
-    def _write_file(self, value, content):
+    def _write_file(self, path_disk, content, dir_perms, file_perms):
         """_write_file creates or updates a file with the specified content. It also sets the file mode bits, and the
         owner to root if the process is running as root."""
-        path, dir_chmod, file_chmod = self._parse_config_value(value)
-        full_path = expanduser(path)
+        full_path = expanduser(path_disk)
 
         try:
-            os.makedirs(os.path.dirname(full_path), mode=dir_chmod)
-            os.chmod(os.path.dirname(full_path), 0o700)
+            os.makedirs(os.path.dirname(full_path), mode=dir_perms)
         except OSError:
             pass
 
@@ -216,26 +152,45 @@ class Updater:
         except PermissionError:
             return False
 
-        os.chmod(full_path, int(file_chmod, 8))
+        os.chmod(full_path, file_perms)
         if os.geteuid() == 0:
             os.chown(full_path, 0, 0)
 
         return True
+
+    def _print_update_status(self, is_ok, path_disk):
+        """_print_update_status displays the status of a file download operation."""
+        status, status_color = ('[✔]', Fore.GREEN) if is_ok else ('[✘]', Fore.RED)
+        pct(status_color, f"  {status}  ", end="")
+        pct(Fore.CYAN, path_disk)
 
 
 def main():
     colorama.init()
 
     args = parse_args()
-    cfg = parse_config(args.config)
+    try:
+        cfg = Config.load()
+        local_config = False
+    except RuntimeError:
+        pct(Fore.RED, "Could not load yaml config file from github!")
+        local_config = True
+
+    if local_config:
+        pct(Fore.YELLOW, f"Trying to load the local config from \"{args.config}\".")
+        try:
+            with io.open(args.config, "r", encoding="utf-8") as f:
+                cfg = Config.from_yaml(f.read())
+        except FileNotFoundError:
+            pct(Fore.RED, "Could not load local yaml config file!")
+            exit(1)
+
+    #import prettyprinter as pp
+    #pp.pprint(cfg)
 
     if args.command == "update":
         updater = Updater(cfg)
-        updater.do_update(args.items)
-    elif args.command == "list":
-        if args.items is not None:
-            updater = Updater(cfg)
-            updater.do_list(args.items)
+        updater.do_update(args.groups)
 
 
 if __name__ == '__main__':
