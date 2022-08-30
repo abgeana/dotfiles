@@ -1,0 +1,36 @@
+defaults:
+  file_perms: 0640
+  dir_perms: 0750
+  sections:
+    - ranger
+    - tmux
+    - nvim
+    - zsh
+    - random
+
+groups:
+  env-update:
+    description: configuration update utility files
+    files:
+      env-update:
+        path: /bin/env-update
+        perms: 0755
+      env-update.cfg:
+        path: /etc/env-update.cfg
+        perms: 0644
+      kek: cheburek
+
+  nvim:
+    description: neovim editor configuration files
+    clear: ~/.config/nvim
+    files:
+      init.lua: ~/.config/nvim/init.lua
+      lua/autocmd.lua: ~/.config/nvim/lua/autocmd.lua
+      lua/colorscheme.lua: ~/.config/nvim/lua/colorscheme.lua
+      lua/keymap.lua: ~/.config/nvim/lua/keymap.lua
+      lua/lsp.lua: ~/.config/nvim/lua/lsp.lua
+      lua/options.lua: ~/.config/nvim/lua/options.lua
+      lua/plugin_configs.lua: ~/.config/nvim/lua/plugin_configs.lua
+      lua/plugins.lua: ~/.config/nvim/lua/plugins.lua
+      lua/tab_switching.lua: ~/.config/nvim/lua/tab_switching.lua
+      lua/util.lua: ~/.config/nvim/lua/util.lua
