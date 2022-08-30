@@ -20,6 +20,15 @@ groups:
         perms: 0644
       kek: cheburek
 
+  tmux:
+    description: ssh oriented configuration files for tmux
+    files:
+      tmux.conf: ~/.tmux.conf
+      tmux.common: ~/.tmux.common
+      tmux.master.conf: ~/.tmux.master.conf
+      tmuxp/gateway.yml: ~/.config/tmuxp/gateway.yml
+      tmuxp/local.yml: ~/.config/tmuxp/local.yml
+
   nvim:
     description: neovim editor configuration files
     clear: ~/.config/nvim
@@ -34,3 +43,83 @@ groups:
       lua/plugins.lua: ~/.config/nvim/lua/plugins.lua
       lua/tab_switching.lua: ~/.config/nvim/lua/tab_switching.lua
       lua/util.lua: ~/.config/nvim/lua/util.lua
+
+  ranger:
+    description: ranger configuration files
+    clear: ~/.config/ranger
+    files:
+      rc.conf: ~/.config/ranger/rc.conf
+      commands.py: ~/.config/ranger/commands.py
+      colorschemes/solarized_nobold.py: ~/.config/ranger/colorschemes/solarized_nobold.py
+
+  zsh:
+    description: zshell configuration files
+    clear: ~/.zshrc.d
+    files:
+      zshrc: ~/.zshrc
+      zshrc.d/aliases.zsh: ~/.zshrc.d/aliases.zsh
+      zshrc.d/bindkeys.zsh: ~/.zshrc.d/bindkeys.zsh
+      zshrc.d/final.zsh: ~/.zshrc.d/final.zsh
+      zshrc.d/functions.zsh: ~/.zshrc.d/functions.zsh
+      zshrc.d/init.zsh: ~/.zshrc.d/init.zsh
+      zshrc.d/prompt.zsh: ~/.zshrc.d/prompt.zsh
+      zshrc.d/tmux.zsh: ~/.zshrc.d/tmux.zsh
+      zshrc.d/vars.zsh: ~/.zshrc.d/vars.zsh
+
+  sway:
+    description: sway window manager configuration files
+    files:
+      config: ~/.config/sway/config
+      alacritty.yml: ~/.config/alacritty/alacritty.yml
+      rofi/config.rasi: ~/.config/rofi/config.rasi
+      rofi/theme/solarized_alternate.rasi: ~/.config/rofi/theme/solarized_alternate.rasi
+      waybar/config: ~/.config/waybar/config
+      waybar/style.css: ~/.config/waybar/style.css
+      zshrc.d/zprofile: ~/.zprofile
+
+  gnupg:
+    description: gnupg configuration files
+    files:
+      gpg-agent.conf: ~/.gnupg/gpg-agent.conf
+      gpg.conf: ~/.gnupg/gpg.conf
+
+  windows:
+    description: scripts for working in wsl
+    files:
+      wsl/from_clipboard.py: /bin/from_clipboard.py
+      wsl/to_clipboard.py: /bin/to_clipboard.py
+
+  gdb:
+    description: gdb debugger configuration
+    files:
+      gdbinit: ~/.gdbinit
+      gef.py: ~/.gdbinit.gef.py
+
+  ssh:
+    description: ssh configuration
+    files:
+      config:
+        path: ~/.ssh/config
+        perms: 0600
+      known_hosts:
+        path: ~/.ssh/known_hosts
+        perms: 0600
+      keys/gpg/black_backup.pub:
+        path: ~/.ssh/keys/gpg/black_backup.pub
+        perms: 0600
+      keys/gpg/black_usb_a.pub:
+        path: ~/.ssh/keys/gpg/black_usb_a.pub
+        perms: 0600
+      keys/gpg/black_usb_c.pub:
+        path: ~/.ssh/keys/gpg/black_usb_c.pub
+        perms: 0600
+      keys/gpg/server.pub:
+        path: ~/.ssh/keys/gpg/server.pub
+        perms: 0600
+
+  random:
+    description: oneoff files that do not belong anywhere else
+    files:
+      inputrc: ~/.inputrc
+      dircolors: ~/.dircolors
+      ipython_config.py: ~/.ipython/profile_default/ipython_config.py
