@@ -201,6 +201,7 @@ def main():
                 cfg = Config.from_yaml(f.read())
         except FileNotFoundError:
             pct(Fore.RED, "Could not load local yaml config file!")
+            exit(1)
     else:
         try:
             cfg = Config.load()
