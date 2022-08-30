@@ -12,10 +12,10 @@ groups:
   env-update:
     description: configuration update utility files
     files:
-      env-update:
+      env-update/env-update:
         path: /bin/env-update
         perms: 0755
-      env-update.cfg:
+      env-update/env-update.cfg:
         path: /etc/env-update.cfg
         perms: 0644
       kek: cheburek
@@ -23,103 +23,103 @@ groups:
   tmux:
     description: ssh oriented configuration files for tmux
     files:
-      tmux.conf: ~/.tmux.conf
-      tmux.common: ~/.tmux.common
-      tmux.master.conf: ~/.tmux.master.conf
-      tmuxp/gateway.yml: ~/.config/tmuxp/gateway.yml
-      tmuxp/local.yml: ~/.config/tmuxp/local.yml
+      tmux/tmux.conf: ~/.tmux.conf
+      tmux/tmux.common: ~/.tmux.common
+      tmux/tmux.master.conf: ~/.tmux.master.conf
+      tmux/tmuxp/gateway.yml: ~/.config/tmuxp/gateway.yml
+      tmux/tmuxp/local.yml: ~/.config/tmuxp/local.yml
 
   nvim:
     description: neovim editor configuration files
     clear: ~/.config/nvim
     files:
-      init.lua: ~/.config/nvim/init.lua
-      lua/autocmd.lua: ~/.config/nvim/lua/autocmd.lua
-      lua/colorscheme.lua: ~/.config/nvim/lua/colorscheme.lua
-      lua/keymap.lua: ~/.config/nvim/lua/keymap.lua
-      lua/lsp.lua: ~/.config/nvim/lua/lsp.lua
-      lua/options.lua: ~/.config/nvim/lua/options.lua
-      lua/plugin_configs.lua: ~/.config/nvim/lua/plugin_configs.lua
-      lua/plugins.lua: ~/.config/nvim/lua/plugins.lua
-      lua/tab_switching.lua: ~/.config/nvim/lua/tab_switching.lua
-      lua/util.lua: ~/.config/nvim/lua/util.lua
+      nvim/init.lua: ~/.config/nvim/init.lua
+      nvim/lua/autocmd.lua: ~/.config/nvim/lua/autocmd.lua
+      nvim/lua/colorscheme.lua: ~/.config/nvim/lua/colorscheme.lua
+      nvim/lua/keymap.lua: ~/.config/nvim/lua/keymap.lua
+      nvim/lua/lsp.lua: ~/.config/nvim/lua/lsp.lua
+      nvim/lua/options.lua: ~/.config/nvim/lua/options.lua
+      nvim/lua/plugin_configs.lua: ~/.config/nvim/lua/plugin_configs.lua
+      nvim/lua/plugins.lua: ~/.config/nvim/lua/plugins.lua
+      nvim/lua/tab_switching.lua: ~/.config/nvim/lua/tab_switching.lua
+      nvim/lua/util.lua: ~/.config/nvim/lua/util.lua
 
   ranger:
     description: ranger configuration files
     clear: ~/.config/ranger
     files:
-      rc.conf: ~/.config/ranger/rc.conf
-      commands.py: ~/.config/ranger/commands.py
-      colorschemes/solarized_nobold.py: ~/.config/ranger/colorschemes/solarized_nobold.py
+      ranger/rc.conf: ~/.config/ranger/rc.conf
+      ranger/commands.py: ~/.config/ranger/commands.py
+      ranger/colorschemes/solarized_nobold.py: ~/.config/ranger/colorschemes/solarized_nobold.py
 
   zsh:
     description: zshell configuration files
     clear: ~/.zshrc.d
     files:
-      zshrc: ~/.zshrc
-      zshrc.d/aliases.zsh: ~/.zshrc.d/aliases.zsh
-      zshrc.d/bindkeys.zsh: ~/.zshrc.d/bindkeys.zsh
-      zshrc.d/final.zsh: ~/.zshrc.d/final.zsh
-      zshrc.d/functions.zsh: ~/.zshrc.d/functions.zsh
-      zshrc.d/init.zsh: ~/.zshrc.d/init.zsh
-      zshrc.d/prompt.zsh: ~/.zshrc.d/prompt.zsh
-      zshrc.d/tmux.zsh: ~/.zshrc.d/tmux.zsh
-      zshrc.d/vars.zsh: ~/.zshrc.d/vars.zsh
+      zsh/zshrc: ~/.zshrc
+      zsh/zshrc.d/aliases.zsh: ~/.zshrc.d/aliases.zsh
+      zsh/zshrc.d/bindkeys.zsh: ~/.zshrc.d/bindkeys.zsh
+      zsh/zshrc.d/final.zsh: ~/.zshrc.d/final.zsh
+      zsh/zshrc.d/functions.zsh: ~/.zshrc.d/functions.zsh
+      zsh/zshrc.d/init.zsh: ~/.zshrc.d/init.zsh
+      zsh/zshrc.d/prompt.zsh: ~/.zshrc.d/prompt.zsh
+      zsh/zshrc.d/tmux.zsh: ~/.zshrc.d/tmux.zsh
+      zsh/zshrc.d/vars.zsh: ~/.zshrc.d/vars.zsh
 
   sway:
     description: sway window manager configuration files
     files:
-      config: ~/.config/sway/config
-      alacritty.yml: ~/.config/alacritty/alacritty.yml
-      rofi/config.rasi: ~/.config/rofi/config.rasi
-      rofi/theme/solarized_alternate.rasi: ~/.config/rofi/theme/solarized_alternate.rasi
-      waybar/config: ~/.config/waybar/config
-      waybar/style.css: ~/.config/waybar/style.css
-      zshrc.d/zprofile: ~/.zprofile
+      sway/config: ~/.config/sway/config
+      sway/alacritty.yml: ~/.config/alacritty/alacritty.yml
+      sway/rofi/config.rasi: ~/.config/rofi/config.rasi
+      sway/rofi/theme/solarized_alternate.rasi: ~/.config/rofi/theme/solarized_alternate.rasi
+      sway/waybar/config: ~/.config/waybar/config
+      sway/waybar/style.css: ~/.config/waybar/style.css
+      sway/zshrc.d/zprofile: ~/.zprofile
 
   gnupg:
     description: gnupg configuration files
     files:
-      gpg-agent.conf: ~/.gnupg/gpg-agent.conf
-      gpg.conf: ~/.gnupg/gpg.conf
+      gnupg/gpg-agent.conf: ~/.gnupg/gpg-agent.conf
+      gnupg/gpg.conf: ~/.gnupg/gpg.conf
 
   windows:
     description: scripts for working in wsl
     files:
-      wsl/from_clipboard.py: /bin/from_clipboard.py
-      wsl/to_clipboard.py: /bin/to_clipboard.py
+      windows/wsl/from_clipboard.py: /bin/from_clipboard.py
+      windows/wsl/to_clipboard.py: /bin/to_clipboard.py
 
   gdb:
     description: gdb debugger configuration
     files:
-      gdbinit: ~/.gdbinit
-      gef.py: ~/.gdbinit.gef.py
+      gdb/gdbinit: ~/.gdbinit
+      gdb/gef.py: ~/.gdbinit.gef.py
 
   ssh:
     description: ssh configuration
     files:
-      config:
+      ssh/config:
         path: ~/.ssh/config
         perms: 0600
-      known_hosts:
+      ssh/known_hosts:
         path: ~/.ssh/known_hosts
         perms: 0600
-      keys/gpg/black_backup.pub:
+      ssh/keys/gpg/black_backup.pub:
         path: ~/.ssh/keys/gpg/black_backup.pub
         perms: 0600
-      keys/gpg/black_usb_a.pub:
+      ssh/keys/gpg/black_usb_a.pub:
         path: ~/.ssh/keys/gpg/black_usb_a.pub
         perms: 0600
-      keys/gpg/black_usb_c.pub:
+      ssh/keys/gpg/black_usb_c.pub:
         path: ~/.ssh/keys/gpg/black_usb_c.pub
         perms: 0600
-      keys/gpg/server.pub:
+      ssh/keys/gpg/server.pub:
         path: ~/.ssh/keys/gpg/server.pub
         perms: 0600
 
   random:
     description: oneoff files that do not belong anywhere else
     files:
-      inputrc: ~/.inputrc
-      dircolors: ~/.dircolors
-      ipython_config.py: ~/.ipython/profile_default/ipython_config.py
+      random/inputrc: ~/.inputrc
+      random/dircolors: ~/.dircolors
+      random/ipython_config.py: ~/.ipython/profile_default/ipython_config.py
