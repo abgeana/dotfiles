@@ -208,9 +208,6 @@ def main():
             pct(Fore.RED, "Could not load yaml config file from github!")
             exit(1)
 
-    #import prettyprinter as pp
-    #pp.pprint(cfg)
-
     if args.command == "update":
         updater = Updater(cfg)
         updater.do_update(args.groups)
