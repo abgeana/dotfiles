@@ -73,7 +73,6 @@ class Config(YAMLWizard):
 
         if response.status_code != 200:
             raise RuntimeError("could not load configuration file")
-        print(response.text)
 
         return Config.from_yaml(response.text)
 
