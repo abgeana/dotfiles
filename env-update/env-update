@@ -3,13 +3,14 @@
 import argparse
 import base64
 import getpass
+import hashlib
 import io
 import json
 import os
 import shutil
 import stat
 from dataclasses import dataclass
-from os.path import expanduser
+from os.path import exists, expanduser
 from typing import Dict, Optional
 
 import colorama
@@ -38,8 +39,25 @@ def parse_args():
     parser_update = subparsers.add_parser("update")
     parser_update.add_argument('groups', nargs=argparse.REMAINDER, help='configuration groups to be updated')
 
+    parser_diff = subparsers.add_parser("diff")
+    parser_diff.add_argument('-v', '--verbose', action='store_true', help='print verbose diff output')
+    parser_diff.add_argument('groups', nargs=argparse.REMAINDER, help='configuration groups to be updated')
+
     args = parser.parse_args()
     return args
+
+
+def download_file(path_repo):
+    """download_file gets the contents of a file from github. It pretty much scrapes the raw view."""
+    try:
+        response = requests.get(f'https://raw.githubusercontent.com/abgeana/dotfiles/master/{path_repo}')
+    except IOError:
+        pass
+
+    if response.status_code == 200:
+        return response.text, True
+
+    return None, False
 
 
 @dataclass
@@ -142,23 +160,11 @@ class Updater:
                 path_disk = val["path"]
                 file_perms = va["perms"]
 
-            content, is_ok = self._download_file(f"{path_repo}")
+            content, is_ok = download_file(f"{path_repo}")
             if is_ok:
                 is_ok = self._write_file(path_disk, content, self._cfg.defaults.dir_perms, file_perms)
 
             self._print_update_status(is_ok, path_disk)
-
-    def _download_file(self, path_repo):
-        """_download_file gets the contents of a file from github. It pretty much scrapes the raw view."""
-        try:
-            response = requests.get(f'https://raw.githubusercontent.com/abgeana/dotfiles/master/{path_repo}')
-        except IOError:
-            pass
-
-        if response.status_code == 200:
-            return response.text, True
-
-        return None, False
 
     def _write_file(self, path_disk, content, dir_perms, file_perms):
         """_write_file creates or updates a file with the specified content. It also sets the file mode bits, and the
@@ -189,6 +195,69 @@ class Updater:
         pct(Fore.CYAN, path_disk)
 
 
+class Differ:
+
+    DIFF_DOWNLOAD_FAILED = 1
+    DIFF_MISMATCH = 2
+    DIFF_MATCH = 3
+
+    def __init__(self, cfg):
+        self._cfg = cfg
+
+    def do_diff(self, groups, verbose):
+        if groups is None or len(groups) == 0:
+            # if no groups are given, we check all of them
+            groups = self._cfg.groups.keys()
+        for g in groups:
+            self._diff_group(g, verbose)
+
+    def _diff_group(self, group_name, verbose):
+        if group_name not in self._cfg.groups.keys():
+            pct(Fore.RED, f'group {group_name} does not exist')
+            return
+        group = self._cfg.groups[group_name]
+        pct(Fore.BLUE, f'diffing {group_name}: {group.description}')
+        for path_repo, val in group.files.items():
+            if type(val) == str:
+                path_disk = val
+            else:
+                path_disk = val["path"]
+            if not exists(expanduser(path_disk)):
+                continue
+
+            contents, is_ok = download_file(path_repo)
+            if is_ok == False:
+                self._print_match_status(path_disk, Differ.DIFF_DOWNLOAD_FAILED)
+                continue
+
+            match_result = self._check_match(path_disk, contents)
+            self._print_match_status(path_disk, match_result)
+
+    def _check_match(self, path_disk, contents):
+        with open(expanduser(path_disk), 'rb') as f:
+            local_contents = f.read()
+        md5_local = hashlib.md5(local_contents).hexdigest()
+        md5_repo = hashlib.md5(contents.encode("utf-8")).hexdigest()
+        if md5_local == md5_repo:
+            return Differ.DIFF_MATCH
+        else:
+            return Differ.DIFF_MISMATCH
+
+    def _print_match_status(self, path_disk, match_result):
+        if match_result != Differ.DIFF_MATCH:
+            status = '[✘]'
+        else:
+            status = '[✔]'
+        if match_result == Differ.DIFF_MATCH:
+            status_color = Fore.GREEN
+        elif match_result == Differ.DIFF_MISMATCH:
+            status_color = Fore.YELLOW
+        else:
+            status_color = Fore.RED
+        pct(status_color, f"  {status}  ", end="")
+        pct(Fore.CYAN, path_disk)
+
+
 def main():
     colorama.init()
 
@@ -211,6 +280,9 @@ def main():
     if args.command == "update":
         updater = Updater(cfg)
         updater.do_update(args.groups)
+    elif args.command == "diff":
+        differ = Differ(cfg)
+        differ.do_diff(args.groups, args.verbose)
 
 
 if __name__ == '__main__':
