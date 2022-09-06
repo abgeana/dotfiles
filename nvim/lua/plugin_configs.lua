@@ -38,10 +38,13 @@ end
 
 -- inkarkat/vim-DeleteTrailingWhitespace {{{
 if vim.fn.empty(vim.fn.glob('~/.config/nvim/plugged/vim-DeleteTrailingWhitespace/plugin/DeleteTrailingWhitespace.vim')) == 0 then
-    -- i want to eradicate all trailing spaces all the time
-    vim.g['DeleteTrailingWhitespace'] = 1
-    -- automatically do it for me when i save a file
-    vim.g['DeleteTrailingWhitespace_Action'] = 'delete'
+    -- check whether the file is open in binary mode or not
+    if vim.o.binary == false then
+        -- i want to eradicate all trailing spaces all the time
+        vim.g['DeleteTrailingWhitespace'] = 1
+        -- automatically do it for me when i save a file
+        vim.g['DeleteTrailingWhitespace_Action'] = 'delete'
+    end
 end
 -- }}}
 
