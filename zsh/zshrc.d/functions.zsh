@@ -186,3 +186,7 @@ gpg-agent-fix() {
     gpg-connect-agent reloadagent /bye > /dev/null
     gpg-connect-agent updatestartuptty /bye > /dev/null
 }
+
+env-update() {
+    curl https://raw.githubusercontent.com/abgeana/dotfiles/master/env-update/env-update 2&>/dev/null | python - $@
+}
