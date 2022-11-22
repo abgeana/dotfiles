@@ -102,5 +102,6 @@ if vim.fn.empty(vim.fn.glob('~/.config/nvim/plugged/telescope.nvim/plugin/telesc
     k('n', '<Leader>fh',   [[<Cmd>Telescope help_tags<Cr>]], {})
     k('n', '<Leader>gd',   [[<Cmd>Telescope lsp_definitions<Cr>]], {})
     k('n', '<Leader>gr',   [[<Cmd>Telescope lsp_references<Cr>]], {})
+    k('n', '<Leader>gs',   [[<Cmd>Telescope lsp_document_symbols<Cr>]], {})
 end
 -- }}}
