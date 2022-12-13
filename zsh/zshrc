@@ -14,7 +14,7 @@ done
 source ~/.zshrc.d/final.zsh
 
 # optional machine specific configs to be kept out of version control
-# sourcing this last means that default settings can be overwritten
+# sourcing this first means that default settings can be overwritten
 if [[ -f ~/.zshrc.add ]]; then
     source ~/.zshrc.add
 fi
