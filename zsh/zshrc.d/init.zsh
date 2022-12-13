@@ -1,8 +1,3 @@
-# load custom dircolors file if present
-if [[ -f ~/.dircolors ]]; then
-    eval "export $(dircolors --sh ~/.dircolors)"
-fi
-
 # word splitting - non alphanumeric chars treated as part of a word
 # default is '*?_-.[]~=/&;!#$%^(){}<>'
 WORDCHARS='*?_-.[]~=&;!#$%^(){}<>'  # remove /

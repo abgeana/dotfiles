@@ -49,3 +49,8 @@ pathadd "/bin"
 pathadd "/usr/local/sbin"
 pathadd "/usr/sbin"
 pathadd "/sbin"
+
+# load custom dircolors file if present
+if [[ -f ~/.dircolors ]]; then
+    eval "export $(dircolors --sh ~/.dircolors)"
+fi
