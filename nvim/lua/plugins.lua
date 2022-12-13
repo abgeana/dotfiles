@@ -44,7 +44,7 @@ Plug('nvim-telescope/telescope-fzf-native.nvim', {
     end
 })
 Plug 'troydm/zoomwintab.vim'
-Plug 'tpope/vim-fugitive'
+Plug 'abgeana/nvim-fugitive'
 
 -- completion via lsp
 -- inspired from https://github.com/hrsh7th/nvim-cmp/blob/a226b6a4ff72e5e809ed17734318233fb25c87f3/doc/cmp.txt#L47
