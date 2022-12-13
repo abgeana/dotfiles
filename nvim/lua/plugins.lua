@@ -12,7 +12,6 @@ vim.call('plug#begin', '~/.config/nvim/plugged')
 Plug 'google/vim-maktaba'           -- dependency for vim-codefmt
 Plug 'inkarkat/vim-ingo-library'    -- dependency for vim-mark
 Plug 'godlygeek/tabular'            -- dependency for vim-markdown
-Plug 'prabirshrestha/async.vim'     -- dependency for vim-lsp
 Plug 'nvim-lua/plenary.nvim'        -- dependency for telescope.nvim
 
 Plug('Shougo/denite.nvim', {
