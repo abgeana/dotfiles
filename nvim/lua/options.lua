@@ -119,3 +119,6 @@ vim.o.splitright = true
 -- all entries after the current one are discarded
 -- see also 'help jumplist-stack'
 vim.o.jumpoptions = 'stack'
+
+-- adjust the default color groups for a dark background
+vim.o.background = 'dark'
