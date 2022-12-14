@@ -34,12 +34,8 @@ groups:
     clear: ~/.config/nvim
     files:
       nvim/init.lua: ~/.config/nvim/init.lua
-      nvim/lua/autocmd.lua: ~/.config/nvim/lua/autocmd.lua
-      nvim/lua/colorscheme.lua: ~/.config/nvim/lua/colorscheme.lua
       nvim/lua/keymap.lua: ~/.config/nvim/lua/keymap.lua
-      nvim/lua/lsp.lua: ~/.config/nvim/lua/lsp.lua
       nvim/lua/options.lua: ~/.config/nvim/lua/options.lua
-      nvim/lua/plugin_configs.lua: ~/.config/nvim/lua/plugin_configs.lua
       nvim/lua/plugins.lua: ~/.config/nvim/lua/plugins.lua
       nvim/lua/tab_switching.lua: ~/.config/nvim/lua/tab_switching.lua
       nvim/lua/util.lua: ~/.config/nvim/lua/util.lua
