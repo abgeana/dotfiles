@@ -188,5 +188,5 @@ gpg-agent-fix() {
 }
 
 env-update() {
-    curl https://raw.githubusercontent.com/abgeana/dotfiles/master/env-update/env-update 2&>/dev/null | python - $@
+    curl https://raw.githubusercontent.com/abgeana/dotfiles/master/env-update/env-update 2&>/dev/null | python3 - $@
 }
