@@ -1,10 +1,10 @@
-alias l='ls --quoting-style=literal --color=tty'
-alias ls='ls --quoting-style=literal --color=tty'
-alias ll='ls --quoting-style=literal --color=tty -lh'
-alias llz='ls --quoting-style=literal --color=tty -lhZ'
-alias la='ls --quoting-style=literal --color=tty -Ah'
-alias lla='ls --quoting-style=literal --color=tty -Alh'
-alias llaz='ls --quoting-style=literal --color=tty -AlhZ'
+alias l='gls --quoting-style=literal --color=tty'
+alias ls='gls --quoting-style=literal --color=tty'
+alias ll='gls --quoting-style=literal --color=tty -lh'
+alias llz='gls --quoting-style=literal --color=tty -lhZ'
+alias la='gls --quoting-style=literal --color=tty -Ah'
+alias lla='gls --quoting-style=literal --color=tty -Alh'
+alias llaz='gls --quoting-style=literal --color=tty -AlhZ'
 
 alias ff='find . -type f -name'
 alias fd='find . -type d -name'
@@ -22,7 +22,6 @@ alias ncdu='ncdu -0 -e --color dark'
 alias rcp="rsync -ah --inplace --info=progress2"
 alias rm='echo "This is not the command you are looking for."; false'
 alias pz='ps x -o "%p %r %u %c"'
-alias ip='ip --color=auto'
 
 # global aliases defined with '-g' (i.e. can be placed anywhere in other commands)
 alias -g silent='> /dev/null 2>&1'
