@@ -32,25 +32,30 @@ fi
 # needed for gpg-agent (see man gpg-agent)
 export GPG_TTY=$(tty)
 
-# custom PATH
-export PATH
-PATH=""
-pathadd() {
-    if [ -d "$1" ] && [[ ":$PATH:" != *":$1:"* ]]; then
-        PATH="${PATH:+"$PATH:"}$1"
-    fi
-}
-
-# add standard (s/)bin folders to the path
-pathadd "/home/`/usr/bin/id -u -n`/.local/bin"
-pathadd "/usr/local/bin"
-pathadd "/usr/bin"
-pathadd "/bin"
-pathadd "/usr/local/sbin"
-pathadd "/usr/sbin"
-pathadd "/sbin"
-
 # load custom dircolors file if present
 if [[ -f ~/.dircolors ]]; then
     eval "export $(dircolors --sh ~/.dircolors)"
 fi
+
+# custom PATH
+export PATH
+PATH=""
+path_append() {
+    if [ -d "$1" ] && [[ ":$PATH:" != *":$1:"* ]]; then
+        PATH="${PATH:+"$PATH:"}$1"
+    fi
+}
+path_prepend() {
+    if [ -d "$1" ] && [[ ":$PATH:" != *":$1:"* ]]; then
+        PATH="$1:${PATH:+"$PATH"}"
+    fi
+}
+
+# add standard (s/)bin folders to the path
+path_append "/home/`/usr/bin/id -u -n`/.local/bin"
+path_append "/usr/local/bin"
+path_append "/usr/bin"
+path_append "/bin"
+path_append "/usr/local/sbin"
+path_append "/usr/sbin"
+path_append "/sbin"
