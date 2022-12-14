@@ -9,6 +9,7 @@ import json
 import os
 import shutil
 import stat
+import platform
 from dataclasses import dataclass
 from os.path import exists, expanduser
 from typing import Dict, Optional
@@ -49,8 +50,12 @@ def parse_args():
 
 def download_file(path_repo):
     """download_file gets the contents of a file from github. It pretty much scrapes the raw view."""
+    git_branch = 'master'
+    if platform.system() == 'Darwin':
+        git_branch = 'macos'
+
     try:
-        response = requests.get(f'https://raw.githubusercontent.com/abgeana/dotfiles/master/{path_repo}')
+        response = requests.get(f'https://raw.githubusercontent.com/abgeana/dotfiles/{git_branch}/{path_repo}')
     except IOError:
         pass
 
