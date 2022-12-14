@@ -52,6 +52,10 @@ path_prepend() {
     fi
 }
 
+# prepend homebrew bin directory
+# homebrew binaries have higher priority than system ones
+path_prepend "/opt/homebrew/bin"
+
 # add standard (s/)bin folders to the path
 path_append "/home/`/usr/bin/id -u -n`/.local/bin"
 path_append "/usr/local/bin"
