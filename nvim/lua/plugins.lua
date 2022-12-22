@@ -183,13 +183,15 @@ packer.startup(function(use)
                 }
             )
 
-            lspconfig.ccls.setup { -- {{{
+            lspconfig.clangd.setup { -- {{{
                 capabilities = cmp_nvim_lsp.default_capabilities(),
                 flags = {
                     debounce_text_changes = 150,
                 }
             } -- }}}
 
+            local cwd = vim.fn.getcwd()
+            cwd = cwd:gsub('/', "_")
             lspconfig.rust_analyzer.setup { -- {{{
                 capabilities = cmp_nvim_lsp.default_capabilities(),
                 flags = {
@@ -207,7 +209,16 @@ packer.startup(function(use)
                     }
                 },
                 cmd_env = {
-                    CARGO_TARGET_DIR = "/tmp/rust-analyzer-check"
+                    CARGO_TARGET_DIR = "/tmp/rust-analyzer" .. cwd
+                }
+            } -- }}}
+
+            lspconfig.pyright.setup { -- {{{
+                capabilities = cmp_nvim_lsp.default_capabilities(),
+                vim.lsp.diagnostic.on_publish_diagnostics, {
+                    underline = false,
+                    virtual_text = false,
+                    signs = false
                 }
             } -- }}}
 
