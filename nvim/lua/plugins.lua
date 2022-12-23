@@ -193,7 +193,11 @@ packer.startup(function(use)
             local cwd = vim.fn.getcwd()
             cwd = cwd:gsub('/', "_")
             lspconfig.rust_analyzer.setup { -- {{{
-                capabilities = cmp_nvim_lsp.default_capabilities(),
+                capabilities = cmp_nvim_lsp.default_capabilities({
+                    -- disable snippet support such that functions names are completed
+                    -- without the additional arguments afterwards
+                    snippetSupport = false
+                }),
                 flags = {
                     debounce_text_changes = 150,
                 },
