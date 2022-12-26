@@ -158,17 +158,6 @@ bindsym $mod+Shift+s exec grim -g "$(slurp -d)" - | wl-copy
 bindsym Alt+space exec 'swaymsg "input * xkb_switch_layout next"'
 #}}}
 
-# focusing {{{
-# change focus
-bindsym $mod+$left  focus left
-bindsym $mod+$down  focus down
-bindsym $mod+$up    focus up
-bindsym $mod+$right focus right
-
-# focus parent
-bindsym $mod+p focus parent
-# }}}
-
 # moving around {{{
 # move focused window
 bindsym $mod+Shift+$left    move left
@@ -184,6 +173,10 @@ bindsym $mod+Shift+p move workspace to output right
 # }}}
 
 # workspaces {{{
+# cycle through workspaces
+bindsym $mod+$up workspace prev_on_output
+bindsym $mod+$down workspace next_on_output
+
 # switch to workspace
 bindsym $mod+1 workspace number 1
 bindsym $mod+2 workspace number 2
