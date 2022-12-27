@@ -18,8 +18,19 @@ packer.startup(function(use)
 
     use 'zhimsel/vim-stay'                         -- persistent editing state; originally kopischke/vim-stay
     use 'wsdjeg/vim-fetch'                         -- line and column in file name; originally kopischke/vim-fetch
-    use 'troydm/zoomwintab.vim'
     use 'abgeana/nvim-fugitive'
+
+    use {
+        'troydm/zoomwintab.vim', -- {{{
+        setup = function()
+            vim.g['zoomwintab_remap'] = 0
+        end,
+        config = function()
+            local k = vim.api.nvim_set_keymap
+            k('n', '<Leader>z',   [[<Cmd>ZoomWinTabToggle<Cr>]], {})
+        end,
+        -- }}}
+    }
 
     use {
         'altercation/vim-colors-solarized', -- {{{
@@ -138,6 +149,18 @@ packer.startup(function(use)
             -- https://github.com/nvim-treesitter/nvim-treesitter/wiki/Installation#packernvim
             local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
             ts_update()
+        end,
+        config = function()
+            require'nvim-treesitter.configs'.setup {
+                highlight = {
+                    enable = true,
+                    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+                    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+                    -- Using this option may slow down your editor, and you may see some duplicate highlights.
+                    -- Instead of true it can also be a list of languages
+                    additional_vim_regex_highlighting = false,
+                },
+            }
         end,
         -- }}}
     }
