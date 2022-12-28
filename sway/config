@@ -86,6 +86,11 @@ input 1739:52710:DLL096D:01_06CB:CDE6_Touchpad {
 output * {
     bg #000000 solid_color
 }
+# two external monitors (DP-1 and DP-2) at 2560 x 1440 each
+output DP-1 pos 0 0
+output DP-2 pos 2560 0
+# the laptop screen itself (eDP-1) all the way to the right
+output eDP-1 pos 5120 0
 #}}}
 
 # solarized colors
