@@ -110,3 +110,4 @@ key_bindings:
   - { key: Q, mods: Alt, chars: "\x1bq" }
   - { key: E, mods: Alt, chars: "\x1be" }
   - { key: S, mods: Alt, chars: "\x1bs" }
+  - { key: F, mods: Alt, chars: "\x1bf" }
