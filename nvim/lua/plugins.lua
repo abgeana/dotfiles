@@ -23,7 +23,7 @@ packer.startup(function(use)
     use {
         'troydm/zoomwintab.vim', -- {{{
         setup = function()
-            vim.g['zoomwintab_remap'] = 0
+            vim.g.zoomwintab_remap = 0
         end,
         config = function()
             local k = vim.api.nvim_set_keymap
@@ -33,17 +33,21 @@ packer.startup(function(use)
     }
 
     use {
-        'altercation/vim-colors-solarized', -- {{{
+        'svrana/neosolarized.nvim', -- {{{
         config = function()
-            vim.cmd [[
-                autocmd colorscheme solarized highlight colorcolumn ctermbg=1
-                colorscheme solarized
-                hi StatusLine cterm=reverse ctermfg=0 ctermbg=2 gui=bold,reverse
-                hi StatusLineNC cterm=reverse ctermfg=0 ctermbg=3 gui=bold,reverse
-                hi VertSplit ctermfg=11 ctermbg=0 gui=reverse
-                set fillchars+=vert:\ " white space at the end
-            ]]
+            c = require('neosolarized').setup({
+                comment_italics = false,
+            })
+            -- to figure out how each group looks like, run
+            -- :runtime syntax/hitest.vim
+            c.Group.new('FoldColumn', c.colors.none, c.colors.bg, c.styles.none)
+
+            vim.o.background = 'dark'
+            vim.o.termguicolors = true
         end,
+        requires = {
+            'tjdevries/colorbuddy.nvim',
+        }
         -- }}}
     }
     use {
@@ -147,8 +151,18 @@ packer.startup(function(use)
         'nvim-treesitter/nvim-treesitter', -- {{{
         run = function()
             -- https://github.com/nvim-treesitter/nvim-treesitter/wiki/Installation#packernvim
+            -- https://github.com/nvim-treesitter/nvim-treesitter/blob/fb36ed4c9e962d9fbfa608cd4a5d9313b1e8a8b1/lua/nvim-treesitter/install.lua#L689
             local ts_update = require('nvim-treesitter.install').update({ with_sync = true })
             ts_update()
+
+            -- https://github.com/nvim-treesitter/nvim-treesitter/blob/fb36ed4c9e962d9fbfa608cd4a5d9313b1e8a8b1/lua/nvim-treesitter/install.lua#L662
+            local ts_install = require('nvim-treesitter.install').install({ ask_reinstall = 'force' })
+            ts_install('c')
+            ts_install('rust')
+            ts_install('python')
+            ts_install('go')
+            ts_install('vim')
+            ts_install('help')
         end,
         config = function()
             require'nvim-treesitter.configs'.setup {

@@ -62,7 +62,7 @@ vim.o.undolevels = 5000
 vim.o.errorbells = false
 
 -- make a useful status line
-vim.o.statusline = '[ buffer %n ] %F [%Y,%{&ff}] %m%r%h%=[ %l/%L , %v, %o ][ %p%% ]'
+vim.o.statusline = '[ buffer %n ] %F [%Y,%{&ff}] %m%r%h%=[ %l/%L, %v, %o ][ %p%% ]'
 
 -- always show the status line
 vim.o.laststatus = 2
@@ -119,6 +119,3 @@ vim.o.splitright = true
 -- all entries after the current one are discarded
 -- see also 'help jumplist-stack'
 vim.o.jumpoptions = 'stack'
-
--- adjust the default color groups for a dark background
-vim.o.background = 'dark'
