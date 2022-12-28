@@ -27,6 +27,12 @@ scrolling:
   # Specifying '0' will disable scrolling.
   history: 0
 
+font:
+  normal:
+    family: Iosevka Nerd Font
+    style: Regular
+  size: 13.0
+
 # Colors (Solarized Dark)
 # https://github.com/eendroroy/alacritty-theme/blob/master/themes/solarized_dark.yaml
 colors:
