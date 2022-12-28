@@ -359,8 +359,8 @@ packer.startup(function(use)
             telescope.setup({
                 defaults = {
                     mappings = {
-                        i = {
-                            ["<C-h>"] = telescope.extensions.hop.hop,
+                        n = {
+                            ['s'] = telescope.extensions.hop.hop,
                         },
                     },
                 },
