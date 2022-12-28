@@ -158,6 +158,7 @@ packer.startup(function(use)
             -- https://github.com/nvim-treesitter/nvim-treesitter/blob/fb36ed4c9e962d9fbfa608cd4a5d9313b1e8a8b1/lua/nvim-treesitter/install.lua#L662
             local ts_install = require('nvim-treesitter.install').install({ ask_reinstall = 'force' })
             ts_install('c')
+            ts_install('cpp')
             ts_install('rust')
             ts_install('python')
             ts_install('go')
@@ -179,12 +180,22 @@ packer.startup(function(use)
         -- }}}
     }
 
+    use {
+        'nvim-tree/nvim-web-devicons', -- {{{
+        config = function()
+            require('nvim-web-devicons').setup({})
+        end, -- }}}
+    }
+
     -- lsp {{{
     use {
         'onsails/lspkind.nvim', -- {{{
         config = function()
             require('lspkind').init()
         end,
+        after = {
+            'nvim-web-devicons',
+        }
         -- }}}
     }
     use {
@@ -199,6 +210,9 @@ packer.startup(function(use)
             'hrsh7th/cmp-vsnip',
             'hrsh7th/vim-vsnip',
         },
+        after = {
+            'nvim-web-devicons',
+        }
         -- }}}
     }
     use {
@@ -338,17 +352,47 @@ packer.startup(function(use)
     use {
         'nvim-telescope/telescope.nvim', -- {{{
         config = function()
+            local telescope = require('telescope')
+            local fb_actions = require "telescope".extensions.file_browser.actions
             local k = vim.api.nvim_set_keymap
+
+            telescope.setup({
+                defaults = {
+                    mappings = {
+                        i = {
+                            ["<C-h>"] = telescope.extensions.hop.hop,
+                        },
+                    },
+                },
+                extensions = {
+                    file_browser = {
+                        mappings = {
+                            ['n'] = {
+                                ['h'] = fb_actions.goto_parent_dir,
+                                ['l'] = "select_default",
+                                ['cd'] = fb_actions.change_cwd,
+                            },
+                        },
+                    },
+                },
+            })
+            telescope.load_extension('file_browser')
+            telescope.load_extension('hop')
+
             k('n', '<Leader>ff',   [[<Cmd>Telescope find_files<Cr>]], {})
             k('n', '<Leader>fg',   [[<Cmd>Telescope live_grep<Cr>]], {})
             k('n', '<Leader>fw',   [[<Cmd>Telescope grep_string<Cr>]], {})
-            k('n', '<Leader>fb',   [[<Cmd>Telescope buffers<Cr>]], {})
+            k('n', '<Leader>fb',   [[<Cmd>Telescope file_browser<Cr>]], {})
             k('n', '<Leader>fh',   [[<Cmd>Telescope help_tags<Cr>]], {})
             k('n', '<Leader>gd',   [[<Cmd>Telescope lsp_definitions<Cr>]], {})
             k('n', '<Leader>gr',   [[<Cmd>Telescope lsp_references<Cr>]], {})
             k('n', '<Leader>gs',   [[<Cmd>Telescope lsp_document_symbols<Cr>]], {})
         end,
-        requires = 'nvim-lua/plenary.nvim',
+        requires = {
+            'nvim-lua/plenary.nvim',
+            'nvim-telescope/telescope-hop.nvim',
+            'nvim-telescope/telescope-file-browser.nvim',
+        },
         after = {
             'telescope-fzf-native.nvim',
             'nvim-lspconfig',
