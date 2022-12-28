@@ -35,7 +35,7 @@ export GPG_TTY=$(tty)
 # load custom dircolors file if present
 if [[ -f ~/.dircolors ]]; then
     # on macos use gdircolors which gets installed via the coreutils package
-    eval "export $(gdircolors --sh ~/.dircolors)"
+    eval "export $(/opt/homebrew/bin/gdircolors --sh ~/.dircolors)"
 fi
 
 # custom PATH
