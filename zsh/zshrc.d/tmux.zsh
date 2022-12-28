@@ -7,7 +7,7 @@ alias ty='tmux loadb -'
 alias tb='ts base'
 alias tm='tmux -L master'
 alias tp='tmuxp'
-alias tminit='cd ~; tmuxp load -L master -f ~/.tmux.master.conf'
+alias tminit='cd ~; tmuxp load -L master -f ~/.config/tmux/tmux.master.conf'
 
 # }}}
 
