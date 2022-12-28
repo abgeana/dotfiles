@@ -23,9 +23,9 @@ groups:
   tmux:
     description: ssh oriented configuration files for tmux
     files:
-      tmux/tmux.conf: ~/.tmux.conf
-      tmux/tmux.common: ~/.tmux.common
-      tmux/tmux.master.conf: ~/.tmux.master.conf
+      tmux/tmux.conf: ~/.config/tmux/tmux.conf
+      tmux/tmux.common: ~/.config/tmux/tmux.common
+      tmux/tmux.master.conf: ~/.config/tmux/tmux.master.conf
       tmux/tmuxp/gateway.yml: ~/.config/tmuxp/gateway.yml
       tmux/tmuxp/local.yml: ~/.config/tmuxp/local.yml
 
