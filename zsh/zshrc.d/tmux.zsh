@@ -1,15 +1,10 @@
 # vim: foldmethod=marker
 
-# aliases {{{
-
 alias tmux='tmux -2'
-alias ty='tmux loadb -'
 alias tb='ts base'
 alias tm='tmux -L master'
 alias tp='tmuxp'
-alias tminit='cd ~; tmuxp load -L master -f ~/.config/tmux/tmux.master.conf'
-
-# }}}
+alias tminit='cd ~; tmuxp load -L master'
 
 # create new tmux session and switch to it
 ts() {
@@ -50,11 +45,3 @@ ts() {
         tmux attach -t $target_session
     fi
 }
-
-# start a vim session with the contents of the current tmux pane
-tmux-pane-to-nvim() {
-    tmux capture-pane -p -S - | nvim -c 'call TmuxCapturePaneSetup()' -
-}
-
-# define new widget for calling the pe function
-zle -N tmux-pane-to-nvim
