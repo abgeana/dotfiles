@@ -73,8 +73,6 @@ groups:
       - alacritty
     files:
       sway/config: ~/.config/sway/config
-      sway/rofi/config.rasi: ~/.config/rofi/config.rasi
-      sway/rofi/theme/solarized_alternate.rasi: ~/.config/rofi/theme/solarized_alternate.rasi
       sway/waybar/config: ~/.config/waybar/config
       sway/waybar/style.css: ~/.config/waybar/style.css
       sway/zshrc.d/zprofile: ~/.zprofile
