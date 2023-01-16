@@ -387,7 +387,11 @@ packer.startup(function(use)
             k('n', '<Leader>fh',   [[<Cmd>Telescope help_tags<Cr>]], {})
             k('n', '<Leader>gd',   [[<Cmd>Telescope lsp_definitions<Cr>]], {})
             k('n', '<Leader>gr',   [[<Cmd>Telescope lsp_references<Cr>]], {})
-            k('n', '<Leader>gs',   [[<Cmd>Telescope lsp_document_symbols<Cr>]], {})
+            k('n', '<Leader>ds',   [[<Cmd>Telescope lsp_document_symbols<Cr>]], {})
+            -- lsp_dynamic_workspace_symbols differs from lsp_workspace_symbols in the sense
+            -- that it generates the list of symbols dynamically while you are typing a name
+            -- see also https://github.com/nvim-telescope/telescope.nvim/issues/964
+            k('n', '<Leader>ws',   [[<Cmd>Telescope lsp_dynamic_workspace_symbols<Cr>]], {})
         end,
         requires = {
             'nvim-lua/plenary.nvim',
