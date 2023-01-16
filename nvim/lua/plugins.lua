@@ -165,6 +165,7 @@ packer.startup(function(use)
             ts_install('go')
             ts_install('vim')
             ts_install('help')
+            ts_install('java')
         end,
         config = function()
             require'nvim-treesitter.configs'.setup {
