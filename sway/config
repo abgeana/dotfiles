@@ -154,7 +154,7 @@ bindsym $mod+d exec $menu
 bindsym $mod+Shift+c reload
 
 # rename workspace
-bindsym $mod+Shift+n exec echo "" | dmenu -p "New name for this workspace" | xargs -r swaymsg rename workspace to
+bindsym $mod+Shift+n exec wofi --show=dmenu -p "New name for this workspace" | xargs -r swaymsg rename workspace to
 
 # take a screenshot
 bindsym $mod+Shift+s exec grim -g "$(slurp -d)" - | wl-copy
@@ -218,7 +218,7 @@ bindsym $mod+Shift+9 move container to workspace number 9
 bindsym $mod+Shift+0 move container to workspace number 10
 
 # move focused window to workspace
-bindsym $mod+Shift+m exec echo "" | dmenu -p "Move focused window to workspace" | xargs -r swaymsg move container to workspace
+bindsym $mod+Shift+m exec wofi --show=dmenu -p "Move focused window to workspace" | xargs -r swaymsg move container to workspace
 # }}}
 
 # layout stuff {{{
