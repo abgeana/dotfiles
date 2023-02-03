@@ -51,6 +51,7 @@ groups:
     clear: ~/.zshrc.d
     files:
       zsh/zshrc: ~/.zshrc
+      zsh/zprofile: ~/.zprofile
       zsh/zshrc.d/aliases.zsh: ~/.zshrc.d/aliases.zsh
       zsh/zshrc.d/bindkeys.zsh: ~/.zshrc.d/bindkeys.zsh
       zsh/zshrc.d/final.zsh: ~/.zshrc.d/final.zsh

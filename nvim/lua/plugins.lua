@@ -306,15 +306,37 @@ packer.startup(function(use)
                     ['<CR>'] = cmp.mapping.confirm({ select = true }),
                 }),
 
-                sources = cmp.config.sources({
-                    { name = 'nvim_lsp' },
-                    { name = 'vsnip' },           -- For vsnip users.
-                    -- { name = 'luasnip' },      -- For luasnip users.
-                    -- { name = 'snippy' },       -- For snippy users.
-                    -- { name = 'ultisnips' },    -- For ultisnips users.
-                }, {
-                    { name = 'buffer' },
-                }),
+                sources = cmp.config.sources(
+                    -- first group of sources
+                    {
+                        { name = 'nvim_lsp' },
+                        { name = 'vsnip' },           -- For vsnip users.
+                        -- { name = 'luasnip' },      -- For luasnip users.
+                        -- { name = 'snippy' },       -- For snippy users.
+                        -- { name = 'ultisnips' },    -- For ultisnips users.
+                    },
+                    -- second group of sources
+                    {
+                        {
+                            name = 'buffer',
+                            entry_filter = function(entry, ctx)
+                                -- this function filters entries if they are of type text
+                                -- and either they are longer than 20 characters (probably some hash digest)
+                                -- or they start with a digit (probably some code constant)
+                                local cmp_types = require('cmp.types')
+                                if cmp_types.lsp.CompletionItemKind[entry:get_kind()] == 'Text' then
+                                    if entry:get_word():len() > 15 then
+                                        return false
+                                    elseif string.byte(entry:get_word():sub(1,1)) >= string.byte('0') and
+                                        string.byte(entry:get_word():sub(1,1)) <= string.byte('9') then
+                                        return false
+                                    end
+                                end
+                                return true
+                            end
+                        },
+                    }
+                ),
 
                 formatting = {
                     format = lspkind.cmp_format {
@@ -336,6 +358,8 @@ packer.startup(function(use)
                 }
             }) -- }}}
 
+            -- limit the number of items in the popup menu
+            vim.cmd("set pumheight=10")
         end,
         after = {
             'lspkind.nvim',
