@@ -237,7 +237,22 @@ packer.startup(function(use)
             )
 
             lspconfig.clangd.setup { -- {{{
-                capabilities = cmp_nvim_lsp.default_capabilities(),
+                capabilities = cmp_nvim_lsp.default_capabilities({
+                    -- disable snippet support such that functions names are completed
+                    -- without the additional arguments afterwards
+                    snippetSupport = false
+                }),
+                flags = {
+                    debounce_text_changes = 150,
+                }
+            } -- }}}
+
+            lspconfig.gopls.setup { -- {{{
+                capabilities = cmp_nvim_lsp.default_capabilities({
+                    -- disable snippet support such that functions names are completed
+                    -- without the additional arguments afterwards
+                    snippetSupport = false
+                }),
                 flags = {
                     debounce_text_changes = 150,
                 }
