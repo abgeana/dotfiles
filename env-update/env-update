@@ -7,17 +7,17 @@ import hashlib
 import io
 import json
 import os
+import platform
 import shutil
 import stat
-import platform
 from dataclasses import dataclass
 from os.path import exists, expanduser
 from typing import Dict, Optional
 
 import colorama
 import requests
+import yaml
 from colorama import Fore, Style
-from dataclass_wizard import YAMLWizard
 
 
 def ct(color, text):
@@ -81,13 +81,23 @@ class ConfigGroup:
 
 
 @dataclass
-class Config(YAMLWizard):
+class Config:
     defaults: ConfigDefaults
     groups: dict[str, ConfigGroup]
 
+    def __post_init__(self):
+        """__post_init__ sets the correct type for the dataclass fields."""
+        dict_defaults = self.defaults
+        self.defaults = ConfigDefaults(**dict_defaults)
+
+        dict_groups = self.groups
+        self.groups = dict()
+        for key, value in dict_groups.items():
+            self.groups[key] = ConfigGroup(**value)
+
     @staticmethod
-    def load():
-        """load gets the contents of the yaml config file hosted on github."""
+    def load_github():
+        """load_github gets the contents of the yaml config file hosted on github."""
         try:
             response = requests.get(
                 "https://raw.githubusercontent.com/abgeana/dotfiles/master/env-update/env-update.yml")
@@ -97,7 +107,8 @@ class Config(YAMLWizard):
         if response.status_code != 200:
             raise RuntimeError("could not load configuration file")
 
-        return Config.from_yaml(response.text)
+        yaml_data = yaml.safe_load(response.text)
+        return Config(**yaml_data)
 
 
 class Updater:
@@ -271,13 +282,14 @@ def main():
     if args.config is not None:
         try:
             with io.open(args.config, "r", encoding="utf-8") as f:
-                cfg = Config.from_yaml(f.read())
+                yaml_data = yaml.safe_load(f.read())
+                cfg = Config(**yaml_data)
         except FileNotFoundError:
             pct(Fore.RED, "Could not load local yaml config file!")
             exit(1)
     else:
         try:
-            cfg = Config.load()
+            cfg = Config.load_github()
         except RuntimeError:
             pct(Fore.RED, "Could not load yaml config file from github!")
             exit(1)
