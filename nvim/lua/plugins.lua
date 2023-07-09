@@ -38,10 +38,6 @@ packer.startup(function(use)
             c = require('neosolarized').setup({
                 comment_italics = false,
             })
-            -- to figure out how each group looks like, run
-            -- :runtime syntax/hitest.vim
-            c.Group.new('FoldColumn', c.colors.none, c.colors.bg, c.styles.none)
-
             vim.o.background = 'dark'
             vim.o.termguicolors = true
         end,
