@@ -18,7 +18,7 @@ packer.startup(function(use)
 
     use 'zhimsel/vim-stay'                         -- persistent editing state; originally kopischke/vim-stay
     use 'wsdjeg/vim-fetch'                         -- line and column in file name; originally kopischke/vim-fetch
-    use 'abgeana/nvim-fugitive'
+    use 'tpope/vim-fugitive'
 
     use {
         'troydm/zoomwintab.vim', -- {{{
