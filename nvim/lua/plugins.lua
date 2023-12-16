@@ -76,21 +76,6 @@ packer.startup(function(use)
         -- }}}
     }
     use {
-        'google/vim-coverage', -- {{{
-        config = function()
-        -- to get the maktaba plugin, use
-        --   let coverage_plugin=maktaba#plugin#Get('coverage')
-        -- after which you can configure the gcov plugin via
-        --   let coverage_plugin.globals._gcov_temp_search_paths = ['...']
-        --   let coverage_plugin.globals._gcov_temp_file_patterns = ['...']
-        end,
-        requires = {
-            'google/vim-maktaba',
-            'google/vim-glaive',
-        },
-        -- }}}
-    }
-    use {
         'christoomey/vim-tmux-navigator', -- {{{
         config = function()
             local k = vim.api.nvim_set_keymap
