@@ -59,6 +59,13 @@ packer.startup(function(use)
         -- }}}
     }
     use {
+        'google/vim-glaive', -- {{{
+        requires = {
+            'google/vim-maktaba',
+        },
+        -- }}}
+    }
+    use {
         'google/vim-codefmt', -- {{{
         config = function()
             local k = vim.api.nvim_set_keymap
@@ -70,7 +77,6 @@ packer.startup(function(use)
             vim.cmd('autocmd FileType javascript let b:codefmt_formatter="prettier"')
         end,
         requires = {
-            'google/vim-maktaba',
             'google/vim-glaive',
         },
         -- }}}
