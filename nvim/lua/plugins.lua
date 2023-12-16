@@ -59,27 +59,13 @@ packer.startup(function(use)
         -- }}}
     }
     use {
-        'google/vim-glaive', -- {{{
-        requires = {
-            'google/vim-maktaba',
-        },
-        -- }}}
-    }
-    use {
-        'google/vim-codefmt', -- {{{
-        config = function()
-            local k = vim.api.nvim_set_keymap
+    'sbdchd/neoformat', -- {{{
+    config = function()
+        local k = vim.api.nvim_set_keymap
 
-            k('n', '<A-f>', '<Cmd>FormatCode<Cr>', { noremap = true, silent = true })
-            -- change default formatter for javascript buffers from clang-format to js-beautify
-            -- https://github.com/google/vim-codefmt/blob/0bf16eb74e8243ee477ad97330e451026311fbae/instant/flags.vim#L24
-            -- https://github.com/google/vim-codefmt/blob/78f646545c4e1254fc413242e5c204a2dc79665d/vroom/main.vroom#L137
-            vim.cmd('autocmd FileType javascript let b:codefmt_formatter="prettier"')
-        end,
-        requires = {
-            'google/vim-glaive',
-        },
-        -- }}}
+        k('n', '<A-f>', '<Cmd>Neoformat<Cr>', { noremap = true, silent = true })
+    end,
+    -- }}}
     }
     use {
         'christoomey/vim-tmux-navigator', -- {{{
