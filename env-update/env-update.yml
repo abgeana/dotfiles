@@ -103,18 +103,6 @@ groups:
       ssh/known_hosts:
         path: ~/.ssh/known_hosts
         perms: 0600
-      ssh/keys/gpg/black_backup.pub:
-        path: ~/.ssh/keys/gpg/black_backup.pub
-        perms: 0600
-      ssh/keys/gpg/black_usb_a.pub:
-        path: ~/.ssh/keys/gpg/black_usb_a.pub
-        perms: 0600
-      ssh/keys/gpg/black_usb_c.pub:
-        path: ~/.ssh/keys/gpg/black_usb_c.pub
-        perms: 0600
-      ssh/keys/gpg/server.pub:
-        path: ~/.ssh/keys/gpg/server.pub
-        perms: 0600
 
   random:
     description: oneoff files that do not belong anywhere else
