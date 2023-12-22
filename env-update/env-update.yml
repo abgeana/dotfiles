@@ -31,12 +31,28 @@ groups:
     description: neovim editor configuration files
     clear: ~/.config/nvim
     files:
+      nvim/README.md: ~/.config/nvim/README.md
+      nvim/lua/plugins/sneak.lua: ~/.config/nvim/lua/plugins/sneak.lua
+      nvim/lua/plugins/telescope.lua: ~/.config/nvim/lua/plugins/telescope.lua
+      nvim/lua/plugins/lsp.lua: ~/.config/nvim/lua/plugins/lsp.lua
+      nvim/lua/plugins/colorscheme.lua: ~/.config/nvim/lua/plugins/colorscheme.lua
+      nvim/lua/plugins/zoomwintab.lua: ~/.config/nvim/lua/plugins/zoomwintab.lua
+      nvim/lua/plugins/icons.lua: ~/.config/nvim/lua/plugins/icons.lua
+      nvim/lua/plugins/treesitter.lua: ~/.config/nvim/lua/plugins/treesitter.lua
+      nvim/lua/plugins/init.lua: ~/.config/nvim/lua/plugins/init.lua
+      nvim/lua/plugins/tmux.lua: ~/.config/nvim/lua/plugins/tmux.lua
+      nvim/lua/plugins/syntax_range.lua: ~/.config/nvim/lua/plugins/syntax_range.lua
+      nvim/lua/plugins/neoformat.lua: ~/.config/nvim/lua/plugins/neoformat.lua
+      nvim/lua/plugins/whitespace.lua: ~/.config/nvim/lua/plugins/whitespace.lua
+      nvim/lua/plugins/mark.lua: ~/.config/nvim/lua/plugins/mark.lua
+      nvim/lua/abg/init.lua: ~/.config/nvim/lua/abg/init.lua
+      nvim/lua/abg/options.lua: ~/.config/nvim/lua/abg/options.lua
+      nvim/lua/abg/keymap.lua: ~/.config/nvim/lua/abg/keymap.lua
       nvim/init.lua: ~/.config/nvim/init.lua
-      nvim/lua/keymap.lua: ~/.config/nvim/lua/keymap.lua
-      nvim/lua/options.lua: ~/.config/nvim/lua/options.lua
-      nvim/lua/plugins.lua: ~/.config/nvim/lua/plugins.lua
-      nvim/lua/tab_switching.lua: ~/.config/nvim/lua/tab_switching.lua
-      nvim/lua/util.lua: ~/.config/nvim/lua/util.lua
+      nvim/.luacheckrc: ~/.config/nvim/.luacheckrc
+      nvim/.stylua.toml: ~/.config/nvim/.stylua.toml
+      nvim/lazy-lock.json: ~/.config/nvim/lazy-lock.json
+
 
   ranger:
     description: ranger configuration files
