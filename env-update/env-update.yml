@@ -32,7 +32,7 @@ groups:
     clear: ~/.config/nvim
     files:
       nvim/README.md: ~/.config/nvim/README.md
-      nvim/lua/plugins/sneak.lua: ~/.config/nvim/lua/plugins/sneak.lua
+      nvim/lua/plugins/leap.lua: ~/.config/nvim/lua/plugins/leap.lua
       nvim/lua/plugins/telescope.lua: ~/.config/nvim/lua/plugins/telescope.lua
       nvim/lua/plugins/lsp.lua: ~/.config/nvim/lua/plugins/lsp.lua
       nvim/lua/plugins/colorscheme.lua: ~/.config/nvim/lua/plugins/colorscheme.lua
