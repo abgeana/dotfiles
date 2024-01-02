@@ -1,12 +1,8 @@
 Host *
-    IdentityFile ~/.ssh/keys/fido/blue_usb_c
-    IdentityFile ~/.ssh/keys/fido/blue_usb_a
-    IdentityFile ~/.ssh/keys/fido/black_usb_c
-    IdentityFile ~/.ssh/keys/fido/black_usb_a
-    IdentityFile ~/.ssh/keys/gpg/black_usb_a.pub
-    IdentityFile ~/.ssh/keys/gpg/black_usb_c.pub
-    IdentityFile ~/.ssh/keys/gpg/black_backup.pub
-    IdentityFile ~/.ssh/keys/gpg/server.pub
+    #IdentityFile ~/.ssh/keys/fido/blue_usb_c
+    #IdentityFile ~/.ssh/keys/fido/blue_usb_a
+    #IdentityFile ~/.ssh/keys/fido/black_usb_c
+    #IdentityFile ~/.ssh/keys/fido/black_usb_a
     IdentitiesOnly yes
     PreferredAuthentications publickey
     PubkeyAuthentication yes
