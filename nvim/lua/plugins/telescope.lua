@@ -8,6 +8,7 @@ return {
         'nvim-telescope/telescope.nvim',
         config = function()
             local telescope = require 'telescope'
+            local telescope_actions = require "telescope.actions"
             local fb_actions = require('telescope').extensions.file_browser.actions
 
             telescope.setup {
@@ -15,6 +16,12 @@ return {
                     mappings = {
                         n = {
                             ['s'] = telescope.extensions.hop.hop,
+                            ["<C-s>"] = telescope_actions.select_horizontal,
+                            ["<C-v>"] = telescope_actions.select_vertical, -- default
+                        },
+                        i = {
+                            ["<C-s>"] = telescope_actions.select_horizontal,
+                            ["<C-v>"] = telescope_actions.select_vertical, -- default
                         },
                     },
                 },
