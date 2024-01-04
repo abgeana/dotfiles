@@ -39,7 +39,7 @@ return {
                 mapping = cmp.mapping.preset.insert {
                     ['<C-j>'] = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Insert },
                     ['<C-k>'] = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Insert },
-                    ['<Esc>'] = cmp.mapping.abort(),
+                    -- ['<Esc>'] = cmp.mapping.abort(), -- not a good idea, because i expect to be in normal mode after pressing escape
                     ['<C-Space>'] = cmp.mapping.complete(),
                     ['<CR>'] = cmp.mapping.confirm { select = false },
                 },
