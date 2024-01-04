@@ -19,7 +19,16 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 -- configure plugins
-require('lazy').setup 'plugins'
+require('lazy').setup({
+    spec = {
+        import = 'plugins'
+    },
+    opts = {
+        install = {
+            colorscheme = 'neosolarized', -- colorscheme when starting an installation during startup
+        },
+    },
+})
 
 -- apply my custom options and keymaps
 require 'abg'
