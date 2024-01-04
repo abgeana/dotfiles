@@ -1,5 +1,5 @@
--- enable mouse mode
-vim.o.mouse = 'a'
+-- disable mouse mode
+vim.o.mouse = ''
 
 -- show foldcolumn with auto size up to a max of 5 levels
 vim.o.foldcolumn = 'auto:5'
