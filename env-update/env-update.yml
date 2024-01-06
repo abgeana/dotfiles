@@ -51,7 +51,6 @@ groups:
       nvim/init.lua: ~/.config/nvim/init.lua
       nvim/.luacheckrc: ~/.config/nvim/.luacheckrc
       nvim/.stylua.toml: ~/.config/nvim/.stylua.toml
-      nvim/lazy-lock.json: ~/.config/nvim/lazy-lock.json
 
 
   ranger:
