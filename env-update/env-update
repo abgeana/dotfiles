@@ -10,22 +10,42 @@ import os
 import platform
 import shutil
 import stat
+import urllib.request
+import yaml
+
 from dataclasses import dataclass
 from os.path import exists, expanduser
 from typing import Dict, Optional
 
-import colorama
-import requests
-import yaml
-from colorama import Fore, Style
+
+class Colors:
+    ZERO = '\x1b[38;5;0m'
+    ONE = '\x1b[38;5;1m'
+    TWO = '\x1b[38;5;2m'
+    THREE = '\x1b[38;5;3m'
+    FOUR = '\x1b[38;5;4m'
+    FIVE = '\x1b[38;5;5m'
+    SIX = '\x1b[38;5;6m'
+    SEVEN = '\x1b[38;5;7m'
+
+    BLACK = '\x1b[38;5;0m'
+    RED = '\x1b[38;5;1m'
+    GREEN = '\x1b[38;5;2m'
+    YELLOW = '\x1b[38;5;3m'
+    BLUE = '\x1b[38;5;4m'
+    MAGENTA = '\x1b[38;5;5m'
+    CYAN = '\x1b[38;5;6m'
+    WHITE = '\x1b[38;5;7m'
+
+    RESET = '\x1b[0m'
 
 
 def ct(color, text):
-    """ct uses the colorama library to set the terminal color for the specified text."""
-    return f'{color}{text}{colorama.Style.RESET_ALL}'
+    """ct sets the terminal color for the specified text, after which it resets."""
+    return f'{color}{text}{Colors.RESET}'
 
 
-def pct(color, text, end="\n"):
+def pct(color, text, end='\n'):
     """pct prints the provided text with the specified color."""
     print(ct(color, text), end=end)
 
@@ -35,12 +55,12 @@ def parse_args():
     parser = argparse.ArgumentParser(description='Update environment configuration files.')
     parser.add_argument('-c', '--config', type=str, default=None, help='configuration file for this update utility')
 
-    subparsers = parser.add_subparsers(dest="command")
+    subparsers = parser.add_subparsers(dest='command')
 
-    parser_update = subparsers.add_parser("update")
+    parser_update = subparsers.add_parser('update')
     parser_update.add_argument('groups', nargs=argparse.REMAINDER, help='configuration groups to be updated')
 
-    parser_diff = subparsers.add_parser("diff")
+    parser_diff = subparsers.add_parser('diff')
     parser_diff.add_argument('-v', '--verbose', action='store_true', help='print verbose diff output')
     parser_diff.add_argument('groups', nargs=argparse.REMAINDER, help='configuration groups to be updated')
 
@@ -55,12 +75,13 @@ def download_file(path_repo):
         git_branch = 'macos'
 
     try:
-        response = requests.get(f'https://raw.githubusercontent.com/abgeana/dotfiles/{git_branch}/{path_repo}')
+        response = urllib.request.urlopen(
+            f'https://raw.githubusercontent.com/abgeana/dotfiles/{git_branch}/{path_repo}')
     except IOError:
         pass
 
-    if response.status_code == 200:
-        return response.text, True
+    if response.status == 200:
+        return response.read().decode('utf-8'), True
 
     return None, False
 
@@ -99,15 +120,15 @@ class Config:
     def load_github():
         """load_github gets the contents of the yaml config file hosted on github."""
         try:
-            response = requests.get(
-                "https://raw.githubusercontent.com/abgeana/dotfiles/master/env-update/env-update.yml")
+            response = urllib.request.urlopen(
+                'https://raw.githubusercontent.com/abgeana/dotfiles/master/env-update/env-update.yml')
         except IOError:
-            raise RuntimeError("could not load configuration file")
+            raise RuntimeError('could not load configuration file')
 
-        if response.status_code != 200:
-            raise RuntimeError("could not load configuration file")
+        if response.status != 200:
+            raise RuntimeError('could not load configuration file')
 
-        yaml_data = yaml.safe_load(response.text)
+        yaml_data = yaml.safe_load(response.read().decode('utf-8'))
         return Config(**yaml_data)
 
 
@@ -138,7 +159,7 @@ class Updater:
                     continue
                 for d in group.dependencies:
                     if d not in self._cfg.groups.keys():
-                        pct(Fore.RED, f'dependency \"{d}\" does not exist')
+                        pct(Colors.RED, f'dependency {d} does not exist')
                         continue
                     if d not in groups:
                         groups.append(d)
@@ -151,11 +172,11 @@ class Updater:
     def _update_group(self, group_name):
         """_update_group updates all the files for the specified group in the configuration file."""
         if group_name not in self._cfg.groups.keys():
-            pct(Fore.RED, f'group {group_name} does not exist')
+            pct(Colors.RED, f'group {group_name} does not exist')
             return
         else:
             group = self._cfg.groups[group_name]
-            pct(Fore.BLUE, f'updating {group_name}: {group.description}')
+            pct(Colors.BLUE, f'updating {group_name}: {group.description}')
 
         if group.files is None:
             return
@@ -172,11 +193,11 @@ class Updater:
                 path_disk = val
                 file_perms = self._cfg.defaults.file_perms
             elif type(val) == dict:
-                # the value is a dict with keys "path" and "perms"
-                path_disk = val["path"]
-                file_perms = val["perms"]
+                # the value is a dict with keys 'path' and 'perms'
+                path_disk = val['path']
+                file_perms = val['perms']
 
-            content, is_ok = download_file(f"{path_repo}")
+            content, is_ok = download_file(f'{path_repo}')
             if is_ok:
                 is_ok = self._write_file(path_disk, content, self._cfg.defaults.dir_perms, file_perms)
 
@@ -206,9 +227,9 @@ class Updater:
 
     def _print_update_status(self, is_ok, path_disk):
         """_print_update_status displays the status of a file download operation."""
-        status, status_color = ('[✔]', Fore.GREEN) if is_ok else ('[✘]', Fore.RED)
-        pct(status_color, f"  {status}  ", end="")
-        pct(Fore.CYAN, path_disk)
+        status, status_color = ('[✔]', Colors.GREEN) if is_ok else ('[✘]', Colors.RED)
+        pct(status_color, f'  {status}  ', end='')
+        pct(Colors.CYAN, path_disk)
 
 
 class Differ:
@@ -229,15 +250,15 @@ class Differ:
 
     def _diff_group(self, group_name, verbose):
         if group_name not in self._cfg.groups.keys():
-            pct(Fore.RED, f'group {group_name} does not exist')
+            pct(Colors.RED, f'group {group_name} does not exist')
             return
         group = self._cfg.groups[group_name]
-        pct(Fore.BLUE, f'diffing {group_name}: {group.description}')
+        pct(Colors.BLUE, f'diffing {group_name}: {group.description}')
         for path_repo, val in group.files.items():
             if type(val) == str:
                 path_disk = val
             else:
-                path_disk = val["path"]
+                path_disk = val['path']
             if not exists(expanduser(path_disk)):
                 continue
 
@@ -253,7 +274,7 @@ class Differ:
         with open(expanduser(path_disk), 'rb') as f:
             local_contents = f.read()
         md5_local = hashlib.md5(local_contents).hexdigest()
-        md5_repo = hashlib.md5(contents.encode("utf-8")).hexdigest()
+        md5_repo = hashlib.md5(contents.encode('utf-8')).hexdigest()
         if md5_local == md5_repo:
             return Differ.DIFF_MATCH
         else:
@@ -265,39 +286,37 @@ class Differ:
         else:
             status = '[✔]'
         if match_result == Differ.DIFF_MATCH:
-            status_color = Fore.GREEN
+            status_color = Colors.GREEN
         elif match_result == Differ.DIFF_MISMATCH:
-            status_color = Fore.YELLOW
+            status_color = Colors.YELLOW
         else:
-            status_color = Fore.RED
-        pct(status_color, f"  {status}  ", end="")
-        pct(Fore.CYAN, path_disk)
+            status_color = Colors.RED
+        pct(status_color, f'  {status}  ', end='')
+        pct(Colors.CYAN, path_disk)
 
 
 def main():
-    colorama.init()
-
     args = parse_args()
 
     if args.config is not None:
         try:
-            with io.open(args.config, "r", encoding="utf-8") as f:
+            with io.open(args.config, 'r', encoding='utf-8') as f:
                 yaml_data = yaml.safe_load(f.read())
                 cfg = Config(**yaml_data)
         except FileNotFoundError:
-            pct(Fore.RED, "Could not load local yaml config file!")
+            pct(Colors.RED, 'Could not load local yaml config file!')
             exit(1)
     else:
         try:
             cfg = Config.load_github()
         except RuntimeError:
-            pct(Fore.RED, "Could not load yaml config file from github!")
+            pct(Colors.RED, 'Could not load yaml config file from github!')
             exit(1)
 
-    if args.command == "update":
+    if args.command == 'update':
         updater = Updater(cfg)
         updater.do_update(args.groups)
-    elif args.command == "diff":
+    elif args.command == 'diff':
         differ = Differ(cfg)
         differ.do_diff(args.groups, args.verbose)
 
