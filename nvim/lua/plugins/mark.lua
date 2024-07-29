@@ -35,7 +35,8 @@ return {
 
         vim.keymap.set('', '<F1>', '<Leader>m', { remap = true })
         vim.keymap.set('n', '<F2>', do_search)
-        vim.keymap.set('v', '<F3>', do_search)
+        vim.keymap.set('v', '<F2>', do_search)
+        vim.keymap.set('n', '<F3>', '<Cmd>set hlsearch!<Cr>')
         vim.keymap.set('', '<F4>', '<Cmd>MarkClear<Cr>' .. '<Cmd>setl nohlsearch<Cr>')
     end,
 

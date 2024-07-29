@@ -10,6 +10,7 @@ return {
 
         vim.o.background = 'dark'
         vim.o.termguicolors = true
+        vim.cmd("colorscheme neosolarized")
     end,
 
     dependencies = {
