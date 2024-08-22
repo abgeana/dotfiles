@@ -25,7 +25,7 @@ require('lazy').setup({
     },
     opts = {
         install = {
-            colorscheme = 'solarized', -- colorscheme when starting an installation during startup
+            colorscheme = 'neosolarized', -- colorscheme when starting an installation during startup
         },
     },
 })

@@ -112,3 +112,6 @@ vim.o.updatetime = 250
 
 -- enable 24bit terminal gui colors
 vim.o.termguicolors = true
+
+-- set the background to dark
+vim.o.background = 'dark'
