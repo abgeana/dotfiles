@@ -1,5 +1,6 @@
 return {
     {
+        -- TODO Replace this with vim.lsp.completion once it gets released in 0.11.0.
         'hrsh7th/nvim-cmp',
 
         config = function()
@@ -34,6 +35,11 @@ return {
                     expand = function(args)
                         vim.fn['vsnip#anonymous'](args.body)
                     end,
+                },
+
+                view = {
+                    -- This fixes the issues with the colorscheme going to shit.
+                    entries = "native" -- can be "custom" (default), "wildmenu" or "native"
                 },
 
                 mapping = cmp.mapping.preset.insert {
@@ -72,10 +78,6 @@ return {
                             tn = '[TabNine]',
                         },
                     },
-                },
-
-                experimental = {
-                    native_menu = false,
                 },
             }
         end,
