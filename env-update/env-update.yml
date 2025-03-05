@@ -79,7 +79,8 @@ groups:
   alacritty:
     description: alacritty terminal emulator config
     files:
-      alacritty/alacritty.yml: ~/.config/alacritty/alacritty.yml
+      alacritty/alacritty.toml: ~/.config/alacritty/alacritty.toml
+      alacritty/solarized_dark.toml: ~/.config/alacritty/solarized_dark.toml
 
   sway:
     description: sway window manager configuration files
