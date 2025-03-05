@@ -1,5 +1,8 @@
 # Colors (Solarized Dark)
 
+# This theme config is taken from
+# https://github.com/alacritty/alacritty-theme/blob/master/themes/solarized_dark.toml
+
 # Default colors
 [colors.primary]
 background = '#002b36'
