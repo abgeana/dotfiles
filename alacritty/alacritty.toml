@@ -47,12 +47,10 @@ style = "Block"
 # from `0.0` to `1.0`.
 thickness = 0.15
 
-
-# Live config reload (changes require restart).
-live_config_reload = true
-
 [general]
 import = [
     # Import the Solarized Dark theme.
-    "~/.config/alacritty/themes/themes/solarized_dark.toml"
+    "~/.config/alacritty/solarized_dark.toml"
 ]
+# Live config reload (changes require restart).
+live_config_reload = true
