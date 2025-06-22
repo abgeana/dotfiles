@@ -5,12 +5,10 @@ else
     COLOR_USER=202
 fi
 
-if [[ $(hostname) =~ .*\.ubiq.domic.io ]]; then
+if [[ $(hostname) =~ .*\.fob.geana.network ]]; then
     COLOR_HOST=82
-elif [[ $(hostname) =~ .*\.cuib.domic.io ]]; then
+elif [[ $(hostname) =~ .*\.hq.geana.network ]]; then
     COLOR_HOST=39
-elif [[ $(hostname) =~ .*\.docker.domic.io ]]; then
-    COLOR_HOST=201
 else
     typeset -A HOST_COLORS
     HOST_COLORS=(
