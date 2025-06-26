@@ -115,3 +115,8 @@ vim.o.termguicolors = true
 
 -- set the background to dark
 vim.o.background = 'dark'
+
+-- Setting foldtext to the empty string enables syntax highlighting for the first fold line.
+-- Otherwise, the first line would be something along the lines "xxxx lines: [actual first line]" in gray.
+vim.o.foldtext = ""
+vim.o.foldlevel = 99
