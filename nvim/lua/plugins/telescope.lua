@@ -9,7 +9,9 @@ return {
         config = function()
             local telescope = require 'telescope'
             local telescope_actions = require "telescope.actions"
-            local fb_actions = require('telescope').extensions.file_browser.actions
+            local telescope_lga_actions = require("telescope-live-grep-args.actions")
+            local telescope_lga_shortcuts = require("telescope-live-grep-args.shortcuts")
+            local telescope_fb_actions = require('telescope').extensions.file_browser.actions
 
             telescope.setup {
                 defaults = {
@@ -26,24 +28,45 @@ return {
                     },
                 },
                 extensions = {
+                    fzf = {
+                        fuzzy = true,                    -- false will only do exact matching
+                        override_generic_sorter = true,  -- override the generic sorter
+                        override_file_sorter = true,     -- override the file sorter
+                        case_mode = "smart_case",        -- or "ignore_case" or "respect_case"
+                                                         -- the default case_mode is "smart_case"
+                    },
                     file_browser = {
                         mappings = {
                             ['n'] = {
-                                ['h'] = fb_actions.goto_parent_dir,
+                                ['h'] = telescope_fb_actions.goto_parent_dir,
                                 ['l'] = 'select_default',
-                                ['cd'] = fb_actions.change_cwd,
+                                ['cd'] = telescope_fb_actions.change_cwd,
+                            },
+                        },
+                    },
+                    live_grep_args = {
+                        mappings = {
+                            ['i'] = {
+                                ["<C-k>"] = telescope_lga_actions.quote_prompt(),
+                                ["<C-i>"] = telescope_lga_actions.quote_prompt({ postfix = " --iglob " }),
+                                -- freeze the current list and start a fuzzy search in the frozen list
+                                ["<C-space>"] = telescope_actions.to_fuzzy_refine,
                             },
                         },
                     },
                 },
             }
 
-            telescope.load_extension 'file_browser'
+            telescope.load_extension 'fzf'
             telescope.load_extension 'hop'
+            telescope.load_extension 'file_browser'
+            telescope.load_extension 'live_grep_args'
 
             vim.keymap.set('n', '<Leader>ff', [[<Cmd>Telescope find_files<Cr>]])
-            vim.keymap.set('n', '<Leader>fg', [[<Cmd>Telescope live_grep<Cr>]])
-            vim.keymap.set('n', '<Leader>fw', [[<Cmd>Telescope grep_string<Cr>]])
+            --vim.keymap.set('n', '<Leader>fg', [[<Cmd>Telescope live_grep<Cr>]])
+            vim.keymap.set('n', '<Leader>fg', [[<Cmd>Telescope live_grep_args<Cr>]])
+            --vim.keymap.set('n', '<Leader>fw', [[<Cmd>Telescope grep_string<Cr>]])
+            vim.keymap.set('n', '<Leader>fw', telescope_lga_shortcuts.grep_word_under_cursor)
             vim.keymap.set('n', '<Leader>fb', [[<Cmd>Telescope file_browser<Cr>]])
             vim.keymap.set('n', '<Leader>fh', [[<Cmd>Telescope help_tags<Cr>]])
             vim.keymap.set('n', '<Leader>gd', [[<Cmd>Telescope lsp_definitions<Cr>]])
@@ -60,6 +83,7 @@ return {
             'nvim-telescope/telescope-fzf-native.nvim',
             'nvim-telescope/telescope-hop.nvim',
             'nvim-telescope/telescope-file-browser.nvim',
+            'nvim-telescope/telescope-live-grep-args.nvim',
             'neovim/nvim-lspconfig',
         },
     },
