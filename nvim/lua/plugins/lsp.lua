@@ -137,6 +137,13 @@ return {
                 },
             }
 
+            lspconfig.ada_ls.setup {
+                capabilities = cmp_capabilities,
+                flags = {
+                    debounce_text_changes = 150,
+                },
+            }
+
             local cwd = vim.fn.getcwd()
             cwd = cwd:gsub('/', '_')
             lspconfig.rust_analyzer.setup {
