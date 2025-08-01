@@ -90,7 +90,6 @@ groups:
       sway/config: ~/.config/sway/config
       sway/waybar/config: ~/.config/waybar/config
       sway/waybar/style.css: ~/.config/waybar/style.css
-      sway/zshrc.d/zprofile: ~/.zprofile
 
   gnupg:
     description: gnupg configuration files
