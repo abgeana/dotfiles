@@ -32,7 +32,8 @@ history = 0
 size = 13.0
 
 [font.normal]
-family = "Iosevka Nerd Font"
+family = "Iosevka Term Nerd Font"
+#family = "Hack Nerd Font"
 style = "Regular"
 
 [cursor]
