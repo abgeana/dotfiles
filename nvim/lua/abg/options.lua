@@ -67,9 +67,8 @@ vim.o.cursorline = true
 vim.o.wildmode = 'longest:full'
 
 -- configure the completion menu
--- menuone - use the popup menu also when there is only one match
--- longest - only insert the longest common text of the matches
-vim.o.completeopt = 'menuone,longest'
+vim.o.completeopt = 'menu,menuone,noinsert,popup,fuzzy'
+vim.o.pumheight = 10
 
 -- shada (SHAred DAta) configuration
 -- default shada=!,'100,<50,s10,h
