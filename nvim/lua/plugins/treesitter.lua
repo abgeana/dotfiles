@@ -3,7 +3,7 @@ return {
 
     config = function()
         require('nvim-treesitter.configs').setup {
-            ensure_isntalled = {
+            ensure_installed = {
                 'c',
                 'cpp',
                 'rust',
@@ -11,7 +11,6 @@ return {
                 'lua',
                 'go',
                 'vim',
-                'help',
                 'java',
             },
             auto_install = true, -- requires tree-sitter cli installed
@@ -25,5 +24,7 @@ return {
                 additional_vim_regex_highlighting = false,
             },
         }
+
+        vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
     end,
 }
